@@ -8,7 +8,7 @@
 
 ## 공통 작성 양식
 
-[공통 템플릿](TEMPLATE.md) · [작성 및 검토 규칙](CONTRIBUTING.md) · [JSON 연결 매핑](roadmap-mapping.json) · [CSV 연결 매핑](roadmap-mapping.csv)
+[공통 템플릿](../TEMPLATE.md) · [작성 및 검토 규칙](CONTRIBUTING.md) · [JSON 연결 매핑](roadmap-mapping.json) · [CSV 연결 매핑](roadmap-mapping.csv)
 
 ## 전체 항목
 

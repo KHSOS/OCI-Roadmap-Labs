@@ -12,8 +12,8 @@
       "title": "Introduction",
       "parent_node_id": null,
       "parent_title": "Introduction",
-      "filepath": "docs/00_Introduction/00_Introduction.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/00_Introduction/00_Introduction.md",
+      "filepath": "Docs/00_Introduction/00_Introduction.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/00_Introduction/00_Introduction.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -30,8 +30,8 @@
       "title": "Cloud Computing",
       "parent_node_id": "sequence-0-0",
       "parent_title": "Introduction",
-      "filepath": "docs/00_Introduction/01_Cloud_Computing.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/00_Introduction/01_Cloud_Computing.md",
+      "filepath": "Docs/00_Introduction/01_Cloud_Computing.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/00_Introduction/01_Cloud_Computing.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -48,8 +48,8 @@
       "title": "IaaS / PaaS / SaaS",
       "parent_node_id": "sequence-0-0",
       "parent_title": "Introduction",
-      "filepath": "docs/00_Introduction/02_IaaS_PaaS_SaaS.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/00_Introduction/02_IaaS_PaaS_SaaS.md",
+      "filepath": "Docs/00_Introduction/02_IaaS_PaaS_SaaS.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/00_Introduction/02_IaaS_PaaS_SaaS.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -66,8 +66,8 @@
       "title": "Cloud Deployment Models",
       "parent_node_id": "sequence-0-0",
       "parent_title": "Introduction",
-      "filepath": "docs/00_Introduction/03_Cloud_Deployment_Models.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/00_Introduction/03_Cloud_Deployment_Models.md",
+      "filepath": "Docs/00_Introduction/03_Cloud_Deployment_Models.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/00_Introduction/03_Cloud_Deployment_Models.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -84,8 +84,8 @@
       "title": "Introduction to OCI",
       "parent_node_id": null,
       "parent_title": "Introduction to OCI",
-      "filepath": "docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md",
+      "filepath": "Docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -102,8 +102,8 @@
       "title": "Regions",
       "parent_node_id": "sequence-1-0",
       "parent_title": "Introduction to OCI",
-      "filepath": "docs/01_Introduction_to_OCI/01_Regions.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/01_Regions.md",
+      "filepath": "Docs/01_Introduction_to_OCI/01_Regions.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/01_Introduction_to_OCI/01_Regions.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -120,8 +120,8 @@
       "title": "Availability Domains",
       "parent_node_id": "sequence-1-0",
       "parent_title": "Introduction to OCI",
-      "filepath": "docs/01_Introduction_to_OCI/02_Availability_Domains.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/02_Availability_Domains.md",
+      "filepath": "Docs/01_Introduction_to_OCI/02_Availability_Domains.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/01_Introduction_to_OCI/02_Availability_Domains.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -138,8 +138,8 @@
       "title": "Fault Domains",
       "parent_node_id": "sequence-1-0",
       "parent_title": "Introduction to OCI",
-      "filepath": "docs/01_Introduction_to_OCI/03_Fault_Domains.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/03_Fault_Domains.md",
+      "filepath": "Docs/01_Introduction_to_OCI/03_Fault_Domains.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/01_Introduction_to_OCI/03_Fault_Domains.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -156,8 +156,8 @@
       "title": "Shared Security Model",
       "parent_node_id": "sequence-1-0",
       "parent_title": "Introduction to OCI",
-      "filepath": "docs/01_Introduction_to_OCI/04_Shared_Security_Model.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/04_Shared_Security_Model.md",
+      "filepath": "Docs/01_Introduction_to_OCI/04_Shared_Security_Model.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/01_Introduction_to_OCI/04_Shared_Security_Model.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -174,8 +174,8 @@
       "title": "Well-Architected Framework",
       "parent_node_id": "sequence-1-0",
       "parent_title": "Introduction to OCI",
-      "filepath": "docs/01_Introduction_to_OCI/05_Well_Architected_Framework.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/05_Well_Architected_Framework.md",
+      "filepath": "Docs/01_Introduction_to_OCI/05_Well_Architected_Framework.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/01_Introduction_to_OCI/05_Well_Architected_Framework.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -192,8 +192,8 @@
       "title": "Compute",
       "parent_node_id": null,
       "parent_title": "Compute",
-      "filepath": "docs/02_Compute/00_Compute.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/00_Compute.md",
+      "filepath": "Docs/02_Compute/00_Compute.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/02_Compute/00_Compute.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -210,8 +210,8 @@
       "title": "Shapes",
       "parent_node_id": "sequence-2-0",
       "parent_title": "Compute",
-      "filepath": "docs/02_Compute/01_Shapes.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/01_Shapes.md",
+      "filepath": "Docs/02_Compute/01_Shapes.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/02_Compute/01_Shapes.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -228,8 +228,8 @@
       "title": "Burstable Instances",
       "parent_node_id": "sequence-2-0",
       "parent_title": "Compute",
-      "filepath": "docs/02_Compute/02_Burstable_Instances.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/02_Burstable_Instances.md",
+      "filepath": "Docs/02_Compute/02_Burstable_Instances.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/02_Compute/02_Burstable_Instances.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -246,8 +246,8 @@
       "title": "Boot Volume",
       "parent_node_id": "sequence-2-0",
       "parent_title": "Compute",
-      "filepath": "docs/02_Compute/03_Boot_Volume.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/03_Boot_Volume.md",
+      "filepath": "Docs/02_Compute/03_Boot_Volume.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/02_Compute/03_Boot_Volume.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -268,8 +268,8 @@
       "title": "Block Volume",
       "parent_node_id": "sequence-2-0",
       "parent_title": "Compute",
-      "filepath": "docs/02_Compute/04_Block_Volume.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/04_Block_Volume.md",
+      "filepath": "Docs/02_Compute/04_Block_Volume.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/02_Compute/04_Block_Volume.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -286,8 +286,8 @@
       "title": "SSH Keys",
       "parent_node_id": "sequence-2-0",
       "parent_title": "Compute",
-      "filepath": "docs/02_Compute/05_SSH_Keys.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/05_SSH_Keys.md",
+      "filepath": "Docs/02_Compute/05_SSH_Keys.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/02_Compute/05_SSH_Keys.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -304,8 +304,8 @@
       "title": "Public IP Addresses",
       "parent_node_id": "sequence-2-0",
       "parent_title": "Compute",
-      "filepath": "docs/02_Compute/06_Public_IP_Addresses.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/06_Public_IP_Addresses.md",
+      "filepath": "Docs/02_Compute/06_Public_IP_Addresses.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/02_Compute/06_Public_IP_Addresses.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -322,8 +322,8 @@
       "title": "Cloud-init / User Data",
       "parent_node_id": "sequence-2-0",
       "parent_title": "Compute",
-      "filepath": "docs/02_Compute/07_Cloud_init_User_Data.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/07_Cloud_init_User_Data.md",
+      "filepath": "Docs/02_Compute/07_Cloud_init_User_Data.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/02_Compute/07_Cloud_init_User_Data.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -340,8 +340,8 @@
       "title": "Capacity Types",
       "parent_node_id": "sequence-2-0",
       "parent_title": "Compute",
-      "filepath": "docs/02_Compute/08_Capacity_Types.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/08_Capacity_Types.md",
+      "filepath": "Docs/02_Compute/08_Capacity_Types.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/02_Compute/08_Capacity_Types.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -358,8 +358,8 @@
       "title": "Virtual Cloud Network (VCN)",
       "parent_node_id": null,
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -376,8 +376,8 @@
       "title": "CIDR Blocks",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -394,8 +394,8 @@
       "title": "Subnets",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -412,8 +412,8 @@
       "title": "Private Subnets",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -430,8 +430,8 @@
       "title": "Public Subnets",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -448,8 +448,8 @@
       "title": "Route Tables",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -466,8 +466,8 @@
       "title": "Network Security Groups",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -484,8 +484,8 @@
       "title": "Security Lists",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -502,8 +502,8 @@
       "title": "Ingress / Egress",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/08_Ingress_Egress.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/08_Ingress_Egress.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/08_Ingress_Egress.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/08_Ingress_Egress.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -520,8 +520,8 @@
       "title": "Stateful / Stateless Rules",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/09_Stateful_Stateless_Rules.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/09_Stateful_Stateless_Rules.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/09_Stateful_Stateless_Rules.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/09_Stateful_Stateless_Rules.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -538,8 +538,8 @@
       "title": "Internet Gateway",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/10_Internet_Gateway.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/10_Internet_Gateway.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/10_Internet_Gateway.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/10_Internet_Gateway.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -556,8 +556,8 @@
       "title": "NAT Gateway",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -574,8 +574,8 @@
       "title": "Service Gateway",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/12_Service_Gateway.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/12_Service_Gateway.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/12_Service_Gateway.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/12_Service_Gateway.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -592,8 +592,8 @@
       "title": "VNICs",
       "parent_node_id": "sequence-3-0",
       "parent_title": "Virtual Cloud Network (VCN)",
-      "filepath": "docs/03_Virtual_Cloud_Network_VCN/13_VNICs.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/13_VNICs.md",
+      "filepath": "Docs/03_Virtual_Cloud_Network_VCN/13_VNICs.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/03_Virtual_Cloud_Network_VCN/13_VNICs.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -610,8 +610,8 @@
       "title": "Identity and Access Management (IAM)",
       "parent_node_id": null,
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -628,8 +628,8 @@
       "title": "Users",
       "parent_node_id": "sequence-4-0",
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/01_Users.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/01_Users.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/01_Users.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/01_Users.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -646,8 +646,8 @@
       "title": "Groups",
       "parent_node_id": "sequence-4-0",
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/02_Groups.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/02_Groups.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/02_Groups.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/02_Groups.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -664,8 +664,8 @@
       "title": "Dynamic Groups",
       "parent_node_id": "sequence-4-0",
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/03_Dynamic_Groups.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/03_Dynamic_Groups.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/03_Dynamic_Groups.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/03_Dynamic_Groups.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -682,8 +682,8 @@
       "title": "Policies",
       "parent_node_id": "sequence-4-0",
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/04_Policies.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/04_Policies.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/04_Policies.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/04_Policies.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -700,8 +700,8 @@
       "title": "Compartments",
       "parent_node_id": "sequence-4-0",
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/05_Compartments.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/05_Compartments.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/05_Compartments.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/05_Compartments.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -718,8 +718,8 @@
       "title": "OCID",
       "parent_node_id": "sequence-4-0",
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/06_OCID.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/06_OCID.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/06_OCID.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/06_OCID.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -736,8 +736,8 @@
       "title": "Policy Conditions",
       "parent_node_id": "sequence-4-0",
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/07_Policy_Conditions.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/07_Policy_Conditions.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/07_Policy_Conditions.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/07_Policy_Conditions.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -754,8 +754,8 @@
       "title": "Policy Scope / Inheritance",
       "parent_node_id": "sequence-4-0",
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/08_Policy_Scope_Inheritance.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/08_Policy_Scope_Inheritance.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/08_Policy_Scope_Inheritance.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/08_Policy_Scope_Inheritance.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -772,8 +772,8 @@
       "title": "Resource Principals",
       "parent_node_id": "sequence-4-0",
       "parent_title": "Identity and Access Management (IAM)",
-      "filepath": "docs/04_Identity_and_Access_Management_IAM/09_Resource_Principals.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/09_Resource_Principals.md",
+      "filepath": "Docs/04_Identity_and_Access_Management_IAM/09_Resource_Principals.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/04_Identity_and_Access_Management_IAM/09_Resource_Principals.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -790,8 +790,8 @@
       "title": "File Storage",
       "parent_node_id": null,
       "parent_title": "File Storage",
-      "filepath": "docs/05_File_Storage/00_File_Storage.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/00_File_Storage.md",
+      "filepath": "Docs/05_File_Storage/00_File_Storage.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/05_File_Storage/00_File_Storage.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -808,8 +808,8 @@
       "title": "Mount Targets",
       "parent_node_id": "service-file-0",
       "parent_title": "File Storage",
-      "filepath": "docs/05_File_Storage/01_Mount_Targets.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/01_Mount_Targets.md",
+      "filepath": "Docs/05_File_Storage/01_Mount_Targets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/05_File_Storage/01_Mount_Targets.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -826,8 +826,8 @@
       "title": "Exports",
       "parent_node_id": "service-file-0",
       "parent_title": "File Storage",
-      "filepath": "docs/05_File_Storage/02_Exports.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/02_Exports.md",
+      "filepath": "Docs/05_File_Storage/02_Exports.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/05_File_Storage/02_Exports.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -844,8 +844,8 @@
       "title": "Export Options",
       "parent_node_id": "service-file-0",
       "parent_title": "File Storage",
-      "filepath": "docs/05_File_Storage/03_Export_Options.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/03_Export_Options.md",
+      "filepath": "Docs/05_File_Storage/03_Export_Options.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/05_File_Storage/03_Export_Options.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -862,8 +862,8 @@
       "title": "Snapshots",
       "parent_node_id": "service-file-0",
       "parent_title": "File Storage",
-      "filepath": "docs/05_File_Storage/04_Snapshots.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/04_Snapshots.md",
+      "filepath": "Docs/05_File_Storage/04_Snapshots.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/05_File_Storage/04_Snapshots.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -880,8 +880,8 @@
       "title": "Object Storage",
       "parent_node_id": null,
       "parent_title": "Object Storage",
-      "filepath": "docs/06_Object_Storage/00_Object_Storage.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/00_Object_Storage.md",
+      "filepath": "Docs/06_Object_Storage/00_Object_Storage.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/06_Object_Storage/00_Object_Storage.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -898,8 +898,8 @@
       "title": "Buckets / Objects",
       "parent_node_id": "sequence-6-0",
       "parent_title": "Object Storage",
-      "filepath": "docs/06_Object_Storage/01_Buckets_Objects.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/01_Buckets_Objects.md",
+      "filepath": "Docs/06_Object_Storage/01_Buckets_Objects.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/06_Object_Storage/01_Buckets_Objects.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -916,8 +916,8 @@
       "title": "Object Lifecycle Management",
       "parent_node_id": "sequence-6-0",
       "parent_title": "Object Storage",
-      "filepath": "docs/06_Object_Storage/02_Object_Lifecycle_Management.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/02_Object_Lifecycle_Management.md",
+      "filepath": "Docs/06_Object_Storage/02_Object_Lifecycle_Management.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/06_Object_Storage/02_Object_Lifecycle_Management.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -934,8 +934,8 @@
       "title": "Storage Tiers",
       "parent_node_id": "sequence-6-0",
       "parent_title": "Object Storage",
-      "filepath": "docs/06_Object_Storage/03_Storage_Tiers.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/03_Storage_Tiers.md",
+      "filepath": "Docs/06_Object_Storage/03_Storage_Tiers.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/06_Object_Storage/03_Storage_Tiers.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -952,8 +952,8 @@
       "title": "Archive",
       "parent_node_id": "sequence-6-0",
       "parent_title": "Object Storage",
-      "filepath": "docs/06_Object_Storage/04_Archive.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/04_Archive.md",
+      "filepath": "Docs/06_Object_Storage/04_Archive.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/06_Object_Storage/04_Archive.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -970,8 +970,8 @@
       "title": "Standard Storage",
       "parent_node_id": "sequence-6-0",
       "parent_title": "Object Storage",
-      "filepath": "docs/06_Object_Storage/05_Standard_Storage.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/05_Standard_Storage.md",
+      "filepath": "Docs/06_Object_Storage/05_Standard_Storage.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/06_Object_Storage/05_Standard_Storage.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -988,8 +988,8 @@
       "title": "Infrequent Access",
       "parent_node_id": "sequence-6-0",
       "parent_title": "Object Storage",
-      "filepath": "docs/06_Object_Storage/06_Infrequent_Access.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/06_Infrequent_Access.md",
+      "filepath": "Docs/06_Object_Storage/06_Infrequent_Access.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/06_Object_Storage/06_Infrequent_Access.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1006,8 +1006,8 @@
       "title": "Autoscaling",
       "parent_node_id": null,
       "parent_title": "Autoscaling",
-      "filepath": "docs/07_Autoscaling/00_Autoscaling.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/00_Autoscaling.md",
+      "filepath": "Docs/07_Autoscaling/00_Autoscaling.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/07_Autoscaling/00_Autoscaling.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1024,8 +1024,8 @@
       "title": "Images",
       "parent_node_id": "sequence-7-0",
       "parent_title": "Autoscaling",
-      "filepath": "docs/07_Autoscaling/01_Images.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/01_Images.md",
+      "filepath": "Docs/07_Autoscaling/01_Images.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/07_Autoscaling/01_Images.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1042,8 +1042,8 @@
       "title": "Instance Configurations",
       "parent_node_id": "sequence-7-0",
       "parent_title": "Autoscaling",
-      "filepath": "docs/07_Autoscaling/02_Instance_Configurations.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/02_Instance_Configurations.md",
+      "filepath": "Docs/07_Autoscaling/02_Instance_Configurations.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/07_Autoscaling/02_Instance_Configurations.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1060,8 +1060,8 @@
       "title": "Instance Pools",
       "parent_node_id": "sequence-7-0",
       "parent_title": "Autoscaling",
-      "filepath": "docs/07_Autoscaling/03_Instance_Pools.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/03_Instance_Pools.md",
+      "filepath": "Docs/07_Autoscaling/03_Instance_Pools.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/07_Autoscaling/03_Instance_Pools.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1078,8 +1078,8 @@
       "title": "Metric-based Autoscaling",
       "parent_node_id": "sequence-7-0",
       "parent_title": "Autoscaling",
-      "filepath": "docs/07_Autoscaling/04_Metric_based_Autoscaling.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/04_Metric_based_Autoscaling.md",
+      "filepath": "Docs/07_Autoscaling/04_Metric_based_Autoscaling.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/07_Autoscaling/04_Metric_based_Autoscaling.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1096,8 +1096,8 @@
       "title": "Schedule-based Autoscaling",
       "parent_node_id": "sequence-7-0",
       "parent_title": "Autoscaling",
-      "filepath": "docs/07_Autoscaling/05_Schedule_based_Autoscaling.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/05_Schedule_based_Autoscaling.md",
+      "filepath": "Docs/07_Autoscaling/05_Schedule_based_Autoscaling.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/07_Autoscaling/05_Schedule_based_Autoscaling.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1114,8 +1114,8 @@
       "title": "Load Balancer",
       "parent_node_id": null,
       "parent_title": "Load Balancer",
-      "filepath": "docs/08_Load_Balancer/00_Load_Balancer.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/00_Load_Balancer.md",
+      "filepath": "Docs/08_Load_Balancer/00_Load_Balancer.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/08_Load_Balancer/00_Load_Balancer.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1132,8 +1132,8 @@
       "title": "Listeners",
       "parent_node_id": "service-lb-0",
       "parent_title": "Load Balancer",
-      "filepath": "docs/08_Load_Balancer/01_Listeners.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/01_Listeners.md",
+      "filepath": "Docs/08_Load_Balancer/01_Listeners.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/08_Load_Balancer/01_Listeners.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1150,8 +1150,8 @@
       "title": "Backend Sets",
       "parent_node_id": "service-lb-0",
       "parent_title": "Load Balancer",
-      "filepath": "docs/08_Load_Balancer/02_Backend_Sets.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/02_Backend_Sets.md",
+      "filepath": "Docs/08_Load_Balancer/02_Backend_Sets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/08_Load_Balancer/02_Backend_Sets.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1168,8 +1168,8 @@
       "title": "Health Checks",
       "parent_node_id": "service-lb-0",
       "parent_title": "Load Balancer",
-      "filepath": "docs/08_Load_Balancer/03_Health_Checks.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/03_Health_Checks.md",
+      "filepath": "Docs/08_Load_Balancer/03_Health_Checks.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/08_Load_Balancer/03_Health_Checks.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1186,8 +1186,8 @@
       "title": "SSL Certificates",
       "parent_node_id": "service-lb-0",
       "parent_title": "Load Balancer",
-      "filepath": "docs/08_Load_Balancer/04_SSL_Certificates.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/04_SSL_Certificates.md",
+      "filepath": "Docs/08_Load_Balancer/04_SSL_Certificates.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/08_Load_Balancer/04_SSL_Certificates.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1204,8 +1204,8 @@
       "title": "Network Load Balancer",
       "parent_node_id": null,
       "parent_title": "Network Load Balancer",
-      "filepath": "docs/09_Network_Load_Balancer/00_Network_Load_Balancer.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/00_Network_Load_Balancer.md",
+      "filepath": "Docs/09_Network_Load_Balancer/00_Network_Load_Balancer.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/09_Network_Load_Balancer/00_Network_Load_Balancer.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1222,8 +1222,8 @@
       "title": "Layer 3 / Layer 4",
       "parent_node_id": "service-nlb-0",
       "parent_title": "Network Load Balancer",
-      "filepath": "docs/09_Network_Load_Balancer/01_Layer_3_Layer_4.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/01_Layer_3_Layer_4.md",
+      "filepath": "Docs/09_Network_Load_Balancer/01_Layer_3_Layer_4.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/09_Network_Load_Balancer/01_Layer_3_Layer_4.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1240,8 +1240,8 @@
       "title": "IP Address Preservation",
       "parent_node_id": "service-nlb-0",
       "parent_title": "Network Load Balancer",
-      "filepath": "docs/09_Network_Load_Balancer/02_IP_Address_Preservation.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/02_IP_Address_Preservation.md",
+      "filepath": "Docs/09_Network_Load_Balancer/02_IP_Address_Preservation.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/09_Network_Load_Balancer/02_IP_Address_Preservation.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1258,8 +1258,8 @@
       "title": "Health Check Policies",
       "parent_node_id": "service-nlb-0",
       "parent_title": "Network Load Balancer",
-      "filepath": "docs/09_Network_Load_Balancer/03_Health_Check_Policies.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/03_Health_Check_Policies.md",
+      "filepath": "Docs/09_Network_Load_Balancer/03_Health_Check_Policies.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/09_Network_Load_Balancer/03_Health_Check_Policies.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1276,8 +1276,8 @@
       "title": "Long-running Connections",
       "parent_node_id": "service-nlb-0",
       "parent_title": "Network Load Balancer",
-      "filepath": "docs/09_Network_Load_Balancer/04_Long_running_Connections.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/04_Long_running_Connections.md",
+      "filepath": "Docs/09_Network_Load_Balancer/04_Long_running_Connections.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/09_Network_Load_Balancer/04_Long_running_Connections.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1294,8 +1294,8 @@
       "title": "Web Application Firewall (WAF)",
       "parent_node_id": null,
       "parent_title": "Web Application Firewall (WAF)",
-      "filepath": "docs/10_Web_Application_Firewall_WAF/00_Web_Application_Firewall_WAF.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/00_Web_Application_Firewall_WAF.md",
+      "filepath": "Docs/10_Web_Application_Firewall_WAF/00_Web_Application_Firewall_WAF.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/10_Web_Application_Firewall_WAF/00_Web_Application_Firewall_WAF.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1312,8 +1312,8 @@
       "title": "WAF Policies",
       "parent_node_id": "service-waf-0",
       "parent_title": "Web Application Firewall (WAF)",
-      "filepath": "docs/10_Web_Application_Firewall_WAF/01_WAF_Policies.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/01_WAF_Policies.md",
+      "filepath": "Docs/10_Web_Application_Firewall_WAF/01_WAF_Policies.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/10_Web_Application_Firewall_WAF/01_WAF_Policies.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1330,8 +1330,8 @@
       "title": "Request Protection Rules",
       "parent_node_id": "service-waf-0",
       "parent_title": "Web Application Firewall (WAF)",
-      "filepath": "docs/10_Web_Application_Firewall_WAF/02_Request_Protection_Rules.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/02_Request_Protection_Rules.md",
+      "filepath": "Docs/10_Web_Application_Firewall_WAF/02_Request_Protection_Rules.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/10_Web_Application_Firewall_WAF/02_Request_Protection_Rules.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1348,8 +1348,8 @@
       "title": "Access Control",
       "parent_node_id": "service-waf-0",
       "parent_title": "Web Application Firewall (WAF)",
-      "filepath": "docs/10_Web_Application_Firewall_WAF/03_Access_Control.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/03_Access_Control.md",
+      "filepath": "Docs/10_Web_Application_Firewall_WAF/03_Access_Control.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/10_Web_Application_Firewall_WAF/03_Access_Control.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1366,8 +1366,8 @@
       "title": "Rate Limiting",
       "parent_node_id": "service-waf-0",
       "parent_title": "Web Application Firewall (WAF)",
-      "filepath": "docs/10_Web_Application_Firewall_WAF/04_Rate_Limiting.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/04_Rate_Limiting.md",
+      "filepath": "Docs/10_Web_Application_Firewall_WAF/04_Rate_Limiting.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/10_Web_Application_Firewall_WAF/04_Rate_Limiting.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1384,8 +1384,8 @@
       "title": "DNS",
       "parent_node_id": null,
       "parent_title": "DNS",
-      "filepath": "docs/11_DNS/00_DNS.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/11_DNS/00_DNS.md",
+      "filepath": "Docs/11_DNS/00_DNS.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/11_DNS/00_DNS.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1402,8 +1402,8 @@
       "title": "DNS Zones / Records",
       "parent_node_id": "sequence-8-0",
       "parent_title": "DNS",
-      "filepath": "docs/11_DNS/01_DNS_Zones_Records.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/11_DNS/01_DNS_Zones_Records.md",
+      "filepath": "Docs/11_DNS/01_DNS_Zones_Records.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/11_DNS/01_DNS_Zones_Records.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1420,8 +1420,8 @@
       "title": "Traffic Management",
       "parent_node_id": "sequence-8-0",
       "parent_title": "DNS",
-      "filepath": "docs/11_DNS/02_Traffic_Management.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/11_DNS/02_Traffic_Management.md",
+      "filepath": "Docs/11_DNS/02_Traffic_Management.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/11_DNS/02_Traffic_Management.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1438,8 +1438,8 @@
       "title": "DNS Health Checks",
       "parent_node_id": "sequence-8-0",
       "parent_title": "DNS",
-      "filepath": "docs/11_DNS/03_DNS_Health_Checks.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/11_DNS/03_DNS_Health_Checks.md",
+      "filepath": "Docs/11_DNS/03_DNS_Health_Checks.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/11_DNS/03_DNS_Health_Checks.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1456,8 +1456,8 @@
       "title": "Monitoring",
       "parent_node_id": null,
       "parent_title": "Monitoring",
-      "filepath": "docs/12_Monitoring/00_Monitoring.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/00_Monitoring.md",
+      "filepath": "Docs/12_Monitoring/00_Monitoring.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/12_Monitoring/00_Monitoring.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1474,8 +1474,8 @@
       "title": "Metrics",
       "parent_node_id": "sequence-9-0",
       "parent_title": "Monitoring",
-      "filepath": "docs/12_Monitoring/01_Metrics.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/01_Metrics.md",
+      "filepath": "Docs/12_Monitoring/01_Metrics.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/12_Monitoring/01_Metrics.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1492,8 +1492,8 @@
       "title": "Alarms",
       "parent_node_id": "sequence-9-0",
       "parent_title": "Monitoring",
-      "filepath": "docs/12_Monitoring/02_Alarms.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/02_Alarms.md",
+      "filepath": "Docs/12_Monitoring/02_Alarms.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/12_Monitoring/02_Alarms.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1510,8 +1510,8 @@
       "title": "Events",
       "parent_node_id": "sequence-9-0",
       "parent_title": "Monitoring",
-      "filepath": "docs/12_Monitoring/03_Events.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/03_Events.md",
+      "filepath": "Docs/12_Monitoring/03_Events.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/12_Monitoring/03_Events.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1528,8 +1528,8 @@
       "title": "Logging",
       "parent_node_id": "sequence-9-0",
       "parent_title": "Monitoring",
-      "filepath": "docs/12_Monitoring/04_Logging.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/04_Logging.md",
+      "filepath": "Docs/12_Monitoring/04_Logging.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/12_Monitoring/04_Logging.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1546,8 +1546,8 @@
       "title": "Audit",
       "parent_node_id": "sequence-9-0",
       "parent_title": "Monitoring",
-      "filepath": "docs/12_Monitoring/05_Audit.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/05_Audit.md",
+      "filepath": "Docs/12_Monitoring/05_Audit.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/12_Monitoring/05_Audit.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1564,8 +1564,8 @@
       "title": "Notifications",
       "parent_node_id": "sequence-9-0",
       "parent_title": "Monitoring",
-      "filepath": "docs/12_Monitoring/06_Notifications.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/06_Notifications.md",
+      "filepath": "Docs/12_Monitoring/06_Notifications.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/12_Monitoring/06_Notifications.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1582,8 +1582,8 @@
       "title": "Base Database Service",
       "parent_node_id": null,
       "parent_title": "Base Database Service",
-      "filepath": "docs/13_Base_Database_Service/00_Base_Database_Service.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/00_Base_Database_Service.md",
+      "filepath": "Docs/13_Base_Database_Service/00_Base_Database_Service.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/13_Base_Database_Service/00_Base_Database_Service.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1600,8 +1600,8 @@
       "title": "DB Systems",
       "parent_node_id": "sequence-10-0",
       "parent_title": "Base Database Service",
-      "filepath": "docs/13_Base_Database_Service/01_DB_Systems.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/01_DB_Systems.md",
+      "filepath": "Docs/13_Base_Database_Service/01_DB_Systems.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/13_Base_Database_Service/01_DB_Systems.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1618,8 +1618,8 @@
       "title": "Database Storage",
       "parent_node_id": "sequence-10-0",
       "parent_title": "Base Database Service",
-      "filepath": "docs/13_Base_Database_Service/02_Database_Storage.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/02_Database_Storage.md",
+      "filepath": "Docs/13_Base_Database_Service/02_Database_Storage.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/13_Base_Database_Service/02_Database_Storage.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1636,8 +1636,8 @@
       "title": "Backup / Restore",
       "parent_node_id": "sequence-10-0",
       "parent_title": "Base Database Service",
-      "filepath": "docs/13_Base_Database_Service/03_Backup_Restore.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/03_Backup_Restore.md",
+      "filepath": "Docs/13_Base_Database_Service/03_Backup_Restore.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/13_Base_Database_Service/03_Backup_Restore.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1654,8 +1654,8 @@
       "title": "ASM",
       "parent_node_id": "sequence-10-0",
       "parent_title": "Base Database Service",
-      "filepath": "docs/13_Base_Database_Service/04_ASM.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/04_ASM.md",
+      "filepath": "Docs/13_Base_Database_Service/04_ASM.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/13_Base_Database_Service/04_ASM.md",
       "status": "Draft",
       "official_sources": [
         {
@@ -1672,8 +1672,8 @@
       "title": "LVM",
       "parent_node_id": "sequence-10-0",
       "parent_title": "Base Database Service",
-      "filepath": "docs/13_Base_Database_Service/05_LVM.md",
-      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/05_LVM.md",
+      "filepath": "Docs/13_Base_Database_Service/05_LVM.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/Docs/13_Base_Database_Service/05_LVM.md",
       "status": "Draft",
       "official_sources": [
         {
