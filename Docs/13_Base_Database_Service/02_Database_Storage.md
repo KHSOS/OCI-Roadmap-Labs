@@ -44,15 +44,6 @@
 - **주의/대체:** 로그인 가능한 OCI 계정과 해당 범위의 조회 권한이 필요하다. 생성·변경은 별도 승인된 전용 Compartment에서만 수행하며 권한·Region 지원·한도·현재 비용을 먼저 확인한다. 실습 후 생성 리소스의 삭제 대상과 보존 여부를 확인한다. 리소스가 없거나 생성 승인이 없으면 공식 예제 기반 구성표로 대체한다. 고비용·고급 선택 실습이다. 기본은 문서와 생성 화면 검토이며 DB 생성·RAC 구성·복원은 자동 수행하지 않는다. 유료 승인과 별도 격리 DB·backup·접속 준비가 있을 때만 확장한다. DB system의 ASM/LVM 디스크를 직접 재구성하지 않는다.
 - **공식 근거:** [About DB Systems — Database Storage](https://docs.oracle.com/en/cloud/paas/base-database/about-dbs/index.html)
 
-### 학습용 구성도
-
-![Database Storage — 학습용 제안 구성도](../diagrams/89-Database-Storage.png)
-
-> **학습용 제안 구성도**입니다. 실제 배포 현황(as-built)이나 OCI 실습 실행 결과가 아닙니다. 화살표는 그림에 표시된 요청·응답 또는 관리·개념 관계를 뜻합니다. 서비스 계열 아이콘의 정확한 Oracle Toolkit 명칭과 해석 범위는 구성 모델에 기록했습니다.
-
-- [편집 가능한 PowerPoint](../diagrams/89-Database-Storage.pptx) · [구성 모델(JSON)](../diagrams/89-Database-Storage.json)
-- 아이콘 출처: [Oracle OCI Architecture Diagram Toolkits](https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm). 실제 리소스를 생성하지 않은 학습 설계입니다.
-
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.

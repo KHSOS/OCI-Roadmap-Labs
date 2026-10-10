@@ -44,15 +44,6 @@
 - **주의/대체:** 가상 사례만 사용한다. OCI 계정이나 리소스 생성은 필요하지 않으며 고객 구성·실데이터를 사용하지 않는다.
 - **공식 근거:** [What Is Cloud Computing? — IaaS / PaaS / SaaS](https://www.oracle.com/cloud/what-is-cloud-computing/) · [What Is Cloud Computing? — IaaS / PaaS / SaaS](https://www.oracle.com/cloud/what-is-cloud-computing/)
 
-### 학습용 구성도
-
-![IaaS / PaaS / SaaS — 학습용 제안 구성도](../diagrams/02-IaaS-PaaS-SaaS.png)
-
-> **학습용 제안 구성도**입니다. 실제 배포 현황(as-built)이나 OCI 실습 실행 결과가 아닙니다. 화살표는 그림에 표시된 요청·응답 또는 관리·개념 관계를 뜻합니다. 서비스 계열 아이콘의 정확한 Oracle Toolkit 명칭과 해석 범위는 구성 모델에 기록했습니다.
-
-- [편집 가능한 PowerPoint](../diagrams/02-IaaS-PaaS-SaaS.pptx) · [구성 모델(JSON)](../diagrams/02-IaaS-PaaS-SaaS.json)
-- 아이콘 출처: [Oracle OCI Architecture Diagram Toolkits](https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm). 실제 리소스를 생성하지 않은 학습 설계입니다.
-
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.
