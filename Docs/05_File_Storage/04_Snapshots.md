@@ -46,6 +46,15 @@
 
 - **추가 공식 근거:** [항목별 관리·설정 문서](https://docs.oracle.com/en-us/iaas/Content/File/Tasks/managingsnapshots.htm)
 
+### 학습용 구성도
+
+![Snapshots — 학습용 제안 구성도](../diagrams/47-Snapshots.png)
+
+> **학습용 제안 구성도**입니다. 실제 배포 현황(as-built)이나 OCI 실습 실행 결과가 아닙니다. 화살표는 그림에 표시된 요청·응답 또는 관리·개념 관계를 뜻합니다. 서비스 계열 아이콘의 정확한 Oracle Toolkit 명칭과 해석 범위는 구성 모델에 기록했습니다.
+
+- [편집 가능한 PowerPoint](../diagrams/47-Snapshots.pptx) · [구성 모델(JSON)](../diagrams/47-Snapshots.json)
+- 아이콘 출처: [Oracle OCI Architecture Diagram Toolkits](https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm). 실제 리소스를 생성하지 않은 학습 설계입니다.
+
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.

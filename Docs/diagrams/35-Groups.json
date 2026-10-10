@@ -1,0 +1,138 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "relationship",
+  "title": "Groups",
+  "language": "ko",
+  "node_id": "sequence-4-2",
+  "nodes": [
+    {
+      "id": "lane0-source",
+      "label": "User",
+      "icon_key": "user",
+      "rect": [
+        1.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - User",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane0-target",
+      "label": "Group",
+      "icon_key": "user-group",
+      "rect": [
+        10.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - User Group",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane1-source",
+      "label": "Group",
+      "icon_key": "user-group",
+      "rect": [
+        1.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - User Group",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane1-target",
+      "label": "Policy",
+      "icon_key": "policies",
+      "rect": [
+        10.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - Policies",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    }
+  ],
+  "relationship_label": "Membership followed by authorization",
+  "critique": "멤버십과 정책 권한은 별도; Group만으로 자동 권한 없음",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/overview.htm"
+  ],
+  "lab_name": "테스트 그룹 멤버십 구성",
+  "lab_activity": "실습 domain의 전용 그룹에 테스트 사용자를 연결하고 정책과의 관계를 기록한다",
+  "lab_output": "사용자→그룹→정책 연결표",
+  "source_filepath": "Docs/04_Identity_and_Access_Management_IAM/02_Groups.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [],
+  "edges": [
+    {
+      "id": "r0",
+      "source": "lane0-source",
+      "target": "lane0-target",
+      "label": "membership",
+      "points": [
+        [
+          3.3,
+          2.6
+        ],
+        [
+          10.0,
+          2.6
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        1.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r1",
+      "source": "lane1-source",
+      "target": "lane1-target",
+      "label": "authorization is separate",
+      "points": [
+        [
+          3.3,
+          4.1000000000000005
+        ],
+        [
+          10.0,
+          4.1000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        3.47,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "Membership followed by authorization. Management / concept arrows unless explicitly marked traffic.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Repeated labels denote the same role in separate relationship views, not extra resources.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

@@ -1,0 +1,164 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "relationship",
+  "title": "Virtual Cloud Network (VCN)",
+  "language": "ko",
+  "node_id": "sequence-3-0",
+  "nodes": [
+    {
+      "id": "vm",
+      "label": "Compute / VNIC",
+      "icon_key": "compute",
+      "rect": [
+        2.5,
+        3.9,
+        1.8,
+        1.35
+      ],
+      "parent": "subnet",
+      "official_icon_title": "Compute - Virtual Machine VM",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "rt",
+      "label": "Route Table",
+      "icon_key": "route-table",
+      "rect": [
+        6.7,
+        3.45,
+        1.8,
+        1.35
+      ],
+      "parent": "vcn",
+      "official_icon_title": "Networking - Route Table",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "sl",
+      "label": "Security List",
+      "icon_key": "security-list",
+      "rect": [
+        10,
+        3.45,
+        1.8,
+        1.35
+      ],
+      "parent": "vcn",
+      "official_icon_title": "Identity and Security - Security Lists",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    }
+  ],
+  "relationship_label": "VCN contains subnet; subnet associations",
+  "critique": "VCN·Subnet·경로·보안 연계 설계; 실제 생성 없음",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+  ],
+  "lab_name": "격리 VCN 기본 구성",
+  "lab_activity": "전용 실습 Compartment에서 겹치지 않는 CIDR로 VCN과 실습 Subnet을 구성한다",
+  "lab_output": "VCN·Subnet·Route Table·Security List의 연결 관계",
+  "source_filepath": "Docs/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md",
+  "groups": [
+    {
+      "id": "region",
+      "label": "OCI Region",
+      "rect": [
+        0.65,
+        1.65,
+        12,
+        4.85
+      ],
+      "parent": null,
+      "kind": "region"
+    },
+    {
+      "id": "vcn",
+      "label": "Regional VCN 10.0.0.0/16",
+      "rect": [
+        1,
+        2.25,
+        11.3,
+        3.95
+      ],
+      "parent": "region",
+      "kind": "vcn"
+    },
+    {
+      "id": "subnet",
+      "label": "Regional Private Subnet 10.0.1.0/24",
+      "rect": [
+        1.4,
+        3.05,
+        4,
+        2.75
+      ],
+      "parent": "vcn",
+      "kind": "subnet"
+    }
+  ],
+  "edges": [
+    {
+      "id": "route",
+      "source": "subnet",
+      "target": "rt",
+      "label": "associated route table",
+      "points": [
+        [
+          5.4,
+          4
+        ],
+        [
+          6.7,
+          4
+        ]
+      ],
+      "label_rect": [
+        5.45,
+        3.05,
+        1.25,
+        0.55
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "security",
+      "source": "subnet",
+      "target": "sl",
+      "label": "associated security list",
+      "points": [
+        [
+          5.4,
+          5.45
+        ],
+        [
+          10.9,
+          5.45
+        ],
+        [
+          10.9,
+          4.8
+        ]
+      ],
+      "label_rect": [
+        7.2,
+        5.55,
+        2.8,
+        0.4
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "VCN and regional subnet span ADs. Routes select next hops; security rules separately permit traffic.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "renderer": "generate_semantic_learning.py",
+  "icon_policy": "official-source-cache; concepts have no fabricated OCI symbol",
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

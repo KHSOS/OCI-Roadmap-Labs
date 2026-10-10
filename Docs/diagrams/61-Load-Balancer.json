@@ -1,0 +1,187 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "relationship",
+  "title": "Load Balancer",
+  "language": "ko",
+  "node_id": "service-lb-0",
+  "nodes": [
+    {
+      "id": "lane0-source",
+      "label": "Client",
+      "icon_key": "user",
+      "rect": [
+        1.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - User",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane0-target",
+      "label": "Load Balancer",
+      "icon_key": "load-balancer",
+      "rect": [
+        10.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Networking - Load Balancer",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane1-source",
+      "label": "Load Balancer",
+      "icon_key": "load-balancer",
+      "rect": [
+        1.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Networking - Load Balancer",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane1-target",
+      "label": "Backend Set",
+      "icon_key": null,
+      "rect": [
+        10.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane2-source",
+      "label": "Backend Set",
+      "icon_key": null,
+      "rect": [
+        1.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane2-target",
+      "label": "Private Compute backend",
+      "icon_key": "compute",
+      "rect": [
+        10.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Compute - Virtual Machine VM",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    }
+  ],
+  "relationship_label": "Listener -> backend set -> healthy backend",
+  "critique": "public/private 선택 명시·backend 범위 제한; health와 요청 구분",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en-us/iaas/Content/Balance/Concepts/balanceoverview.htm",
+    "https://docs.oracle.com/en-us/iaas/Content/NetworkLoadBalancer/overview.htm"
+  ],
+  "lab_name": "HTTP Load Balancer 연결",
+  "lab_activity": "격리된 웹 backend와 LB를 연결하고 테스트 요청 및 backend health를 확인한다",
+  "lab_output": "listener→backend set→backend 흐름과 응답",
+  "source_filepath": "Docs/08_Load_Balancer/00_Load_Balancer.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [],
+  "edges": [
+    {
+      "id": "r0",
+      "source": "lane0-source",
+      "target": "lane0-target",
+      "label": "listener request",
+      "points": [
+        [
+          3.3,
+          2.6
+        ],
+        [
+          10.0,
+          2.6
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        1.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r1",
+      "source": "lane1-source",
+      "target": "lane1-target",
+      "label": "select backend set",
+      "points": [
+        [
+          3.3,
+          4.1000000000000005
+        ],
+        [
+          10.0,
+          4.1000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        3.47,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r2",
+      "source": "lane2-source",
+      "target": "lane2-target",
+      "label": "select healthy backend",
+      "points": [
+        [
+          3.3,
+          5.6000000000000005
+        ],
+        [
+          10.0,
+          5.6000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        4.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "Listener -> backend set -> healthy backend. Management / concept arrows unless explicitly marked traffic.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Repeated labels denote the same role in separate relationship views, not extra resources.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

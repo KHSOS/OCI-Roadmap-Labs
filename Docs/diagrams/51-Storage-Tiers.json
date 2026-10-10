@@ -1,0 +1,184 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "comparison",
+  "title": "Storage Tiers",
+  "language": "ko",
+  "node_id": "sequence-6-3",
+  "nodes": [
+    {
+      "id": "n0",
+      "label": "Standard",
+      "icon_key": "object-storage",
+      "rect": [
+        0.85,
+        2.35,
+        2.2,
+        1.75
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - Object Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "n1",
+      "label": "Infrequent Access",
+      "icon_key": "object-storage",
+      "rect": [
+        3.98,
+        2.35,
+        2.2,
+        1.75
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - Object Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "n2",
+      "label": "Archive",
+      "icon_key": "object-storage",
+      "rect": [
+        7.109999999999999,
+        2.35,
+        2.2,
+        1.75
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - Object Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "decision",
+      "label": "Compare access / retention / retrieval",
+      "icon_key": null,
+      "rect": [
+        3.5,
+        5.3,
+        6.3,
+        0.8
+      ],
+      "parent": null
+    }
+  ],
+  "relationship_label": "Tier access and retention comparison",
+  "critique": "공식 Object Storage 계열 대체; 검색·보관·복원 지연·과금 비교",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/understandingstoragetiers.htm"
+  ],
+  "lab_name": "Storage Tier 선택표",
+  "lab_activity": "접근 빈도가 다른 세 데이터 사례에 tier를 배정하고 검색·보관 비용 조건을 비교한다",
+  "lab_output": "Standard·Infrequent Access·Archive 선택 이유",
+  "source_filepath": "Docs/06_Object_Storage/03_Storage_Tiers.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [],
+  "edges": [
+    {
+      "id": "dimension0",
+      "source": "n0",
+      "target": "decision",
+      "label": "",
+      "points": [
+        [
+          1.95,
+          4.1
+        ],
+        [
+          1.95,
+          4.7
+        ],
+        [
+          6.65,
+          4.7
+        ],
+        [
+          6.65,
+          5.3
+        ]
+      ],
+      "label_rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "dimension1",
+      "source": "n1",
+      "target": "decision",
+      "label": "",
+      "points": [
+        [
+          5.08,
+          4.1
+        ],
+        [
+          5.08,
+          4.7
+        ],
+        [
+          6.65,
+          4.7
+        ],
+        [
+          6.65,
+          5.3
+        ]
+      ],
+      "label_rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "dimension2",
+      "source": "n2",
+      "target": "decision",
+      "label": "",
+      "points": [
+        [
+          8.209999999999999,
+          4.1
+        ],
+        [
+          8.209999999999999,
+          4.7
+        ],
+        [
+          6.65,
+          4.7
+        ],
+        [
+          6.65,
+          5.3
+        ]
+      ],
+      "label_rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "Tier access and retention comparison. Management / concept arrows unless explicitly marked traffic.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Storage-tier icons use the Object Storage family, not distinct service symbols.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

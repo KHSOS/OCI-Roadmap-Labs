@@ -1,0 +1,187 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "relationship",
+  "title": "Dynamic Groups",
+  "language": "ko",
+  "node_id": "sequence-4-3",
+  "nodes": [
+    {
+      "id": "lane0-source",
+      "label": "Compute resource",
+      "icon_key": "compute",
+      "rect": [
+        1.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Compute - Virtual Machine VM",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane0-target",
+      "label": "Matching rule",
+      "icon_key": null,
+      "rect": [
+        10.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane1-source",
+      "label": "Matching rule",
+      "icon_key": null,
+      "rect": [
+        1.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane1-target",
+      "label": "Dynamic Group",
+      "icon_key": "user-group",
+      "rect": [
+        10.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - User Group",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane2-source",
+      "label": "Dynamic Group",
+      "icon_key": "user-group",
+      "rect": [
+        1.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - User Group",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane2-target",
+      "label": "Policy",
+      "icon_key": "policies",
+      "rect": [
+        10.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - Policies",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    }
+  ],
+  "relationship_label": "Resource matching; then policy access",
+  "critique": "instance principal 예시; matching과 권한 분리; Group 계열 아이콘 대체",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/overview.htm"
+  ],
+  "lab_name": "Dynamic Group 매칭 규칙 검토",
+  "lab_activity": "전용 Compartment의 실습 리소스만 대상으로 매칭 규칙을 작성하고 정책과 구분한다",
+  "lab_output": "매칭 대상과 별도 권한 부여 필요성 설명",
+  "source_filepath": "Docs/04_Identity_and_Access_Management_IAM/03_Dynamic_Groups.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [],
+  "edges": [
+    {
+      "id": "r0",
+      "source": "lane0-source",
+      "target": "lane0-target",
+      "label": "evaluate matching rule",
+      "points": [
+        [
+          3.3,
+          2.6
+        ],
+        [
+          10.0,
+          2.6
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        1.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r1",
+      "source": "lane1-source",
+      "target": "lane1-target",
+      "label": "dynamic membership",
+      "points": [
+        [
+          3.3,
+          4.1000000000000005
+        ],
+        [
+          10.0,
+          4.1000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        3.47,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r2",
+      "source": "lane2-source",
+      "target": "lane2-target",
+      "label": "policy grants permissions",
+      "points": [
+        [
+          3.3,
+          5.6000000000000005
+        ],
+        [
+          10.0,
+          5.6000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        4.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "Resource matching; then policy access. Management / concept arrows unless explicitly marked traffic.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Dynamic Group uses disclosed User Group-family icon; matching and authorization are separate.",
+    "Repeated labels denote the same role in separate relationship views, not extra resources.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

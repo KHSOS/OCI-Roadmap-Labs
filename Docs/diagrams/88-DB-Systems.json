@@ -1,0 +1,253 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "comparison",
+  "title": "DB Systems",
+  "language": "ko",
+  "node_id": "sequence-10-1",
+  "nodes": [
+    {
+      "id": "n0",
+      "label": "Single-node DB",
+      "icon_key": "database",
+      "rect": [
+        0.85,
+        2.35,
+        2.2,
+        1.75
+      ],
+      "parent": null,
+      "official_icon_title": "Database - Database System",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "n1",
+      "label": "Multi-node RAC",
+      "icon_key": "rac",
+      "rect": [
+        3.98,
+        2.35,
+        2.2,
+        1.75
+      ],
+      "parent": null,
+      "official_icon_title": "Database - RAC",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "n2",
+      "label": "ASM storage",
+      "icon_key": "block-storage",
+      "rect": [
+        7.109999999999999,
+        2.35,
+        2.2,
+        1.75
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - Block Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "n3",
+      "label": "LVM option",
+      "icon_key": "block-storage",
+      "rect": [
+        10.24,
+        2.35,
+        2.2,
+        1.75
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - Block Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "decision",
+      "label": "Check supported node-count / storage combinations",
+      "icon_key": null,
+      "rect": [
+        3.5,
+        5.3,
+        6.3,
+        0.8
+      ],
+      "parent": null
+    }
+  ],
+  "relationship_label": "Supported DB-system comparisons",
+  "critique": "RAC는 ASM; LVM fast provisioning 지원 조건 별도",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en/cloud/paas/base-database/about-dbs/index.html"
+  ],
+  "lab_name": "DB System 유형 선택",
+  "lab_activity": "single-node·RAC와 fast provisioning 지원 조건을 비교하고 생성 화면만 검토한다",
+  "lab_output": "선택 유형·edition·Shape·storage 관리 방식 표",
+  "source_filepath": "Docs/13_Base_Database_Service/01_DB_Systems.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [],
+  "edges": [
+    {
+      "id": "dimension0",
+      "source": "n0",
+      "target": "decision",
+      "label": "",
+      "points": [
+        [
+          1.95,
+          4.1
+        ],
+        [
+          1.95,
+          4.7
+        ],
+        [
+          6.65,
+          4.7
+        ],
+        [
+          6.65,
+          5.3
+        ]
+      ],
+      "label_rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "dimension1",
+      "source": "n1",
+      "target": "decision",
+      "label": "",
+      "points": [
+        [
+          5.08,
+          4.1
+        ],
+        [
+          5.08,
+          4.7
+        ],
+        [
+          6.65,
+          4.7
+        ],
+        [
+          6.65,
+          5.3
+        ]
+      ],
+      "label_rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "dimension2",
+      "source": "n2",
+      "target": "decision",
+      "label": "",
+      "points": [
+        [
+          8.209999999999999,
+          4.1
+        ],
+        [
+          8.209999999999999,
+          4.7
+        ],
+        [
+          6.65,
+          4.7
+        ],
+        [
+          6.65,
+          5.3
+        ]
+      ],
+      "label_rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "dimension3",
+      "source": "n3",
+      "target": "decision",
+      "label": "",
+      "points": [
+        [
+          11.34,
+          4.1
+        ],
+        [
+          11.34,
+          4.7
+        ],
+        [
+          6.65,
+          4.7
+        ],
+        [
+          6.65,
+          5.3
+        ]
+      ],
+      "label_rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "rac-asm",
+      "source": "n1",
+      "target": "n2",
+      "label": "RAC requires ASM",
+      "points": [
+        [
+          6.18,
+          3.1
+        ],
+        [
+          7.11,
+          3.1
+        ]
+      ],
+      "label_rect": [
+        3.9,
+        1.85,
+        4,
+        0.4
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "RAC requires ASM. LVM fast provisioning is a supported single-node option only.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

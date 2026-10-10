@@ -1,0 +1,190 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "relationship",
+  "title": "Introduction",
+  "language": "ko",
+  "node_id": "sequence-0-0",
+  "nodes": [
+    {
+      "id": "lane0-source",
+      "label": "User",
+      "icon_key": "user",
+      "rect": [
+        1.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - User",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane0-target",
+      "label": "Compute",
+      "icon_key": "compute",
+      "rect": [
+        10.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Compute - Virtual Machine VM",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane1-source",
+      "label": "User",
+      "icon_key": "user",
+      "rect": [
+        1.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - User",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane1-target",
+      "label": "Object Storage",
+      "icon_key": "object-storage",
+      "rect": [
+        10.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - Object Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane2-source",
+      "label": "User",
+      "icon_key": "user",
+      "rect": [
+        1.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - User",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane2-target",
+      "label": "VCN",
+      "icon_key": "virtual-cloud-network",
+      "rect": [
+        10.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Networking - Virtual Cloud Network VCN",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    }
+  ],
+  "relationship_label": "Service roles (not traffic)",
+  "critique": "역할·운영 주체 분류; 배포 사실 아님",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://www.oracle.com/cloud/what-is-cloud-computing/"
+  ],
+  "lab_name": "클라우드 전환 시나리오 분류",
+  "lab_activity": "가상의 웹 서비스 구성도를 그리고 클라우드 이전 대상과 운영 주체를 표시한다",
+  "lab_output": "컴퓨팅·저장·네트워크와 운영 책임이 구분된 구성도",
+  "source_filepath": "Docs/00_Introduction/00_Introduction.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [],
+  "edges": [
+    {
+      "id": "r0",
+      "source": "lane0-source",
+      "target": "lane0-target",
+      "label": "operates compute",
+      "points": [
+        [
+          3.3,
+          2.6
+        ],
+        [
+          10.0,
+          2.6
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        1.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r1",
+      "source": "lane1-source",
+      "target": "lane1-target",
+      "label": "accesses stored objects",
+      "points": [
+        [
+          3.3,
+          4.1000000000000005
+        ],
+        [
+          10.0,
+          4.1000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        3.47,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r2",
+      "source": "lane2-source",
+      "target": "lane2-target",
+      "label": "designs network scope",
+      "points": [
+        [
+          3.3,
+          5.6000000000000005
+        ],
+        [
+          10.0,
+          5.6000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        4.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "Service roles (not traffic). Management / concept arrows unless explicitly marked traffic.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Repeated labels denote the same role in separate relationship views, not extra resources.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

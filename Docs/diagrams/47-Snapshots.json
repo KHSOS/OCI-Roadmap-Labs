@@ -1,0 +1,137 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "relationship",
+  "title": "Snapshots",
+  "language": "ko",
+  "node_id": "service-file-4",
+  "nodes": [
+    {
+      "id": "lane0-source",
+      "label": "File System",
+      "icon_key": "file-storage",
+      "rect": [
+        1.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - File Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane0-target",
+      "label": "Snapshot point",
+      "icon_key": "file-storage",
+      "rect": [
+        10.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - File Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane1-source",
+      "label": "Snapshot point",
+      "icon_key": "file-storage",
+      "rect": [
+        1.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - File Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane1-target",
+      "label": "Test file versions",
+      "icon_key": null,
+      "rect": [
+        10.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    }
+  ],
+  "relationship_label": "Point-in-time filesystem view",
+  "critique": "시점 데이터 관찰; 외부 backup·교차 Region DR 자동 보장 아님",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en-us/iaas/Content/File/Concepts/filestorageoverview.htm",
+    "https://docs.oracle.com/en-us/iaas/Content/File/Tasks/managingsnapshots.htm"
+  ],
+  "lab_name": "File Storage Snapshot 관찰",
+  "lab_activity": "테스트 파일만 있는 실습 파일시스템에서 snapshot을 생성하거나 기존 snapshot을 관찰한다",
+  "lab_output": "snapshot 목록과 생성 시점·파일 접근 방식 기록",
+  "source_filepath": "Docs/05_File_Storage/04_Snapshots.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [],
+  "edges": [
+    {
+      "id": "r0",
+      "source": "lane0-source",
+      "target": "lane0-target",
+      "label": "point-in-time snapshot",
+      "points": [
+        [
+          3.3,
+          2.6
+        ],
+        [
+          10.0,
+          2.6
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        1.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r1",
+      "source": "lane1-source",
+      "target": "lane1-target",
+      "label": "inspect captured file version",
+      "points": [
+        [
+          3.3,
+          4.1000000000000005
+        ],
+        [
+          10.0,
+          4.1000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        3.47,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "Point-in-time filesystem view. Management / concept arrows unless explicitly marked traffic.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Repeated labels denote the same role in separate relationship views, not extra resources.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

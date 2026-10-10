@@ -1,0 +1,180 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "relationship",
+  "title": "Security Lists",
+  "language": "ko",
+  "node_id": "sequence-3-7",
+  "nodes": [
+    {
+      "id": "lane0-source",
+      "label": "Security List",
+      "icon_key": "security-list",
+      "rect": [
+        1.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Identity and Security - Security Lists",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane0-target",
+      "label": "Subnet",
+      "icon_key": null,
+      "rect": [
+        10.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane1-source",
+      "label": "Subnet",
+      "icon_key": null,
+      "rect": [
+        1.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane1-target",
+      "label": "VNIC A",
+      "icon_key": null,
+      "rect": [
+        10.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane2-source",
+      "label": "Subnet",
+      "icon_key": null,
+      "rect": [
+        1.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane2-target",
+      "label": "VNIC B",
+      "icon_key": null,
+      "rect": [
+        10.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    }
+  ],
+  "relationship_label": "Subnet association covers subnet VNICs",
+  "critique": "연계 Subnet의 VNIC에 적용; 개별 NSG 멤버십과 구분",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/securityrules.htm"
+  ],
+  "lab_name": "Subnet 단위 Security List 관찰",
+  "lab_activity": "실습 Subnet의 Security List를 읽고 해당 Subnet VNIC에 적용되는 규칙을 정리한다",
+  "lab_output": "Subnet과 Security List 연결 및 NSG와의 적용 범위 차이",
+  "source_filepath": "Docs/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [],
+  "edges": [
+    {
+      "id": "r0",
+      "source": "lane0-source",
+      "target": "lane0-target",
+      "label": "subnet association",
+      "points": [
+        [
+          3.3,
+          2.6
+        ],
+        [
+          10.0,
+          2.6
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        1.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r1",
+      "source": "lane1-source",
+      "target": "lane1-target",
+      "label": "applies to subnet VNIC",
+      "points": [
+        [
+          3.3,
+          4.1000000000000005
+        ],
+        [
+          10.0,
+          4.1000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        3.47,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r2",
+      "source": "lane2-source",
+      "target": "lane2-target",
+      "label": "applies to subnet VNIC",
+      "points": [
+        [
+          3.3,
+          5.6000000000000005
+        ],
+        [
+          10.0,
+          5.6000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        4.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "Subnet association covers subnet VNICs. Management / concept arrows unless explicitly marked traffic.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Repeated labels denote the same role in separate relationship views, not extra resources.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

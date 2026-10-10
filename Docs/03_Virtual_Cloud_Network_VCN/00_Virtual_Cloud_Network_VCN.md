@@ -44,6 +44,15 @@
 - **주의/대체:** 로그인 가능한 OCI 계정과 해당 범위의 조회 권한이 필요하다. 생성·변경은 별도 승인된 전용 Compartment에서만 수행하며 권한·Region 지원·한도·현재 비용을 먼저 확인한다. 실습 후 생성 리소스의 삭제 대상과 보존 여부를 확인한다. 리소스가 없거나 생성 승인이 없으면 공식 예제 기반 구성표로 대체한다. SSH 허용 source는 본인의 공인 IP 범위로 제한하고 전체 인터넷에 SSH를 열지 않는다. private key·인증정보는 문서나 저장소에 넣지 않는다.
 - **공식 근거:** [Networking Overview — Virtual Cloud Network (VCN)](https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm)
 
+### 학습용 구성도
+
+![Virtual Cloud Network (VCN) — 학습용 제안 구성도](../diagrams/19-Virtual-Cloud-Network-VCN.png)
+
+> **학습용 제안 구성도**입니다. 실제 배포 현황(as-built)이나 OCI 실습 실행 결과가 아닙니다. 화살표는 그림에 표시된 요청·응답 또는 관리·개념 관계를 뜻합니다. 서비스 계열 아이콘의 정확한 Oracle Toolkit 명칭과 해석 범위는 구성 모델에 기록했습니다.
+
+- [편집 가능한 PowerPoint](../diagrams/19-Virtual-Cloud-Network-VCN.pptx) · [구성 모델(JSON)](../diagrams/19-Virtual-Cloud-Network-VCN.json)
+- 아이콘 출처: [Oracle OCI Architecture Diagram Toolkits](https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm). 실제 리소스를 생성하지 않은 학습 설계입니다.
+
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.

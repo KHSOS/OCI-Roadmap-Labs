@@ -1,0 +1,184 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "comparison",
+  "title": "LVM",
+  "language": "ko",
+  "node_id": "sequence-10-5",
+  "nodes": [
+    {
+      "id": "lane0-source",
+      "label": "Single-node DB",
+      "icon_key": "database",
+      "rect": [
+        1.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Database - Database System",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane0-target",
+      "label": "Fast provisioning",
+      "icon_key": null,
+      "rect": [
+        10.0,
+        1.95,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane1-source",
+      "label": "Fast provisioning",
+      "icon_key": null,
+      "rect": [
+        1.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    },
+    {
+      "id": "lane1-target",
+      "label": "LVM storage",
+      "icon_key": "block-storage",
+      "rect": [
+        10.0,
+        3.45,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - Block Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane2-source",
+      "label": "LVM storage",
+      "icon_key": "block-storage",
+      "rect": [
+        1.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Storage - Block Storage",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "lane2-target",
+      "label": "ASM comparison",
+      "icon_key": null,
+      "rect": [
+        10.0,
+        4.95,
+        2.3,
+        1.35
+      ],
+      "parent": null
+    }
+  ],
+  "relationship_label": "LVM-supported setup versus ASM",
+  "critique": "LVM 지원 조건; LVM multi-node RAC 제안 금지",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en/cloud/paas/base-database/about-dbs/index.html"
+  ],
+  "lab_name": "LVM fast provisioning 비교",
+  "lab_activity": "공식 문서에서 fast provisioning의 LVM 사용 조건을 읽고 ASM 방식과 비교한다",
+  "lab_output": "LVM 적용 DB 유형과 provisioning 차이 표",
+  "source_filepath": "Docs/13_Base_Database_Service/05_LVM.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [],
+  "edges": [
+    {
+      "id": "r0",
+      "source": "lane0-source",
+      "target": "lane0-target",
+      "label": "supported single-node selection",
+      "points": [
+        [
+          3.3,
+          2.6
+        ],
+        [
+          10.0,
+          2.6
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        1.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r1",
+      "source": "lane1-source",
+      "target": "lane1-target",
+      "label": "LVM fast-provisioning option",
+      "points": [
+        [
+          3.3,
+          4.1000000000000005
+        ],
+        [
+          10.0,
+          4.1000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        3.47,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "r2",
+      "source": "lane2-source",
+      "target": "lane2-target",
+      "label": "compare supported ASM alternative",
+      "points": [
+        [
+          3.3,
+          5.6000000000000005
+        ],
+        [
+          10.0,
+          5.6000000000000005
+        ]
+      ],
+      "label_rect": [
+        3.65,
+        4.97,
+        5.95,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "LVM fast provisioning: supported single-node only, not multi-node RAC.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Repeated labels denote the same role in separate relationship views, not extra resources.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

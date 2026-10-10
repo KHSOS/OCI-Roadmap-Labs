@@ -1,0 +1,145 @@
+{
+  "architecture_type": "semantic-learning-v1",
+  "scope": "proposed-learning",
+  "diagram_kind": "relationship",
+  "title": "CIDR Blocks",
+  "language": "ko",
+  "node_id": "sequence-3-1",
+  "nodes": [
+    {
+      "id": "vcn-icon",
+      "label": "VCN address plan",
+      "icon_key": "virtual-cloud-network",
+      "rect": [
+        9.7,
+        2.05,
+        2.8,
+        1.35
+      ],
+      "parent": null,
+      "official_icon_title": "Networking - Virtual Cloud Network VCN",
+      "icon_usage": "Official service-family symbol illustrates the explicitly labeled role; not a new standalone service."
+    },
+    {
+      "id": "peer",
+      "label": "Peer CIDR\n10.1.0.0/16",
+      "icon_key": null,
+      "rect": [
+        9.7,
+        4.35,
+        2.8,
+        1.8
+      ],
+      "parent": null
+    }
+  ],
+  "relationship_label": "CIDR containment and non-overlap",
+  "critique": "Subnet은 VCN 범위 내 상호 비중첩; 피어 대역도 대조",
+  "assumptions": [
+    "실제 OCI 실행·배포 검증은 수행하지 않았다.",
+    "이 논리 관계도는 Subnet 배치나 네트워크 route를 증명하지 않는다."
+  ],
+  "official_sources": [
+    "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+  ],
+  "lab_name": "CIDR 주소 계획",
+  "lab_activity": "실습망과 연계망이 겹치지 않도록 VCN·Subnet CIDR 계획을 작성하고 생성 화면에서 검토한다",
+  "lab_output": "중복 없는 주소 계획과 포함 관계 표",
+  "source_filepath": "Docs/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md",
+  "renderer": "generate_semantic_learning.py",
+  "groups": [
+    {
+      "id": "vcn",
+      "label": "VCN 10.0.0.0/16",
+      "rect": [
+        0.75,
+        1.85,
+        8.5,
+        4.55
+      ],
+      "parent": null,
+      "kind": "vcn"
+    },
+    {
+      "id": "a",
+      "label": "Subnet A 10.0.1.0/24",
+      "rect": [
+        1.2,
+        2.65,
+        3.4,
+        3
+      ],
+      "parent": "vcn",
+      "kind": "subnet"
+    },
+    {
+      "id": "b",
+      "label": "Subnet B 10.0.2.0/24",
+      "rect": [
+        5.1,
+        2.65,
+        3.4,
+        3
+      ],
+      "parent": "vcn",
+      "kind": "subnet"
+    }
+  ],
+  "edges": [
+    {
+      "id": "symbol",
+      "source": "vcn",
+      "target": "vcn-icon",
+      "label": "address-plan view",
+      "points": [
+        [
+          9.25,
+          2.7
+        ],
+        [
+          9.7,
+          2.7
+        ]
+      ],
+      "label_rect": [
+        9.3,
+        3.55,
+        3.2,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    },
+    {
+      "id": "nonoverlap",
+      "source": "vcn",
+      "target": "peer",
+      "label": "compare: no overlap",
+      "points": [
+        [
+          9.25,
+          5.1
+        ],
+        [
+          9.7,
+          5.1
+        ]
+      ],
+      "label_rect": [
+        9.3,
+        5.9,
+        3.2,
+        0.5
+      ],
+      "dash": false,
+      "relation": "dependency"
+    }
+  ],
+  "annotations": [
+    "CIDR containment and non-overlap. Management / concept arrows unless explicitly marked traffic.",
+    "Scope: illustrative learning only; no OCI provisioning or paid service execution.",
+    "Arbitrary illustrative private CIDRs; no peering is configured.",
+    "Service-family icon meanings and exact official toolkit titles are disclosed in the model JSON."
+  ],
+  "icon_source": "https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm"
+}

@@ -48,6 +48,15 @@
 
 - **확장 준비:** 별도 승인된 테스트 backend VM에 서비스가 실행 중이어야 한다. LB/NLB·backend 사이의 health check 및 서비스 포트 보안 규칙과 반환 경로를 확인한다. 기본 설계 검토는 backend 추가 생성 없이 가능하다.
 
+### 학습용 구성도
+
+![Network Load Balancer — 학습용 제안 구성도](../diagrams/66-Network-Load-Balancer.png)
+
+> **학습용 제안 구성도**입니다. 실제 배포 현황(as-built)이나 OCI 실습 실행 결과가 아닙니다. 화살표는 그림에 표시된 요청·응답 또는 관리·개념 관계를 뜻합니다. 서비스 계열 아이콘의 정확한 Oracle Toolkit 명칭과 해석 범위는 구성 모델에 기록했습니다.
+
+- [편집 가능한 PowerPoint](../diagrams/66-Network-Load-Balancer.pptx) · [구성 모델(JSON)](../diagrams/66-Network-Load-Balancer.json)
+- 아이콘 출처: [Oracle OCI Architecture Diagram Toolkits](https://docs.oracle.com/en-us/iaas/Content/General/Reference/graphicsfordiagrams.htm). 실제 리소스를 생성하지 않은 학습 설계입니다.
+
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.
