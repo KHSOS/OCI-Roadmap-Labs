@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Listeners` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- Listener가 지정하는 수신 프로토콜과 포트를 설명할 수 있다.[6]
+- Listener 문서에서 지원 프로토콜과 수신 트래픽 설정 항목을 확인할 수 있다.[6]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Listeners
+- 항목명: **Listeners**
+- Roadmap 경로: **Load Balancer → Listeners**
 - Node ID: `service-lb-1`
-- 상위 항목: Load Balancer
-- 상태: Draft / 작성예정
+- 상위 항목: **Load Balancer** (`service-lb-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Listeners](https://docs.oracle.com/en-us/iaas/Content/Balance/Tasks/managinglisteners.htm)
+- [6] [Listeners for Load Balancers — Listeners](https://docs.oracle.com/en-us/iaas/Content/Balance/Tasks/managinglisteners.htm)
+  - 확인 범위: Listeners.

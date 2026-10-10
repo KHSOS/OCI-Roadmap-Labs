@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Alarms` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- Alarm의 지표 조건 평가와 대상 서비스 알림을 설명할 수 있다.[29]
+- 트리거 조건과 알림 전달 대상을 구분할 수 있다.[29]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Alarms
+- 항목명: **Alarms**
+- Roadmap 경로: **Monitoring → Alarms**
 - Node ID: `sequence-9-2`
-- 상위 항목: Monitoring
-- 상태: Draft / 작성예정
+- 상위 항목: **Monitoring** (`sequence-9-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Alarms](https://docs.oracle.com/en-us/iaas/Content/Monitoring/Concepts/monitoringoverview.htm)
+- [29] [Overview of Monitoring — Alarms](https://docs.oracle.com/en-us/iaas/Content/Monitoring/Concepts/monitoringoverview.htm)
+  - 확인 범위: Alarms Feature Overview.

@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Logging` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- Audit·Service·Custom 로그의 용도를 구분할 수 있다.[28]
+- Logging에서 로그 활성화·관리·검색 항목을 확인할 수 있다.[28]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Logging
+- 항목명: **Logging**
+- Roadmap 경로: **Monitoring → Logging**
 - Node ID: `sequence-9-4`
-- 상위 항목: Monitoring
-- 상태: Draft / 작성예정
+- 상위 항목: **Monitoring** (`sequence-9-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Logging](https://docs.oracle.com/en-us/iaas/Content/Logging/Concepts/loggingoverview.htm)
+- [28] [Logging Overview — Logging](https://docs.oracle.com/en-us/iaas/Content/Logging/Concepts/loggingoverview.htm)
+  - 확인 범위: The Oracle Cloud Infrastructure Logging service.

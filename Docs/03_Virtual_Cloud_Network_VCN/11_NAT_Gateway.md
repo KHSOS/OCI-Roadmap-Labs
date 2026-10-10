@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `NAT Gateway` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- NAT Gateway를 통한 비공인 리소스의 외부 연결을 설명할 수 있다.[30]
+- 리소스가 시작하는 연결과 인터넷에서 시작하는 인바운드 연결을 구분할 수 있다.[30]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: NAT Gateway
+- 항목명: **NAT Gateway**
+- Roadmap 경로: **Virtual Cloud Network (VCN) → NAT Gateway**
 - Node ID: `sequence-3-11`
-- 상위 항목: Virtual Cloud Network (VCN)
-- 상태: Draft / 작성예정
+- 상위 항목: **Virtual Cloud Network (VCN)** (`sequence-3-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [NAT Gateway](https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm)
+- [30] [Networking Overview — NAT Gateway](https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm)
+  - 확인 범위: NETWORK ADDRESS TRANSLATION.

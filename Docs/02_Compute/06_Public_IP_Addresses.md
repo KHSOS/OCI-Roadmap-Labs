@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Public IP Addresses` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- Ephemeral Public IP와 Reserved Public IP의 수명주기를 구분할 수 있다.[32]
+- 공인 IP 할당 대상과 인터넷 접근을 위한 네트워크 조건을 공식문서에서 확인할 수 있다.[32]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Public IP Addresses
+- 항목명: **Public IP Addresses**
+- Roadmap 경로: **Compute → Public IP Addresses**
 - Node ID: `sequence-2-6`
-- 상위 항목: Compute
-- 상태: Draft / 작성예정
+- 상위 항목: **Compute** (`sequence-2-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Public IP Addresses](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/managingpublicIPs.htm)
+- [32] [Public IP Addresses — Public IP Addresses](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/managingpublicIPs.htm)
+  - 확인 범위: public IP.

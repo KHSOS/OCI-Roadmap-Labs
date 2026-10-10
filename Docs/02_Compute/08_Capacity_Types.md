@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Capacity Types` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- On-demand·Preemptible·Capacity Reservation·Dedicated Capacity를 구분할 수 있다.[9]
+- 워크로드의 중단 허용 여부와 용량 확보 요구에 맞는 선택 기준을 확인할 수 있다.[9]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Capacity Types
+- 항목명: **Capacity Types**
+- Roadmap 경로: **Compute → Capacity Types**
 - Node ID: `sequence-2-8`
-- 상위 항목: Compute
-- 상태: Draft / 작성예정
+- 상위 항목: **Compute** (`sequence-2-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Capacity Types](https://docs.oracle.com/en-us/iaas/Content/Compute/Concepts/capacity-types.htm)
+- [9] [Overview of the Compute Service — Capacity Types](https://docs.oracle.com/en-us/iaas/Content/Compute/Concepts/computeoverview.htm#capacity_types)
+  - 확인 범위: Capacity Types.

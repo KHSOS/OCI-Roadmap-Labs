@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Database Storage` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- DB System의 OCI Block Storage 사용과 스토리지 확장 방식을 설명할 수 있다.[41]
+- 생성 시 지정하는 저장 용량과 이후 확장 조건을 확인할 수 있다.[41]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Database Storage
+- 항목명: **Database Storage**
+- Roadmap 경로: **Base Database Service → Database Storage**
 - Node ID: `sequence-10-2`
-- 상위 항목: Base Database Service
-- 상태: Draft / 작성예정
+- 상위 항목: **Base Database Service** (`sequence-10-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Database Storage](https://docs.oracle.com/en/cloud/paas/base-database/about-dbs/index.html)
+- [41] [About DB Systems — Database Storage](https://docs.oracle.com/en/cloud/paas/base-database/about-dbs/index.html)
+  - 확인 범위: A DB system can have only.

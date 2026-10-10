@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Cloud-init / User Data` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- Cloud-init과 User Data를 이용한 시작 시 초기화의 목적을 설명할 수 있다.[16]
+- 인스턴스 생성 설정에서 초기화 스크립트를 전달하는 위치를 확인할 수 있다.[16]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Cloud-init / User Data
+- 항목명: **Cloud-init / User Data**
+- Roadmap 경로: **Compute → Cloud-init / User Data**
 - Node ID: `sequence-2-7`
-- 상위 항목: Compute
-- 상태: Draft / 작성예정
+- 상위 항목: **Compute** (`sequence-2-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Cloud-init / User Data](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/launchinginstance.htm)
+- [16] [Creating an Instance — Cloud-init / User Data](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/launchinginstance.htm)
+  - 확인 범위: cloud-init.

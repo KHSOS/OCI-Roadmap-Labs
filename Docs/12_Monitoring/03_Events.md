@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Events` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- 리소스 상태 변경 이벤트와 자동화 동작의 관계를 설명할 수 있다.[18]
+- Events Rule의 필터와 실행 동작을 구분할 수 있다.[18]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Events
+- 항목명: **Events**
+- Roadmap 경로: **Monitoring → Events**
 - Node ID: `sequence-9-3`
-- 상위 항목: Monitoring
-- 상태: Draft / 작성예정
+- 상위 항목: **Monitoring** (`sequence-9-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Events](https://docs.oracle.com/en-us/iaas/Content/Events/Concepts/eventsoverview.htm)
+- [18] [Overview of Events — Events](https://docs.oracle.com/en-us/iaas/Content/Events/Concepts/eventsoverview.htm)
+  - 확인 범위: Oracle Cloud Infrastructure Events enables.

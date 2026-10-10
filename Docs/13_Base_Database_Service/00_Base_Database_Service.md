@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Base Database Service` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- Base Database Service의 VM 기반 Oracle Database 운영 모델을 설명할 수 있다.[43]
+- 단일 노드·다중 노드 RAC와 지원 관리 도구를 구분할 수 있다.[43]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Base Database Service
+- 항목명: **Base Database Service**
+- Roadmap 경로: **Base Database Service**
 - Node ID: `sequence-10-0`
-- 상위 항목: Base Database Service
-- 상태: Draft / 작성예정
+- 상위 항목: 없음 — 최상위 학습 항목
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Oracle Base Database Service - Get Started](https://docs.oracle.com/en/cloud/paas/base-database/index.html)
+- [43] [Oracle Base Database Service - Get Started — Base Database Service](https://docs.oracle.com/en/cloud/paas/base-database/index.html)
+  - 확인 범위: Oracle Base Database Service enables / You can manage these DB systems.

@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `SSL Certificates` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- SSL Certificate의 HTTPS 및 SSL 종료 용도를 설명할 수 있다.[5]
+- Listener의 SSL 구성과 인증서 관리 항목을 확인할 수 있다.[5]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: SSL Certificates
+- 항목명: **SSL Certificates**
+- Roadmap 경로: **Load Balancer → SSL Certificates**
 - Node ID: `service-lb-4`
-- 상위 항목: Load Balancer
-- 상태: Draft / 작성예정
+- 상위 항목: **Load Balancer** (`service-lb-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [SSL Certificates](https://docs.oracle.com/en-us/iaas/Content/Balance/Tasks/managingcertificates.htm)
+- [5] [Load Balancer- Managed SSL Certificates — SSL Certificates](https://docs.oracle.com/en-us/iaas/Content/Balance/Tasks/managingcertificates.htm)
+  - 확인 범위: SSL Certificates.

@@ -4,15 +4,19 @@
 
 ## 학습목표
 
-작성예정 — `Standard Storage` 항목에 맞는 학습목표와 완료 기준을 정의합니다.
+- Standard Storage가 자주 접근하는 데이터에 적합한 이유를 설명할 수 있다.[36]
+- Standard와 덜 자주 접근하는 데이터용 계층의 용도를 구분할 수 있다.[36]
+
 
 ## 대응 Roadmap 항목
 
-- 항목명: Standard Storage
+- 항목명: **Standard Storage**
+- Roadmap 경로: **Object Storage → Standard Storage**
 - Node ID: `sequence-6-5`
-- 상위 항목: Object Storage
-- 상태: Draft / 작성예정
+- 상위 항목: **Object Storage** (`sequence-6-0`)
+- 문서 범위: 이 항목의 개념 학습목표와 공식 출처. 실습절차 및 실행 검증은 작성예정입니다.
 - [전체 항목 목록](../README.md)
+
 
 ## 사전준비
 
@@ -48,6 +52,7 @@
 
 ## 공식문서
 
-기존 Roadmap의 항목별 Oracle 공식 출처를 유지합니다. 실습 작성 시 문서 본문과 최신 조건을 다시 확인합니다.
+아래 Oracle 공식문서의 해당 항목 본문을 학습 근거로 사용합니다. 목표는 학습 후 설명·구분·확인할 내용이며 실제 OCI 실행 결과를 뜻하지 않습니다.
 
-- [Standard Storage](https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/understandingstoragetiers.htm)
+- [36] [Object Storage Storage Tiers — Standard Storage](https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/understandingstoragetiers.htm)
+  - 확인 범위: The Standard tier is the primary.
