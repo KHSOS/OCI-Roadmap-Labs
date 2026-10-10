@@ -1,0 +1,1686 @@
+{
+  "learning_items": 93,
+  "graph_nodes": 109,
+  "graph_edges": 92,
+  "numbering": "Top-level groups ordered by graph y then x; parallel groups read left to right. Each group starts at 00 and preserves node suffix order. Numbers are navigation identifiers, not mandatory sequential lessons.",
+  "items": [
+    {
+      "order": 0,
+      "group_order": 0,
+      "item_order": 0,
+      "node_id": "sequence-0-0",
+      "title": "Introduction",
+      "parent_node_id": null,
+      "parent_title": "Introduction",
+      "filepath": "docs/00_Introduction/00_Introduction.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/00_Introduction/00_Introduction.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Introduction",
+          "url": "https://www.oracle.com/cloud/what-is-cloud-computing/"
+        }
+      ]
+    },
+    {
+      "order": 1,
+      "group_order": 0,
+      "item_order": 1,
+      "node_id": "sequence-0-1",
+      "title": "Cloud Computing",
+      "parent_node_id": "sequence-0-0",
+      "parent_title": "Introduction",
+      "filepath": "docs/00_Introduction/01_Cloud_Computing.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/00_Introduction/01_Cloud_Computing.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Cloud Computing",
+          "url": "https://www.oracle.com/cloud/what-is-cloud-computing/"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "group_order": 0,
+      "item_order": 2,
+      "node_id": "sequence-0-2",
+      "title": "IaaS / PaaS / SaaS",
+      "parent_node_id": "sequence-0-0",
+      "parent_title": "Introduction",
+      "filepath": "docs/00_Introduction/02_IaaS_PaaS_SaaS.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/00_Introduction/02_IaaS_PaaS_SaaS.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "IaaS / PaaS / SaaS",
+          "url": "https://www.oracle.com/cloud/what-is-cloud-computing/"
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "group_order": 0,
+      "item_order": 3,
+      "node_id": "sequence-0-3",
+      "title": "Cloud Deployment Models",
+      "parent_node_id": "sequence-0-0",
+      "parent_title": "Introduction",
+      "filepath": "docs/00_Introduction/03_Cloud_Deployment_Models.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/00_Introduction/03_Cloud_Deployment_Models.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Cloud Deployment Models",
+          "url": "https://www.oracle.com/cloud/what-is-cloud-computing/"
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "group_order": 1,
+      "item_order": 0,
+      "node_id": "sequence-1-0",
+      "title": "Introduction to OCI",
+      "parent_node_id": null,
+      "parent_title": "Introduction to OCI",
+      "filepath": "docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Introduction to OCI",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/GSG/Concepts/baremetalintro.htm"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "group_order": 1,
+      "item_order": 1,
+      "node_id": "sequence-1-1",
+      "title": "Regions",
+      "parent_node_id": "sequence-1-0",
+      "parent_title": "Introduction to OCI",
+      "filepath": "docs/01_Introduction_to_OCI/01_Regions.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/01_Regions.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Regions and Availability Domains",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "group_order": 1,
+      "item_order": 2,
+      "node_id": "sequence-1-2",
+      "title": "Availability Domains",
+      "parent_node_id": "sequence-1-0",
+      "parent_title": "Introduction to OCI",
+      "filepath": "docs/01_Introduction_to_OCI/02_Availability_Domains.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/02_Availability_Domains.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Regions and Availability Domains",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm"
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "group_order": 1,
+      "item_order": 3,
+      "node_id": "sequence-1-3",
+      "title": "Fault Domains",
+      "parent_node_id": "sequence-1-0",
+      "parent_title": "Introduction to OCI",
+      "filepath": "docs/01_Introduction_to_OCI/03_Fault_Domains.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/03_Fault_Domains.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Regions and Availability Domains",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm"
+        }
+      ]
+    },
+    {
+      "order": 8,
+      "group_order": 1,
+      "item_order": 4,
+      "node_id": "sequence-1-4",
+      "title": "Shared Security Model",
+      "parent_node_id": "sequence-1-0",
+      "parent_title": "Introduction to OCI",
+      "filepath": "docs/01_Introduction_to_OCI/04_Shared_Security_Model.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/04_Shared_Security_Model.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Shared Security Model",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/cloud-adoption-framework/security.htm"
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "group_order": 1,
+      "item_order": 5,
+      "node_id": "sequence-1-5",
+      "title": "Well-Architected Framework",
+      "parent_node_id": "sequence-1-0",
+      "parent_title": "Introduction to OCI",
+      "filepath": "docs/01_Introduction_to_OCI/05_Well_Architected_Framework.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/01_Introduction_to_OCI/05_Well_Architected_Framework.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Well-Architected Framework",
+          "url": "https://docs.oracle.com/en/solutions/oci-best-practices/index.html"
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "group_order": 2,
+      "item_order": 0,
+      "node_id": "sequence-2-0",
+      "title": "Compute",
+      "parent_node_id": null,
+      "parent_title": "Compute",
+      "filepath": "docs/02_Compute/00_Compute.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/00_Compute.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Compute",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/launchinginstance.htm"
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "group_order": 2,
+      "item_order": 1,
+      "node_id": "sequence-2-1",
+      "title": "Shapes",
+      "parent_node_id": "sequence-2-0",
+      "parent_title": "Compute",
+      "filepath": "docs/02_Compute/01_Shapes.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/01_Shapes.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Compute Shapes",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm"
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "group_order": 2,
+      "item_order": 2,
+      "node_id": "sequence-2-2",
+      "title": "Burstable Instances",
+      "parent_node_id": "sequence-2-0",
+      "parent_title": "Compute",
+      "filepath": "docs/02_Compute/02_Burstable_Instances.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/02_Burstable_Instances.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Burstable Instances",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/References/burstable-instances.htm"
+        }
+      ]
+    },
+    {
+      "order": 13,
+      "group_order": 2,
+      "item_order": 3,
+      "node_id": "sequence-2-3",
+      "title": "Boot Volume",
+      "parent_node_id": "sequence-2-0",
+      "parent_title": "Compute",
+      "filepath": "docs/02_Compute/03_Boot_Volume.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/03_Boot_Volume.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Overview of Block Volume",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Block/Concepts/overview.htm"
+        },
+        {
+          "title": "Working with Boot Volumes",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Block/Concepts/bootvolumes.htm"
+        }
+      ]
+    },
+    {
+      "order": 14,
+      "group_order": 2,
+      "item_order": 4,
+      "node_id": "sequence-2-4",
+      "title": "Block Volume",
+      "parent_node_id": "sequence-2-0",
+      "parent_title": "Compute",
+      "filepath": "docs/02_Compute/04_Block_Volume.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/04_Block_Volume.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Overview of Block Volume",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Block/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 15,
+      "group_order": 2,
+      "item_order": 5,
+      "node_id": "sequence-2-5",
+      "title": "SSH Keys",
+      "parent_node_id": "sequence-2-0",
+      "parent_title": "Compute",
+      "filepath": "docs/02_Compute/05_SSH_Keys.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/05_SSH_Keys.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "SSH Keys",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/launchinginstance.htm"
+        }
+      ]
+    },
+    {
+      "order": 16,
+      "group_order": 2,
+      "item_order": 6,
+      "node_id": "sequence-2-6",
+      "title": "Public IP Addresses",
+      "parent_node_id": "sequence-2-0",
+      "parent_title": "Compute",
+      "filepath": "docs/02_Compute/06_Public_IP_Addresses.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/06_Public_IP_Addresses.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Public IP Addresses",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/managingpublicIPs.htm"
+        }
+      ]
+    },
+    {
+      "order": 17,
+      "group_order": 2,
+      "item_order": 7,
+      "node_id": "sequence-2-7",
+      "title": "Cloud-init / User Data",
+      "parent_node_id": "sequence-2-0",
+      "parent_title": "Compute",
+      "filepath": "docs/02_Compute/07_Cloud_init_User_Data.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/07_Cloud_init_User_Data.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Cloud-init / User Data",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/launchinginstance.htm"
+        }
+      ]
+    },
+    {
+      "order": 18,
+      "group_order": 2,
+      "item_order": 8,
+      "node_id": "sequence-2-8",
+      "title": "Capacity Types",
+      "parent_node_id": "sequence-2-0",
+      "parent_title": "Compute",
+      "filepath": "docs/02_Compute/08_Capacity_Types.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/02_Compute/08_Capacity_Types.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Capacity Types",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Concepts/capacity-types.htm"
+        }
+      ]
+    },
+    {
+      "order": 19,
+      "group_order": 3,
+      "item_order": 0,
+      "node_id": "sequence-3-0",
+      "title": "Virtual Cloud Network (VCN)",
+      "parent_node_id": null,
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Virtual Cloud Network (VCN)",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 20,
+      "group_order": 3,
+      "item_order": 1,
+      "node_id": "sequence-3-1",
+      "title": "CIDR Blocks",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "CIDR Blocks",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 21,
+      "group_order": 3,
+      "item_order": 2,
+      "node_id": "sequence-3-2",
+      "title": "Subnets",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Subnets",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 22,
+      "group_order": 3,
+      "item_order": 3,
+      "node_id": "sequence-3-3",
+      "title": "Private Subnets",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Private Subnets",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 23,
+      "group_order": 3,
+      "item_order": 4,
+      "node_id": "sequence-3-4",
+      "title": "Public Subnets",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Public Subnets",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 24,
+      "group_order": 3,
+      "item_order": 5,
+      "node_id": "sequence-3-5",
+      "title": "Route Tables",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Route Tables",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 25,
+      "group_order": 3,
+      "item_order": 6,
+      "node_id": "sequence-3-6",
+      "title": "Network Security Groups",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Security Rules",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/securityrules.htm"
+        }
+      ]
+    },
+    {
+      "order": 26,
+      "group_order": 3,
+      "item_order": 7,
+      "node_id": "sequence-3-7",
+      "title": "Security Lists",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Security Rules",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/securityrules.htm"
+        }
+      ]
+    },
+    {
+      "order": 27,
+      "group_order": 3,
+      "item_order": 8,
+      "node_id": "sequence-3-8",
+      "title": "Ingress / Egress",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/08_Ingress_Egress.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/08_Ingress_Egress.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Networking Overview",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 28,
+      "group_order": 3,
+      "item_order": 9,
+      "node_id": "sequence-3-9",
+      "title": "Stateful / Stateless Rules",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/09_Stateful_Stateless_Rules.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/09_Stateful_Stateless_Rules.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Stateful / Stateless Rules",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/securityrules.htm"
+        }
+      ]
+    },
+    {
+      "order": 29,
+      "group_order": 3,
+      "item_order": 10,
+      "node_id": "sequence-3-10",
+      "title": "Internet Gateway",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/10_Internet_Gateway.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/10_Internet_Gateway.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Internet Gateway",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 30,
+      "group_order": 3,
+      "item_order": 11,
+      "node_id": "sequence-3-11",
+      "title": "NAT Gateway",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "NAT Gateway",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 31,
+      "group_order": 3,
+      "item_order": 12,
+      "node_id": "sequence-3-12",
+      "title": "Service Gateway",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/12_Service_Gateway.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/12_Service_Gateway.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Service Gateway",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 32,
+      "group_order": 3,
+      "item_order": 13,
+      "node_id": "sequence-3-13",
+      "title": "VNICs",
+      "parent_node_id": "sequence-3-0",
+      "parent_title": "Virtual Cloud Network (VCN)",
+      "filepath": "docs/03_Virtual_Cloud_Network_VCN/13_VNICs.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/03_Virtual_Cloud_Network_VCN/13_VNICs.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "VNICs",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Network/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 33,
+      "group_order": 4,
+      "item_order": 0,
+      "node_id": "sequence-4-0",
+      "title": "Identity and Access Management (IAM)",
+      "parent_node_id": null,
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Identity and Access Management (IAM)",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 34,
+      "group_order": 4,
+      "item_order": 1,
+      "node_id": "sequence-4-1",
+      "title": "Users",
+      "parent_node_id": "sequence-4-0",
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/01_Users.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/01_Users.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Users",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 35,
+      "group_order": 4,
+      "item_order": 2,
+      "node_id": "sequence-4-2",
+      "title": "Groups",
+      "parent_node_id": "sequence-4-0",
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/02_Groups.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/02_Groups.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Groups",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 36,
+      "group_order": 4,
+      "item_order": 3,
+      "node_id": "sequence-4-3",
+      "title": "Dynamic Groups",
+      "parent_node_id": "sequence-4-0",
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/03_Dynamic_Groups.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/03_Dynamic_Groups.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Dynamic Groups",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 37,
+      "group_order": 4,
+      "item_order": 4,
+      "node_id": "sequence-4-4",
+      "title": "Policies",
+      "parent_node_id": "sequence-4-0",
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/04_Policies.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/04_Policies.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Policies",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 38,
+      "group_order": 4,
+      "item_order": 5,
+      "node_id": "sequence-4-5",
+      "title": "Compartments",
+      "parent_node_id": "sequence-4-0",
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/05_Compartments.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/05_Compartments.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Compartments",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 39,
+      "group_order": 4,
+      "item_order": 6,
+      "node_id": "sequence-4-6",
+      "title": "OCID",
+      "parent_node_id": "sequence-4-0",
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/06_OCID.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/06_OCID.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "OCID",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/General/Concepts/identifiers.htm"
+        }
+      ]
+    },
+    {
+      "order": 40,
+      "group_order": 4,
+      "item_order": 7,
+      "node_id": "sequence-4-7",
+      "title": "Policy Conditions",
+      "parent_node_id": "sequence-4-0",
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/07_Policy_Conditions.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/07_Policy_Conditions.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Policy Conditions",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/policygetstarted.htm"
+        }
+      ]
+    },
+    {
+      "order": 41,
+      "group_order": 4,
+      "item_order": 8,
+      "node_id": "sequence-4-8",
+      "title": "Policy Scope / Inheritance",
+      "parent_node_id": "sequence-4-0",
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/08_Policy_Scope_Inheritance.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/08_Policy_Scope_Inheritance.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Policy Scope / Inheritance",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Identity/getstarted/identity-domains.htm"
+        }
+      ]
+    },
+    {
+      "order": 42,
+      "group_order": 4,
+      "item_order": 9,
+      "node_id": "sequence-4-9",
+      "title": "Resource Principals",
+      "parent_node_id": "sequence-4-0",
+      "parent_title": "Identity and Access Management (IAM)",
+      "filepath": "docs/04_Identity_and_Access_Management_IAM/09_Resource_Principals.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/04_Identity_and_Access_Management_IAM/09_Resource_Principals.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Resource Principals",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Functions/Tasks/functionsaccessingociresources.htm"
+        }
+      ]
+    },
+    {
+      "order": 43,
+      "group_order": 5,
+      "item_order": 0,
+      "node_id": "service-file-0",
+      "title": "File Storage",
+      "parent_node_id": null,
+      "parent_title": "File Storage",
+      "filepath": "docs/05_File_Storage/00_File_Storage.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/00_File_Storage.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "File Storage",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/File/Concepts/filestorageoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 44,
+      "group_order": 5,
+      "item_order": 1,
+      "node_id": "service-file-1",
+      "title": "Mount Targets",
+      "parent_node_id": "service-file-0",
+      "parent_title": "File Storage",
+      "filepath": "docs/05_File_Storage/01_Mount_Targets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/01_Mount_Targets.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Mount Targets",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/File/Concepts/filestorageoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 45,
+      "group_order": 5,
+      "item_order": 2,
+      "node_id": "service-file-2",
+      "title": "Exports",
+      "parent_node_id": "service-file-0",
+      "parent_title": "File Storage",
+      "filepath": "docs/05_File_Storage/02_Exports.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/02_Exports.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Exports",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/File/Concepts/filestorageoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 46,
+      "group_order": 5,
+      "item_order": 3,
+      "node_id": "service-file-3",
+      "title": "Export Options",
+      "parent_node_id": "service-file-0",
+      "parent_title": "File Storage",
+      "filepath": "docs/05_File_Storage/03_Export_Options.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/03_Export_Options.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Export Options",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/File/Concepts/filestorageoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 47,
+      "group_order": 5,
+      "item_order": 4,
+      "node_id": "service-file-4",
+      "title": "Snapshots",
+      "parent_node_id": "service-file-0",
+      "parent_title": "File Storage",
+      "filepath": "docs/05_File_Storage/04_Snapshots.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/05_File_Storage/04_Snapshots.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Snapshots",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/File/Concepts/filestorageoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 48,
+      "group_order": 6,
+      "item_order": 0,
+      "node_id": "sequence-6-0",
+      "title": "Object Storage",
+      "parent_node_id": null,
+      "parent_title": "Object Storage",
+      "filepath": "docs/06_Object_Storage/00_Object_Storage.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/00_Object_Storage.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Object Storage",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/objectstorageoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 49,
+      "group_order": 6,
+      "item_order": 1,
+      "node_id": "sequence-6-1",
+      "title": "Buckets / Objects",
+      "parent_node_id": "sequence-6-0",
+      "parent_title": "Object Storage",
+      "filepath": "docs/06_Object_Storage/01_Buckets_Objects.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/01_Buckets_Objects.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Overview of Object Storage",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/objectstorageoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 50,
+      "group_order": 6,
+      "item_order": 2,
+      "node_id": "sequence-6-2",
+      "title": "Object Lifecycle Management",
+      "parent_node_id": "sequence-6-0",
+      "parent_title": "Object Storage",
+      "filepath": "docs/06_Object_Storage/02_Object_Lifecycle_Management.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/02_Object_Lifecycle_Management.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Object Lifecycle Management",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/usinglifecyclepolicies.htm"
+        }
+      ]
+    },
+    {
+      "order": 51,
+      "group_order": 6,
+      "item_order": 3,
+      "node_id": "sequence-6-3",
+      "title": "Storage Tiers",
+      "parent_node_id": "sequence-6-0",
+      "parent_title": "Object Storage",
+      "filepath": "docs/06_Object_Storage/03_Storage_Tiers.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/03_Storage_Tiers.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Object Storage Storage Tiers",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/understandingstoragetiers.htm"
+        }
+      ]
+    },
+    {
+      "order": 52,
+      "group_order": 6,
+      "item_order": 4,
+      "node_id": "sequence-6-4",
+      "title": "Archive",
+      "parent_node_id": "sequence-6-0",
+      "parent_title": "Object Storage",
+      "filepath": "docs/06_Object_Storage/04_Archive.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/04_Archive.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Object Storage Storage Tiers",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/understandingstoragetiers.htm"
+        }
+      ]
+    },
+    {
+      "order": 53,
+      "group_order": 6,
+      "item_order": 5,
+      "node_id": "sequence-6-5",
+      "title": "Standard Storage",
+      "parent_node_id": "sequence-6-0",
+      "parent_title": "Object Storage",
+      "filepath": "docs/06_Object_Storage/05_Standard_Storage.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/05_Standard_Storage.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Standard Storage",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/understandingstoragetiers.htm"
+        }
+      ]
+    },
+    {
+      "order": 54,
+      "group_order": 6,
+      "item_order": 6,
+      "node_id": "sequence-6-6",
+      "title": "Infrequent Access",
+      "parent_node_id": "sequence-6-0",
+      "parent_title": "Object Storage",
+      "filepath": "docs/06_Object_Storage/06_Infrequent_Access.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/06_Object_Storage/06_Infrequent_Access.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Infrequent Access Storage",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/understandingstoragetiers.htm"
+        }
+      ]
+    },
+    {
+      "order": 55,
+      "group_order": 7,
+      "item_order": 0,
+      "node_id": "sequence-7-0",
+      "title": "Autoscaling",
+      "parent_node_id": null,
+      "parent_title": "Autoscaling",
+      "filepath": "docs/07_Autoscaling/00_Autoscaling.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/00_Autoscaling.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Autoscaling",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/autoscalinginstancepools.htm"
+        }
+      ]
+    },
+    {
+      "order": 56,
+      "group_order": 7,
+      "item_order": 1,
+      "node_id": "sequence-7-1",
+      "title": "Images",
+      "parent_node_id": "sequence-7-0",
+      "parent_title": "Autoscaling",
+      "filepath": "docs/07_Autoscaling/01_Images.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/01_Images.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Platform Images",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/References/images.htm"
+        }
+      ]
+    },
+    {
+      "order": 57,
+      "group_order": 7,
+      "item_order": 2,
+      "node_id": "sequence-7-2",
+      "title": "Instance Configurations",
+      "parent_node_id": "sequence-7-0",
+      "parent_title": "Autoscaling",
+      "filepath": "docs/07_Autoscaling/02_Instance_Configurations.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/02_Instance_Configurations.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Instance Configurations",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Concepts/instancemanagement.htm"
+        }
+      ]
+    },
+    {
+      "order": 58,
+      "group_order": 7,
+      "item_order": 3,
+      "node_id": "sequence-7-3",
+      "title": "Instance Pools",
+      "parent_node_id": "sequence-7-0",
+      "parent_title": "Autoscaling",
+      "filepath": "docs/07_Autoscaling/03_Instance_Pools.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/03_Instance_Pools.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Creating Instance Pools",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/creatinginstancepool.htm"
+        }
+      ]
+    },
+    {
+      "order": 59,
+      "group_order": 7,
+      "item_order": 4,
+      "node_id": "sequence-7-4",
+      "title": "Metric-based Autoscaling",
+      "parent_node_id": "sequence-7-0",
+      "parent_title": "Autoscaling",
+      "filepath": "docs/07_Autoscaling/04_Metric_based_Autoscaling.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/04_Metric_based_Autoscaling.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Autoscaling",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/autoscalinginstancepools.htm"
+        }
+      ]
+    },
+    {
+      "order": 60,
+      "group_order": 7,
+      "item_order": 5,
+      "node_id": "sequence-7-5",
+      "title": "Schedule-based Autoscaling",
+      "parent_node_id": "sequence-7-0",
+      "parent_title": "Autoscaling",
+      "filepath": "docs/07_Autoscaling/05_Schedule_based_Autoscaling.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/07_Autoscaling/05_Schedule_based_Autoscaling.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Autoscaling",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/autoscalinginstancepools.htm"
+        }
+      ]
+    },
+    {
+      "order": 61,
+      "group_order": 8,
+      "item_order": 0,
+      "node_id": "service-lb-0",
+      "title": "Load Balancer",
+      "parent_node_id": null,
+      "parent_title": "Load Balancer",
+      "filepath": "docs/08_Load_Balancer/00_Load_Balancer.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/00_Load_Balancer.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Load Balancer",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Balance/Concepts/balanceoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 62,
+      "group_order": 8,
+      "item_order": 1,
+      "node_id": "service-lb-1",
+      "title": "Listeners",
+      "parent_node_id": "service-lb-0",
+      "parent_title": "Load Balancer",
+      "filepath": "docs/08_Load_Balancer/01_Listeners.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/01_Listeners.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Listeners",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Balance/Tasks/managinglisteners.htm"
+        }
+      ]
+    },
+    {
+      "order": 63,
+      "group_order": 8,
+      "item_order": 2,
+      "node_id": "service-lb-2",
+      "title": "Backend Sets",
+      "parent_node_id": "service-lb-0",
+      "parent_title": "Load Balancer",
+      "filepath": "docs/08_Load_Balancer/02_Backend_Sets.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/02_Backend_Sets.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Backend Sets",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Balance/Tasks/managingbackendsets.htm"
+        }
+      ]
+    },
+    {
+      "order": 64,
+      "group_order": 8,
+      "item_order": 3,
+      "node_id": "service-lb-3",
+      "title": "Health Checks",
+      "parent_node_id": "service-lb-0",
+      "parent_title": "Load Balancer",
+      "filepath": "docs/08_Load_Balancer/03_Health_Checks.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/03_Health_Checks.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Health Checks",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Balance/Tasks/load_balancer_health_management.htm"
+        }
+      ]
+    },
+    {
+      "order": 65,
+      "group_order": 8,
+      "item_order": 4,
+      "node_id": "service-lb-4",
+      "title": "SSL Certificates",
+      "parent_node_id": "service-lb-0",
+      "parent_title": "Load Balancer",
+      "filepath": "docs/08_Load_Balancer/04_SSL_Certificates.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/08_Load_Balancer/04_SSL_Certificates.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "SSL Certificates",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Balance/Tasks/managingcertificates.htm"
+        }
+      ]
+    },
+    {
+      "order": 66,
+      "group_order": 9,
+      "item_order": 0,
+      "node_id": "service-nlb-0",
+      "title": "Network Load Balancer",
+      "parent_node_id": null,
+      "parent_title": "Network Load Balancer",
+      "filepath": "docs/09_Network_Load_Balancer/00_Network_Load_Balancer.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/00_Network_Load_Balancer.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Network Load Balancer",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/NetworkLoadBalancer/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 67,
+      "group_order": 9,
+      "item_order": 1,
+      "node_id": "service-nlb-1",
+      "title": "Layer 3 / Layer 4",
+      "parent_node_id": "service-nlb-0",
+      "parent_title": "Network Load Balancer",
+      "filepath": "docs/09_Network_Load_Balancer/01_Layer_3_Layer_4.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/01_Layer_3_Layer_4.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Layer 3 / Layer 4",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/NetworkLoadBalancer/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 68,
+      "group_order": 9,
+      "item_order": 2,
+      "node_id": "service-nlb-2",
+      "title": "IP Address Preservation",
+      "parent_node_id": "service-nlb-0",
+      "parent_title": "Network Load Balancer",
+      "filepath": "docs/09_Network_Load_Balancer/02_IP_Address_Preservation.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/02_IP_Address_Preservation.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "IP Address Preservation",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/NetworkLoadBalancer/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 69,
+      "group_order": 9,
+      "item_order": 3,
+      "node_id": "service-nlb-3",
+      "title": "Health Check Policies",
+      "parent_node_id": "service-nlb-0",
+      "parent_title": "Network Load Balancer",
+      "filepath": "docs/09_Network_Load_Balancer/03_Health_Check_Policies.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/03_Health_Check_Policies.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Health Check Policies",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/NetworkLoadBalancer/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 70,
+      "group_order": 9,
+      "item_order": 4,
+      "node_id": "service-nlb-4",
+      "title": "Long-running Connections",
+      "parent_node_id": "service-nlb-0",
+      "parent_title": "Network Load Balancer",
+      "filepath": "docs/09_Network_Load_Balancer/04_Long_running_Connections.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/09_Network_Load_Balancer/04_Long_running_Connections.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Long-running Connections",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/NetworkLoadBalancer/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 71,
+      "group_order": 10,
+      "item_order": 0,
+      "node_id": "service-waf-0",
+      "title": "Web Application Firewall (WAF)",
+      "parent_node_id": null,
+      "parent_title": "Web Application Firewall (WAF)",
+      "filepath": "docs/10_Web_Application_Firewall_WAF/00_Web_Application_Firewall_WAF.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/00_Web_Application_Firewall_WAF.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Web Application Firewall (WAF)",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/WAF/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 72,
+      "group_order": 10,
+      "item_order": 1,
+      "node_id": "service-waf-1",
+      "title": "WAF Policies",
+      "parent_node_id": "service-waf-0",
+      "parent_title": "Web Application Firewall (WAF)",
+      "filepath": "docs/10_Web_Application_Firewall_WAF/01_WAF_Policies.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/01_WAF_Policies.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "WAF Policies",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/WAF/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 73,
+      "group_order": 10,
+      "item_order": 2,
+      "node_id": "service-waf-2",
+      "title": "Request Protection Rules",
+      "parent_node_id": "service-waf-0",
+      "parent_title": "Web Application Firewall (WAF)",
+      "filepath": "docs/10_Web_Application_Firewall_WAF/02_Request_Protection_Rules.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/02_Request_Protection_Rules.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Request Protection Rules",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/WAF/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 74,
+      "group_order": 10,
+      "item_order": 3,
+      "node_id": "service-waf-3",
+      "title": "Access Control",
+      "parent_node_id": "service-waf-0",
+      "parent_title": "Web Application Firewall (WAF)",
+      "filepath": "docs/10_Web_Application_Firewall_WAF/03_Access_Control.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/03_Access_Control.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Access Control",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/WAF/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 75,
+      "group_order": 10,
+      "item_order": 4,
+      "node_id": "service-waf-4",
+      "title": "Rate Limiting",
+      "parent_node_id": "service-waf-0",
+      "parent_title": "Web Application Firewall (WAF)",
+      "filepath": "docs/10_Web_Application_Firewall_WAF/04_Rate_Limiting.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/10_Web_Application_Firewall_WAF/04_Rate_Limiting.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Rate Limiting",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/WAF/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 76,
+      "group_order": 11,
+      "item_order": 0,
+      "node_id": "sequence-8-0",
+      "title": "DNS",
+      "parent_node_id": null,
+      "parent_title": "DNS",
+      "filepath": "docs/11_DNS/00_DNS.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/11_DNS/00_DNS.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "DNS",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm"
+        }
+      ]
+    },
+    {
+      "order": 77,
+      "group_order": 11,
+      "item_order": 1,
+      "node_id": "sequence-8-1",
+      "title": "DNS Zones / Records",
+      "parent_node_id": "sequence-8-0",
+      "parent_title": "DNS",
+      "filepath": "docs/11_DNS/01_DNS_Zones_Records.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/11_DNS/01_DNS_Zones_Records.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Overview of DNS",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm"
+        }
+      ]
+    },
+    {
+      "order": 78,
+      "group_order": 11,
+      "item_order": 2,
+      "node_id": "sequence-8-2",
+      "title": "Traffic Management",
+      "parent_node_id": "sequence-8-0",
+      "parent_title": "DNS",
+      "filepath": "docs/11_DNS/02_Traffic_Management.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/11_DNS/02_Traffic_Management.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Traffic Management",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/TrafficManagement/Concepts/overview.htm"
+        }
+      ]
+    },
+    {
+      "order": 79,
+      "group_order": 11,
+      "item_order": 3,
+      "node_id": "sequence-8-3",
+      "title": "DNS Health Checks",
+      "parent_node_id": "sequence-8-0",
+      "parent_title": "DNS",
+      "filepath": "docs/11_DNS/03_DNS_Health_Checks.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/11_DNS/03_DNS_Health_Checks.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "DNS Health Checks",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/HealthChecks/Concepts/healthchecks.htm"
+        }
+      ]
+    },
+    {
+      "order": 80,
+      "group_order": 12,
+      "item_order": 0,
+      "node_id": "sequence-9-0",
+      "title": "Monitoring",
+      "parent_node_id": null,
+      "parent_title": "Monitoring",
+      "filepath": "docs/12_Monitoring/00_Monitoring.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/00_Monitoring.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Monitoring",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Monitoring/Concepts/monitoringoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 81,
+      "group_order": 12,
+      "item_order": 1,
+      "node_id": "sequence-9-1",
+      "title": "Metrics",
+      "parent_node_id": "sequence-9-0",
+      "parent_title": "Monitoring",
+      "filepath": "docs/12_Monitoring/01_Metrics.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/01_Metrics.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Metrics",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Monitoring/Concepts/monitoringoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 82,
+      "group_order": 12,
+      "item_order": 2,
+      "node_id": "sequence-9-2",
+      "title": "Alarms",
+      "parent_node_id": "sequence-9-0",
+      "parent_title": "Monitoring",
+      "filepath": "docs/12_Monitoring/02_Alarms.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/02_Alarms.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Alarms",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Monitoring/Concepts/monitoringoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 83,
+      "group_order": 12,
+      "item_order": 3,
+      "node_id": "sequence-9-3",
+      "title": "Events",
+      "parent_node_id": "sequence-9-0",
+      "parent_title": "Monitoring",
+      "filepath": "docs/12_Monitoring/03_Events.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/03_Events.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Events",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Events/Concepts/eventsoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 84,
+      "group_order": 12,
+      "item_order": 4,
+      "node_id": "sequence-9-4",
+      "title": "Logging",
+      "parent_node_id": "sequence-9-0",
+      "parent_title": "Monitoring",
+      "filepath": "docs/12_Monitoring/04_Logging.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/04_Logging.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Logging",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Logging/Concepts/loggingoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 85,
+      "group_order": 12,
+      "item_order": 5,
+      "node_id": "sequence-9-5",
+      "title": "Audit",
+      "parent_node_id": "sequence-9-0",
+      "parent_title": "Monitoring",
+      "filepath": "docs/12_Monitoring/05_Audit.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/05_Audit.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Audit",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Audit/Concepts/auditoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 86,
+      "group_order": 12,
+      "item_order": 6,
+      "node_id": "sequence-9-6",
+      "title": "Notifications",
+      "parent_node_id": "sequence-9-0",
+      "parent_title": "Monitoring",
+      "filepath": "docs/12_Monitoring/06_Notifications.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/12_Monitoring/06_Notifications.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Overview of Notifications",
+          "url": "https://docs.oracle.com/en-us/iaas/Content/Notification/Concepts/notificationoverview.htm"
+        }
+      ]
+    },
+    {
+      "order": 87,
+      "group_order": 13,
+      "item_order": 0,
+      "node_id": "sequence-10-0",
+      "title": "Base Database Service",
+      "parent_node_id": null,
+      "parent_title": "Base Database Service",
+      "filepath": "docs/13_Base_Database_Service/00_Base_Database_Service.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/00_Base_Database_Service.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Oracle Base Database Service - Get Started",
+          "url": "https://docs.oracle.com/en/cloud/paas/base-database/index.html"
+        }
+      ]
+    },
+    {
+      "order": 88,
+      "group_order": 13,
+      "item_order": 1,
+      "node_id": "sequence-10-1",
+      "title": "DB Systems",
+      "parent_node_id": "sequence-10-0",
+      "parent_title": "Base Database Service",
+      "filepath": "docs/13_Base_Database_Service/01_DB_Systems.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/01_DB_Systems.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "DB Systems",
+          "url": "https://docs.oracle.com/en/cloud/paas/base-database/about-dbs/index.html"
+        }
+      ]
+    },
+    {
+      "order": 89,
+      "group_order": 13,
+      "item_order": 2,
+      "node_id": "sequence-10-2",
+      "title": "Database Storage",
+      "parent_node_id": "sequence-10-0",
+      "parent_title": "Base Database Service",
+      "filepath": "docs/13_Base_Database_Service/02_Database_Storage.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/02_Database_Storage.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Database Storage",
+          "url": "https://docs.oracle.com/en/cloud/paas/base-database/about-dbs/index.html"
+        }
+      ]
+    },
+    {
+      "order": 90,
+      "group_order": 13,
+      "item_order": 3,
+      "node_id": "sequence-10-3",
+      "title": "Backup / Restore",
+      "parent_node_id": "sequence-10-0",
+      "parent_title": "Base Database Service",
+      "filepath": "docs/13_Base_Database_Service/03_Backup_Restore.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/03_Backup_Restore.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Backup / Restore",
+          "url": "https://docs.oracle.com/en/cloud/paas/base-database/backup-recover/index.html"
+        }
+      ]
+    },
+    {
+      "order": 91,
+      "group_order": 13,
+      "item_order": 4,
+      "node_id": "sequence-10-4",
+      "title": "ASM",
+      "parent_node_id": "sequence-10-0",
+      "parent_title": "Base Database Service",
+      "filepath": "docs/13_Base_Database_Service/04_ASM.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/04_ASM.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Automatic Storage Management (ASM)",
+          "url": "https://docs.oracle.com/en/cloud/paas/base-database/about-dbs/index.html"
+        }
+      ]
+    },
+    {
+      "order": 92,
+      "group_order": 13,
+      "item_order": 5,
+      "node_id": "sequence-10-5",
+      "title": "LVM",
+      "parent_node_id": "sequence-10-0",
+      "parent_title": "Base Database Service",
+      "filepath": "docs/13_Base_Database_Service/05_LVM.md",
+      "github_url": "https://github.com/KHSOS/OCI-Roadmap-Labs/blob/main/docs/13_Base_Database_Service/05_LVM.md",
+      "status": "Draft",
+      "official_sources": [
+        {
+          "title": "Logical Volume Manager (LVM)",
+          "url": "https://docs.oracle.com/en/cloud/paas/base-database/about-dbs/index.html"
+        }
+      ]
+    }
+  ]
+}
