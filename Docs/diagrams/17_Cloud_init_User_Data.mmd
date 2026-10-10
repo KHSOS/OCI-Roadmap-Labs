@@ -1,0 +1,10 @@
+flowchart LR
+  accTitle: Cloud-init / User Data — learning plan
+  accDescr: 학습용 계획도. 실제 배포 아님. 점선은 검토 관계를 표시한다.
+  n0["Safe User Data<br/>비밀정보 없는 설정"]
+  n1["Cloud-init<br/>초기화"]
+  n2["Initialization Log<br/>선택 실행 확인"]
+  n0 -.-> n1
+  n1 -.-> n2
+  classDef item fill:#f4f7fb,stroke:#526c87,color:#182e46,stroke-width:1.5px;
+  class n0,n1,n2 item;

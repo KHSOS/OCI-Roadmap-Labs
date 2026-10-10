@@ -1,0 +1,10 @@
+flowchart LR
+  accTitle: Policies — learning plan
+  accDescr: 학습용 계획도. 실제 배포 아님. 점선은 검토 관계를 표시한다.
+  n0["Group Subject<br/>주체"]
+  n1["Verb & Resource Type<br/>최소권한"]
+  n2["Compartment Location<br/>정책 범위"]
+  n0 -.-> n1
+  n1 -.-> n2
+  classDef item fill:#f4f7fb,stroke:#526c87,color:#182e46,stroke-width:1.5px;
+  class n0,n1,n2 item;

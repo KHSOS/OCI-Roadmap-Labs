@@ -44,6 +44,12 @@
 - **주의/대체:** 로그인 가능한 OCI 계정과 해당 범위의 조회 권한이 필요하다. 생성·변경은 별도 승인된 전용 Compartment에서만 수행하며 권한·Region 지원·한도·현재 비용을 먼저 확인한다. 실습 후 생성 리소스의 삭제 대상과 보존 여부를 확인한다. 리소스가 없거나 생성 승인이 없으면 공식 예제 기반 구성표로 대체한다. LB/NLB와 backend Compute 비용·한도를 함께 확인하고 운영 endpoint를 테스트하지 않는다. 이 구성은 regional WAF와 HTTP Load Balancer를 대상으로 한다. NLB에 WAF를 부착하지 않으며 탐지 검토 후에만 차단을 선택한다.
 - **공식 근거:** [Overview of Web Application Firewall — WAF Policies](https://docs.oracle.com/en-us/iaas/Content/WAF/Concepts/overview.htm)
 
+- **학습용 계획도:** 아래는 이 권장 실습의 구성 요소·검토 관계를 나타내며 실제 배포도가 아닙니다. 점선은 학습·설정 관계이고 실제 패킷 경로나 자원 생성 순서를 보장하지 않습니다. 이번 문서 작성에서 실제 OCI 리소스는 생성하지 않았습니다.
+
+![WAF Policies 권장 실습 학습용 계획도](../diagrams/72_WAF_Policies.png)
+
+[SVG 확대](../diagrams/72_WAF_Policies.svg) · [Mermaid 원본](../diagrams/72_WAF_Policies.mmd)
+
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.

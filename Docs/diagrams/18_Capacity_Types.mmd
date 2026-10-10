@@ -1,0 +1,10 @@
+flowchart LR
+  accTitle: Capacity Types — learning plan
+  accDescr: 학습용 계획도. 실제 배포 아님. 점선은 검토 관계를 표시한다.
+  n0["Workload Requirements<br/>중단 허용성"]
+  n1["Capacity Type<br/>유형 비교"]
+  n2["Reservation Cost<br/>예약 생성 없이 검토"]
+  n0 -.-> n1
+  n1 -.-> n2
+  classDef item fill:#f4f7fb,stroke:#526c87,color:#182e46,stroke-width:1.5px;
+  class n0,n1,n2 item;

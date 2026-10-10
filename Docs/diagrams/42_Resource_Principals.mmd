@@ -1,0 +1,12 @@
+flowchart LR
+  accTitle: Resource Principals — learning plan
+  accDescr: 학습용 계획도. 실제 배포 아님. 점선은 검토 관계를 표시한다.
+  n0["Running Function<br/>선택 확장"]
+  n1["Resource Principal<br/>리소스 자격증명"]
+  n2["Dynamic Group Policy<br/>한정 접근"]
+  n3["Target Resource<br/>공식 예제"]
+  n0 -.-> n1
+  n1 -.-> n2
+  n2 -.-> n3
+  classDef item fill:#f4f7fb,stroke:#526c87,color:#182e46,stroke-width:1.5px;
+  class n0,n1,n2,n3 item;

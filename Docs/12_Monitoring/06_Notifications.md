@@ -46,6 +46,12 @@
 
 - **확장 준비:** 본인이 제어하는 endpoint를 사용하고 해당 프로토콜의 subscription 확인 요건을 충족한 뒤 테스트 발행한다.
 
+- **학습용 계획도:** 아래는 이 권장 실습의 구성 요소·검토 관계를 나타내며 실제 배포도가 아닙니다. 점선은 학습·설정 관계이고 실제 패킷 경로나 자원 생성 순서를 보장하지 않습니다. 이번 문서 작성에서 실제 OCI 리소스는 생성하지 않았습니다.
+
+![Notifications 권장 실습 학습용 계획도](../diagrams/86_Notifications.png)
+
+[SVG 확대](../diagrams/86_Notifications.svg) · [Mermaid 원본](../diagrams/86_Notifications.mmd)
+
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.

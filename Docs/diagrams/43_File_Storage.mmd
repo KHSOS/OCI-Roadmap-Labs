@@ -1,0 +1,12 @@
+flowchart LR
+  accTitle: File Storage — learning plan
+  accDescr: 학습용 계획도. 실제 배포 아님. 점선은 검토 관계를 표시한다.
+  n0["NFS Client<br/>실습 VM"]
+  n1["Mount Target<br/>private endpoint"]
+  n2["Export<br/>파일시스템 연결"]
+  n3["File System<br/>테스트 파일"]
+  n0 -.-> n1
+  n1 -.-> n2
+  n2 -.-> n3
+  classDef item fill:#f4f7fb,stroke:#526c87,color:#182e46,stroke-width:1.5px;
+  class n0,n1,n2,n3 item;

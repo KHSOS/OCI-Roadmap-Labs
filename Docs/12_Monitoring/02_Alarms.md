@@ -44,6 +44,12 @@
 - **주의/대체:** 로그인 가능한 OCI 계정과 해당 범위의 조회 권한이 필요하다. 생성·변경은 별도 승인된 전용 Compartment에서만 수행하며 권한·Region 지원·한도·현재 비용을 먼저 확인한다. 실습 후 생성 리소스의 삭제 대상과 보존 여부를 확인한다. 리소스가 없거나 생성 승인이 없으면 공식 예제 기반 구성표로 대체한다. 로그·metric은 지원 리소스와 권한에 따라 없을 수 있다. 수집·보관·알림 비용을 확인하고 비밀정보·개인정보는 테스트 메시지에 넣지 않는다.
 - **공식 근거:** [Overview of Monitoring — Alarms](https://docs.oracle.com/en-us/iaas/Content/Monitoring/Concepts/monitoringoverview.htm)
 
+- **학습용 계획도:** 아래는 이 권장 실습의 구성 요소·검토 관계를 나타내며 실제 배포도가 아닙니다. 점선은 학습·설정 관계이고 실제 패킷 경로나 자원 생성 순서를 보장하지 않습니다. 이번 문서 작성에서 실제 OCI 리소스는 생성하지 않았습니다.
+
+![Alarms 권장 실습 학습용 계획도](../diagrams/82_Alarms.png)
+
+[SVG 확대](../diagrams/82_Alarms.svg) · [Mermaid 원본](../diagrams/82_Alarms.mmd)
+
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.
