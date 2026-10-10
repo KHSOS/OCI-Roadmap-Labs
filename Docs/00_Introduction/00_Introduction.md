@@ -44,12 +44,6 @@
 - **주의/대체:** 가상 사례만 사용한다. OCI 계정이나 리소스 생성은 필요하지 않으며 고객 구성·실데이터를 사용하지 않는다.
 - **공식 근거:** [What Is Cloud Computing? — Introduction](https://www.oracle.com/cloud/what-is-cloud-computing/) · [What Is Cloud Computing? — Introduction](https://www.oracle.com/cloud/what-is-cloud-computing/)
 
-- **학습용 계획도:** 아래는 이 권장 실습의 구성 요소·검토 관계를 나타내며 실제 배포도가 아닙니다. 점선은 학습·설정 관계이고 실제 패킷 경로나 자원 생성 순서를 보장하지 않습니다. 이번 문서 작성에서 실제 OCI 리소스는 생성하지 않았습니다.
-
-![Introduction 권장 실습 학습용 계획도](../diagrams/00_Introduction.png)
-
-[SVG 확대](../diagrams/00_Introduction.svg) · [Mermaid 원본](../diagrams/00_Introduction.mmd)
-
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.

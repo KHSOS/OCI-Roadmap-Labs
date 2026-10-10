@@ -44,12 +44,6 @@
 - **주의/대체:** 로그인 가능한 OCI 계정과 해당 범위의 조회 권한이 필요하다. 생성·변경은 별도 승인된 전용 Compartment에서만 수행하며 권한·Region 지원·한도·현재 비용을 먼저 확인한다. 실습 후 생성 리소스의 삭제 대상과 보존 여부를 확인한다. 리소스가 없거나 생성 승인이 없으면 공식 예제 기반 구성표로 대체한다. Region·AD·FD 자체를 생성하는 실습이 아니다. 표시 옵션은 Region·서비스·계정에 따라 달라지며 배치 가능 용량을 보장하지 않는다.
 - **공식 근거:** [Regions and Availability Domains — Availability Domains](https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm) · [Regions and Availability Domains — Availability Domains](https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm)
 
-- **학습용 계획도:** 아래는 이 권장 실습의 구성 요소·검토 관계를 나타내며 실제 배포도가 아닙니다. 점선은 학습·설정 관계이고 실제 패킷 경로나 자원 생성 순서를 보장하지 않습니다. 이번 문서 작성에서 실제 OCI 리소스는 생성하지 않았습니다.
-
-![Availability Domains 권장 실습 학습용 계획도](../diagrams/06_Availability_Domains.png)
-
-[SVG 확대](../diagrams/06_Availability_Domains.svg) · [Mermaid 원본](../diagrams/06_Availability_Domains.mmd)
-
 ## 실습절차
 
 작성예정 — 실습 내용은 아직 작성하지 않았습니다.
