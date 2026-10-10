@@ -32,7 +32,17 @@
 
 ## 실습구성
 
-작성예정 — 실습 내용은 아직 작성하지 않았습니다.
+> 아래는 Oracle 공식문서가 설명하는 기능을 기반으로 설계한 **권장 실습안**이며 Oracle이 공인·권장한 교육과정이라는 뜻은 아닙니다. 실제 OCI 실행·검증은 수행하지 않았습니다.
+
+- **권장 실습:** 소규모 Instance Pool 구성안
+- **실습 방식:** Console에서 전용 실습 리소스를 관찰·구성하는 방식. 아래 활동은 구성 제안이며 상세 실행절차는 별도 작성 대상이다.
+  1. 실습 configuration과 배치 설정으로 최소 크기 pool을 설계하고 예산 승인 시 생성한다
+  2. 공식문서의 해당 설정·제약과 관찰값을 대조한다.
+  3. 아래 결과를 기록하고 선택 생성한 리소스의 정리 범위를 확인한다.
+- **확인할 결과:** pool·configuration·멤버 인스턴스 대응표
+- **선행/연계 실습:** [Instance Configurations](02_Instance_Configurations.md) — 문서 연계이며 모두 리소스 생성을 요구하는 필수 순서는 아니다.
+- **주의/대체:** 로그인 가능한 OCI 계정과 해당 범위의 조회 권한이 필요하다. 생성·변경은 별도 승인된 전용 Compartment에서만 수행하며 권한·Region 지원·한도·현재 비용을 먼저 확인한다. 실습 후 생성 리소스의 삭제 대상과 보존 여부를 확인한다. 리소스가 없거나 생성 승인이 없으면 공식 예제 기반 구성표로 대체한다. pool은 여러 VM 비용을 만들 수 있다. 활성화 전 최대 크기와 실행 시간을 제한하고 승인 없으면 설계표로 끝낸다. Schedule 시간은 공식문서의 UTC 기준을 확인한다.
+- **공식 근거:** [Creating Instance Pools — Instance Pools](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/creatinginstancepool.htm)
 
 ## 실습절차
 

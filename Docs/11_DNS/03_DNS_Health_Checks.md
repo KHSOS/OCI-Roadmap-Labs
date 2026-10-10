@@ -32,7 +32,17 @@
 
 ## 실습구성
 
-작성예정 — 실습 내용은 아직 작성하지 않았습니다.
+> 아래는 Oracle 공식문서가 설명하는 기능을 기반으로 설계한 **권장 실습안**이며 Oracle이 공인·권장한 교육과정이라는 뜻은 아닙니다. 실제 OCI 실행·검증은 수행하지 않았습니다.
+
+- **권장 실습:** 외부 DNS Health Check 설계
+- **실습 방식:** 문서 기반 설계·비교를 기본으로 하고 Console에서 실제 옵션을 읽기 전용으로 관찰한다. 생성 화면 검토만 하는 경우 제출하지 않는다.
+  1. 본인 소유의 공개 테스트 endpoint만 대상으로 HTTP check의 vantage point·interval을 검토한다
+  2. 공식문서의 해당 설정·제약과 관찰값을 대조한다.
+  3. 아래 결과를 기록하고 선택 생성한 리소스의 정리 범위를 확인한다.
+- **확인할 결과:** monitor 대상과 외부 관측 결과 항목
+- **선행/연계 실습:** [DNS](00_DNS.md) — 문서 연계이며 모두 리소스 생성을 요구하는 필수 순서는 아니다.
+- **주의/대체:** 로그인 가능한 OCI 계정과 해당 범위의 조회 권한이 필요하다. 생성·변경은 별도 승인된 전용 Compartment에서만 수행하며 권한·Region 지원·한도·현재 비용을 먼저 확인한다. 실습 후 생성 리소스의 삭제 대상과 보존 여부를 확인한다. 리소스가 없거나 생성 승인이 없으면 공식 예제 기반 구성표로 대체한다. 운영 zone·registrar 위임은 변경하지 않는다. Public DNS 실습은 소유한 별도 테스트 도메인이 있을 때만 선택하고 없으면 문서 설계로 대체한다. Health Checks는 공개 endpoint 관측이다. private backend check와 구분하고 타인 서버를 대상으로 요청하지 않는다.
+- **공식 근거:** [Overview of the Health Checks Service — DNS Health Checks](https://docs.oracle.com/en-us/iaas/Content/HealthChecks/Concepts/healthchecks.htm)
 
 ## 실습절차
 

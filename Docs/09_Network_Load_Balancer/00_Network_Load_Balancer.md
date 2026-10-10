@@ -32,7 +32,21 @@
 
 ## 실습구성
 
-작성예정 — 실습 내용은 아직 작성하지 않았습니다.
+> 아래는 Oracle 공식문서가 설명하는 기능을 기반으로 설계한 **권장 실습안**이며 Oracle이 공인·권장한 교육과정이라는 뜻은 아닙니다. 실제 OCI 실행·검증은 수행하지 않았습니다.
+
+- **권장 실습:** TCP Network Load Balancer 연결
+- **실습 방식:** Console에서 전용 실습 리소스를 관찰·구성하는 방식. 아래 활동은 구성 제안이며 상세 실행절차는 별도 작성 대상이다.
+  1. 실습 TCP backend와 NLB의 listener·backend set을 연결하고 테스트 연결을 확인한다
+  2. 공식문서의 해당 설정·제약과 관찰값을 대조한다.
+  3. 아래 결과를 기록하고 선택 생성한 리소스의 정리 범위를 확인한다.
+- **확인할 결과:** L4 연결 성공과 backend health
+- **선행/연계 실습:** [Virtual Cloud Network (VCN)](../03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md) · [Compute](../02_Compute/00_Compute.md) — 문서 연계이며 모두 리소스 생성을 요구하는 필수 순서는 아니다.
+- **주의/대체:** 로그인 가능한 OCI 계정과 해당 범위의 조회 권한이 필요하다. 생성·변경은 별도 승인된 전용 Compartment에서만 수행하며 권한·Region 지원·한도·현재 비용을 먼저 확인한다. 실습 후 생성 리소스의 삭제 대상과 보존 여부를 확인한다. 리소스가 없거나 생성 승인이 없으면 공식 예제 기반 구성표로 대체한다. LB/NLB와 backend Compute 비용·한도를 함께 확인하고 운영 endpoint를 테스트하지 않는다.
+- **공식 근거:** [Overview of Flexible Network Load Balancer — Network Load Balancer](https://docs.oracle.com/en-us/iaas/Content/NetworkLoadBalancer/overview.htm)
+
+- **추가 공식 근거:** [항목별 관리·설정 문서](https://docs.oracle.com/en-us/iaas/Content/NetworkLoadBalancer/introduction.htm)
+
+- **확장 준비:** 별도 승인된 테스트 backend VM에 서비스가 실행 중이어야 한다. LB/NLB·backend 사이의 health check 및 서비스 포트 보안 규칙과 반환 경로를 확인한다. 기본 설계 검토는 backend 추가 생성 없이 가능하다.
 
 ## 실습절차
 

@@ -32,7 +32,17 @@
 
 ## 실습구성
 
-작성예정 — 실습 내용은 아직 작성하지 않았습니다.
+> 아래는 Oracle 공식문서가 설명하는 기능을 기반으로 설계한 **권장 실습안**이며 Oracle이 공인·권장한 교육과정이라는 뜻은 아닙니다. 실제 OCI 실행·검증은 수행하지 않았습니다.
+
+- **권장 실습:** TLS 인증서 연결 설계
+- **실습 방식:** Console에서 전용 실습 리소스를 관찰·구성하는 방식. 아래 활동은 구성 제안이며 상세 실행절차는 별도 작성 대상이다.
+  1. 실습 도메인용 인증서의 chain·listener 연결을 검토하고 승인 시 HTTPS handshake를 확인한다
+  2. 공식문서의 해당 설정·제약과 관찰값을 대조한다.
+  3. 아래 결과를 기록하고 선택 생성한 리소스의 정리 범위를 확인한다.
+- **확인할 결과:** 인증서 유효성·hostname·TLS 연결 확인표
+- **선행/연계 실습:** [Load Balancer](00_Load_Balancer.md) — 문서 연계이며 모두 리소스 생성을 요구하는 필수 순서는 아니다.
+- **주의/대체:** 로그인 가능한 OCI 계정과 해당 범위의 조회 권한이 필요하다. 생성·변경은 별도 승인된 전용 Compartment에서만 수행하며 권한·Region 지원·한도·현재 비용을 먼저 확인한다. 실습 후 생성 리소스의 삭제 대상과 보존 여부를 확인한다. 리소스가 없거나 생성 승인이 없으면 공식 예제 기반 구성표로 대체한다. LB/NLB와 backend Compute 비용·한도를 함께 확인하고 운영 endpoint를 테스트하지 않는다. certificate private key를 공개하지 않는다. 소유한 테스트 hostname과 올바른 chain만 사용한다.
+- **공식 근거:** [Load Balancer- Managed SSL Certificates — SSL Certificates](https://docs.oracle.com/en-us/iaas/Content/Balance/Tasks/managingcertificates.htm)
 
 ## 실습절차
 
