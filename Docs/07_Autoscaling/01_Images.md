@@ -33,7 +33,7 @@ custom branch만22의 실제 source OCID/Oracle Linux9/architecture/boot/SSH와6
 
 ## 권한
 
-Custom source stop/restart는22 owner의 실제 instance에 대한 `INSTANCE_POWER_ACTIONS` 별도 승인 작업이다. image creator의 CREATE_IMAGE 권한을 source power 권한으로 취급하지 않는다. 현재 작업자는 image 생성/readback만 수행하고 stop/restart는 승인된22 owner에게 반환한다.
+Custom source stop/restart는22 owner의 실제 instance에 대한 `INSTANCE_POWER_ACTIONS` 별도 승인 작업이다. image creator의 `INSTANCE_CREATE_IMAGE` 권한을 source power 권한으로 취급하지 않는다. 현재 작업자는 image 생성/readback만 수행하고 stop/restart는 승인된22 owner에게 반환한다.
 
 [corepolicyreference — Permissions Required for Each API Operation / Autoscaling API Operations](https://docs.oracle.com/en-us/iaas/Content/Identity/Reference/corepolicyreference.htm) 실제 본문 기준이다. 선행 owner의 생성/정리 권한을 현재 사용자에게 자동 부여하지 않는다. 관리자가 exact operation과 실제 resource compartment를 대조한다.
 

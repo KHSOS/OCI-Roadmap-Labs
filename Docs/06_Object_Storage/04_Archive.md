@@ -43,7 +43,7 @@ Allow group <identity-domain>/<lab-group> to manage object-family in compartment
 
 ## 비용및주의사항
 
-owner48의 Standard bucket에 `lab/archive.txt` Archive object 하나만 추가한다. Archive90일 최소 저장기간·조기삭제·restore/다운로드·전송 비용을 업로드 전에 승인한다. 즉시 삭제해도 최소기간 의무가 없어지지 않는다. 복원 완료까지 최대1시간과 완료 후 선택한1시간 다운로드 window는 서로 다른 시간이다. 전체 restore/검증이 원래 lease를 넘을 가능성이 있으면 업로드 전 BUCKET_EXPIRY_UTC를 갱신한다. 승인 없으면 시작하지 않거나 원래deadline 전에 owner와 owned-key 삭제/반환을 조율한다. Restoring은 성공이 아니다.
+owner48의 Standard bucket에 `lab/archive.txt` Archive object 하나만 추가한다. Archive90일 최소 저장기간·조기삭제, 복원 중 Standard tier 저장 및 요청/다운로드·전송 비용을 업로드 전에 승인한다. 즉시 삭제해도 최소기간 의무가 없어지지 않는다. 복원 완료까지 최대1시간과 완료 후 선택한1시간 다운로드 window는 서로 다른 시간이다. 전체 restore/검증이 원래 lease를 넘을 가능성이 있으면 업로드 전 BUCKET_EXPIRY_UTC를 갱신한다. 승인 없으면 시작하지 않거나 원래deadline 전에 owner와 owned-key 삭제/반환을 조율한다. Restoring은 성공이 아니다.
 
 ## 실습구성
 

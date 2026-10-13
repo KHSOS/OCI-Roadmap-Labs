@@ -90,7 +90,7 @@ export EXPIRY_UTC="<approved-session-end-UTC>"
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 
 1. [Instance Pools](03_Instance_Pools.md)의 size 1/앱 검증까지 완료한다. owner55의 metric configuration을 disable/delete하고 실제 반환/list없음을 확인한 뒤 동일 pool에 schedule configuration 하나를 생성한다. 저장한 metric 설정은 나중에55 승인 후 재생성하며 두 configuration을 동시에 연결하지 않는다. 중복 제어는 금지한다.
-2. Console → Autoscaling → Schedule-based를 선택한다. schedule UI에는 metric scaling limits와 같은 minimum/maximum을 입력하지 않는다. policy1 이름 lab-once-out/Action=Scale pool size/Target pool size=2, Another Policy 이름 lab-once-in/Target=1을 입력한다. 두 target은 비용 상한2를 유지한다. 현재 UTC와 실습 종료시각을 실제 확인하고 미래 scale-out 시각/scale-in 시각을 승인한다.
+2. Console → Compute → Autoscaling configurations → Create autoscaling configuration → Add basic details: Name=`lab-once-schedule`, configuration Compartment=승인 LAB_COMPARTMENT_ID, pool Compartment=owner58 실제 scope, Instance pool=actual POOL_ID, tags=미선택. Next → Configure autoscaling policy → Schedule-based autoscaling을 선택한다. schedule UI에는 metric scaling limits와 같은 minimum/maximum을 입력하지 않는다. policy1 이름 lab-once-out/Action=Scale pool size/Target pool size=2, Another Policy 이름 lab-once-in/Target=1을 입력한다. 두 target은 비용 상한2를 유지한다. 현재 UTC와 실습 종료시각을 실제 확인하고 미래 scale-out 시각/scale-in 시각을 승인한다.
 3. UI의 cron 필드 의미를 공식 schedule 본문과 대조하여 UTC 일시를 입력한다. 예시는 Quartz 형식 `0 15 9 ? * MON *`이며 매주 월요일 09:15 UTC이다. 이를 그대로 실행하지 말고 승인한 미래 날짜에 맞춘 one-time 연도/날짜 표현식을 입력한다. out target 2, in target 1로 구성하고 preview next run을 검증한다.
 4. 해당 UTC까지 승인된 세션만 유지하고 pool size2 뒤 **먼저 아래 신규 scale-out member client 경로 인수 station의 IP/rule/cloud-init handoff를 완료한 후** 새 VM /health를 확인한다. deadline내준비가끝나지않으면schedule disable/owner58size1복구로중단한다. in schedule 이후 size 1을 확인한다. 예약 저장만으로 실제 실행 완료가 아니다.
 5. 반복 schedule은 즉시 disable/delete한다. 예약을 남겨 종료 후 재생성되게 하지 않는다.
@@ -109,7 +109,7 @@ for label,minutes in [('out',10),('in',30)]:
     print(label,t.isoformat(),f'0 {t.minute} {t.hour} {t.day} {t.month} ? {t.year}')
 PY
 ```
-out/inexpression을각ExecutionSchedule에붙이고forecastUTC를비교한다. 지난스케줄은성공하지않는다. deadline도달하면scheduleconfigurationdisable후owner58이poolsize1로manual복원하며두schedule을삭제한다.
+out/in expression을 각각 Execution schedule에 붙이고 Next → Review에서 same POOL_ID/one-time 두 policy/UTC future forecast/out2/in1/lease를 확인한다. Create를 한 번만 제출하고 actual SCHEDULE_ID 및 두 저장 expression을 조회/readback한다. 오류면 재Create하지 않고 owner60 원복/정리한다. forecast UTC를 실제 승인 UTC와 비교한다. 지난스케줄은성공하지않는다. deadline도달하면scheduleconfigurationdisable후owner58이poolsize1로manual복원하며두schedule을삭제한다.
 
 ### 신규 scale-out member client 경로 인수
 scale event 후 owner58이 같은 pool list-instances/Attached VNIC에서 **실제 새 member /32**를 읽는다. network owner는58의 절차대로 vm-a nsg-admin에 Stateful egress TCP8080→새 member /32(SSH가 필요하면22도)를 승인 추가하고 exact rule ID를 owner58 registry에 기록한다. nsg-pool-app의 A_PRIVATE_IP/32 ingress 및 OS firewall을 조회한 후만 vm-a curl을 실행한다. member 종료/scale-in 뒤 owner58이 그 새 rule ID만 정리한다. 이전 member /32 규칙이 새 IP를 자동 허용한다고 가정하지 않는다.

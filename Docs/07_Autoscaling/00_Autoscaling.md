@@ -97,8 +97,8 @@ export EXPIRY_UTC="<approved-session-end-UTC>"
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 
 1. [Instance Configurations](02_Instance_Configurations.md)의 configuration 생성/readback과 [Instance Pools](03_Instance_Pools.md)의 size 1 및 앱 응답 검증까지 완료한다. 별도 pool을 생성하지 않는다.
-2. Create 이전 same POOL_ID의 현재 autoscaling configuration association을 관리자 Console에서 확인한다. 기존55/60 configuration이 남으면 새 controller를 만들지 않고 exact owner가 삭제/association 부재를 반환한 뒤만 진행한다. disable만으로 연결 해제를 주장하지 않는다. Console → Compute → Autoscaling Configurations → Create에서 해당 pool OCID를 선택하고 cooldown 300초, minimum 1, initial 1, maximum 2로 입력한다. 최대 두 VM 생성 권한/가격/가용량을 사전 승인한다.
-3. Metric-based policy에서 CPU utilization >70%, scale out +1; CPU utilization <20%, scale in -1을 설정한다. CPU 임계값은 실습 입력값이며 공식 권장값을 뜻하지 않는다.
+2. **Create 이전 sole-controller gate:** same POOL_ID의 현재 autoscaling association을 관리자 Console에서 확인한다. 기존55/60 configuration이 남으면 exact owner의 삭제/association 부재 반환까지 중단한다. disable만으로 연결 해제를 주장하지 않는다. 그 다음 Console → Compute → Autoscaling Configurations → Create autoscaling configuration → Add basic details: Name=`lab-cpu-autoscaling`, configuration Compartment=승인 LAB_COMPARTMENT_ID, pool Compartment=owner58 실제 scope, Instance pool=actual POOL_ID, tags=미선택. 이름/풀/소유권을 구분하고 size2의 전체 running3대/추가 Compute·boot 비용 승인을 재확인한다.
+3. Next → Configure autoscaling policy → **Metric-based autoscaling**, policy Name=`lab-cpu-policy`, Cooldown=300s, Performance metric=CPU utilization을 선택한다. Scale-out operator=`>`/threshold70/Number to add1, Scale-in operator=`<`/threshold20/Number to remove1; Minimum1/Initial1/Maximum2를 입력한다. Next → Review에서 same POOL_ID/quantity/sole controller/expiry를 재대조하고 Create를 한 번만 제출한다. actual configuration/policy readback 실패면 재Create하지 않고 owner55 복구/정리한다. CPU 임계값은 실습 입력값이며 공식 권장값을 뜻하지 않는다.
 <a id="policy-saved"></a>
 **policy-saved:** 이 시점은 configuration/policy actual 저장과 same POOL_ID readback만 완료한다. 59 기능완료를 선행 요구하지 않는다.
 

@@ -110,7 +110,7 @@ else RC=$?; printf 'RPC RC=%s; classify network transport not credentials\n' "$R
 
 새 mount 시험은 기존 `/mnt/oci-lab` clean unmount/source 검증 후 `sudo timeout -k 5s 20s mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,retry=0 "$MT_PRIVATE_IP:/lab" /mnt/oci-lab`를 if/else로 호출해 RC를 기록한다. 실패/timeout은 쓰기 허가가 아니며 담당자가60초 안에 복원한다. 종료 뒤 findmnt의 exact mount 존재 여부를 확인하고 mounted면 정상 unmount 후6의 IP mount를 수행한다. D-state/잔존 요청이 있으면 새 mount/디렉터리 삭제를 하지 않고 복구담당자와 정상 종료까지 기다린다.
 
-4. MT의 전용 NSG에서 **NFS TCP/UDP ingress**만 임시 제거한다. 다른 SL/NSG가 NFS를 허용하지 않는지 확인한다. File System/Export option과 B POSIX 권한은 바꾸지 않는다.
+4. **ingress 제거 이전 B guest:** `assert_mt44_mount "$MT_PRIVATE_IP" || exit 1` → `sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1` → exact `findmnt -rn -M /mnt/oci-lab`의 exit1/잔존 요청 없음과 실제 directory empty를 확인한다. 실패면 ingress를 제거하지 않고43 residual station에 반환한다. 그 다음 MT의 전용 NSG에서 **NFS TCP/UDP ingress**만 임시 제거한다. 다른 SL/NSG가 NFS를 허용하지 않는지 확인한다. File System/Export option과 B POSIX 권한은 바꾸지 않는다.
 5. B에서 **step4 직전 deadline station의15초 rpcinfo/20초 mount guarded 요청만** 수행한다. bare rpcinfo/mount를 추가 실행하지 않는다. mount가 대기하면 복구담당자가60초 이내 MT rule을 복원한다. 실패/대기 RC·request 시각·packet을 기록하고 잔존 요청/정확한 mount 상태를 확인한다. 억지 lazy unmount로 data correctness를 주장하지 않는다.
 6. 원래 TCP111/2048-2050·UDP111/2048 source B/32 stateful ingress를 복원한다. B에서 아래 **remount-only**를 수행한다(43의 신규 proof 생성 fence는 다시 실행하지 않는다).
 ```bash
