@@ -1,0 +1,1222 @@
+{
+  "schema_version": "1.0",
+  "scope": {
+    "indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "mapping_source": "../architecture-redraw-research/creation-first-curriculum.json",
+    "excluded_indices": "47-92 untouched",
+    "logging_mapped_path": "Docs/12_Monitoring/04_Logging.md",
+    "logging_correction": "No Logging patch: mapping index84 is outside authorized00-46 scope; actual path exists."
+  },
+  "status": "DOCUMENT_CORRECTIONS_WITH_REMAINING_EXECUTION_GATES_NOT_RUNTIME_PASS",
+  "os": {
+    "distribution": "Oracle Linux",
+    "version": "9",
+    "image": "OCI platform image, architecture matched to approved shape",
+    "login_user": "opc",
+    "package_manager": "dnf",
+    "nfs_package": "nfs-utils",
+    "secondary_vnic_tool": "oci-network-config",
+    "fallback_os_allowed": false
+  },
+  "names_and_cleanup_owners": [
+    {
+      "name": "lab-root",
+      "resource_type": "compartment",
+      "creation_owner_index": 0,
+      "creator_document": "Docs/00_Introduction/00_Introduction.md",
+      "creator_anchor": "baseline-00-ready",
+      "cleanup_owner_index": 0,
+      "actual_ocid": null
+    },
+    {
+      "name": "shared-vcn",
+      "resource_type": "vcn",
+      "creation_owner_index": 19,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md",
+      "creator_anchor": "baseline-19-ready",
+      "cleanup_owner_index": 19,
+      "actual_ocid": null
+    },
+    {
+      "name": "public-admin",
+      "resource_type": "regional_public_subnet",
+      "creation_owner_index": 23,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "creator_anchor": "public-network-preparation",
+      "cleanup_owner_index": 23,
+      "actual_ocid": null
+    },
+    {
+      "name": "rt-public",
+      "resource_type": "route_table",
+      "creation_owner_index": 23,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "creator_anchor": "public-network-preparation",
+      "cleanup_owner_index": 23,
+      "actual_ocid": null
+    },
+    {
+      "name": "sl-public",
+      "resource_type": "empty_security_list",
+      "creation_owner_index": 23,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "creator_anchor": "public-network-preparation",
+      "cleanup_owner_index": 23,
+      "actual_ocid": null
+    },
+    {
+      "name": "nsg-admin",
+      "resource_type": "network_security_group",
+      "creation_owner_index": 23,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "creator_anchor": "public-network-preparation",
+      "cleanup_owner_index": 23,
+      "actual_ocid": null
+    },
+    {
+      "name": "igw-lab",
+      "resource_type": "internet_gateway",
+      "creation_owner_index": 23,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "creator_anchor": "public-network-preparation",
+      "cleanup_owner_index": 23,
+      "actual_ocid": null
+    },
+    {
+      "name": "private-app",
+      "resource_type": "regional_private_subnet",
+      "creation_owner_index": 21,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
+      "creator_anchor": "baseline-21-ready",
+      "cleanup_owner_index": 21,
+      "actual_ocid": null
+    },
+    {
+      "name": "rt-private",
+      "resource_type": "route_table",
+      "creation_owner_index": 21,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
+      "creator_anchor": "baseline-21-ready",
+      "cleanup_owner_index": 21,
+      "actual_ocid": null
+    },
+    {
+      "name": "sl-private",
+      "resource_type": "empty_security_list",
+      "creation_owner_index": 21,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
+      "creator_anchor": "baseline-21-ready",
+      "cleanup_owner_index": 21,
+      "actual_ocid": null
+    },
+    {
+      "name": "vm-a",
+      "resource_type": "oracle_linux9_public_instance",
+      "creation_owner_index": 10,
+      "creator_document": "Docs/02_Compute/00_Compute.md",
+      "creator_anchor": "baseline-10-ready",
+      "cleanup_owner_index": 10,
+      "actual_ocid": null
+    },
+    {
+      "name": "private-vm",
+      "resource_type": "oracle_linux9_private_instance",
+      "creation_owner_index": 22,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md",
+      "creator_anchor": "baseline-22-ready",
+      "cleanup_owner_index": 22,
+      "actual_ocid": null
+    },
+    {
+      "name": "nsg-private-admin",
+      "resource_type": "network_security_group",
+      "creation_owner_index": 22,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md",
+      "creator_anchor": "baseline-22-ready",
+      "cleanup_owner_index": 22,
+      "actual_ocid": null
+    },
+    {
+      "name": "nat-lab",
+      "resource_type": "nat_gateway",
+      "creation_owner_index": 30,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md",
+      "creator_anchor": "nat-installation-preparation",
+      "cleanup_owner_index": 30,
+      "actual_ocid": null
+    },
+    {
+      "name": "sgw-lab",
+      "resource_type": "service_gateway",
+      "creation_owner_index": 31,
+      "creator_document": "Docs/03_Virtual_Cloud_Network_VCN/12_Service_Gateway.md",
+      "creator_anchor": "baseline-31-ready",
+      "cleanup_owner_index": 31,
+      "actual_ocid": null
+    },
+    {
+      "name": "iam-lab",
+      "resource_type": "child_compartment",
+      "creation_owner_index": 33,
+      "creator_document": "Docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md",
+      "creator_anchor": "baseline-33-ready",
+      "cleanup_owner_index": 33,
+      "actual_ocid": null
+    },
+    {
+      "name": "lab-fss",
+      "resource_type": "regional_private_subnet",
+      "creation_owner_index": 43,
+      "creator_document": "Docs/05_File_Storage/00_File_Storage.md",
+      "creator_anchor": "baseline-43-ready",
+      "cleanup_owner_index": 43,
+      "actual_ocid": null
+    },
+    {
+      "name": "rt-fss",
+      "resource_type": "empty_route_table",
+      "creation_owner_index": 43,
+      "creator_document": "Docs/05_File_Storage/00_File_Storage.md",
+      "creator_anchor": "baseline-43-ready",
+      "cleanup_owner_index": 43,
+      "actual_ocid": null
+    },
+    {
+      "name": "sl-fss",
+      "resource_type": "empty_security_list",
+      "creation_owner_index": 43,
+      "creator_document": "Docs/05_File_Storage/00_File_Storage.md",
+      "creator_anchor": "baseline-43-ready",
+      "cleanup_owner_index": 43,
+      "actual_ocid": null
+    },
+    {
+      "name": "fs-lab",
+      "resource_type": "file_system",
+      "creation_owner_index": 43,
+      "creator_document": "Docs/05_File_Storage/00_File_Storage.md",
+      "creator_anchor": "baseline-43-ready",
+      "cleanup_owner_index": 43,
+      "actual_ocid": null
+    },
+    {
+      "name": "mt-lab",
+      "resource_type": "mount_target",
+      "creation_owner_index": 43,
+      "creator_document": "Docs/05_File_Storage/00_File_Storage.md",
+      "creator_anchor": "baseline-43-ready",
+      "cleanup_owner_index": 43,
+      "actual_ocid": null
+    },
+    {
+      "name": "/lab",
+      "resource_type": "nfs_export",
+      "creation_owner_index": 43,
+      "creator_document": "Docs/05_File_Storage/00_File_Storage.md",
+      "creator_anchor": "baseline-43-ready",
+      "cleanup_owner_index": 43,
+      "actual_ocid": null
+    }
+  ],
+  "network": {
+    "vcn": "10.77.0.0/16",
+    "public_admin": "10.77.10.0/24",
+    "private_app": "10.77.20.0/24",
+    "optional_fss": "10.77.30.0/24",
+    "ipv6": false,
+    "default_security_lists_attached": false,
+    "public_route": "0.0.0.0/0 -> IGW_ID",
+    "private_route_initial": [],
+    "dns": "VCN default DHCP Internet and VCN Resolver; DNS labels roadmap/publicadmin/privateapp",
+    "overlap_gate": "Owner20 must compare all actual connected on-prem/VPN/VCN CIDRs before provisioning; replace ALL registered subnet/CIDR inputs if approved plan differs."
+  },
+  "ports": {
+    "ssh": {
+      "tcp": 22,
+      "ingress_public": "learner egress public IPv4/32",
+      "jump_egress": "A -> B/32 TCP22 explicitly allowed",
+      "ingress_private": "A_PRIVATE_IP/32"
+    },
+    "https": {
+      "tcp": 443,
+      "private": "temporary NAT installation or SGW service destination; no public IPv4 on B"
+    },
+    "http": {
+      "24_25": 8080,
+      "26": 8081,
+      "27": 8082,
+      "28": 8083,
+      "32": 8084,
+      "public_ingress_allowed": false,
+      "host_firewall": "source peer private/32 runtime rule; preserve state during OCI deny; remove only newly added exact rule"
+    },
+    "fss": {
+      "tcp_destination": [
+        111,
+        "2048-2050"
+      ],
+      "udp_destination": [
+        111,
+        2048
+      ],
+      "source": "B_PRIVATE_IP/32",
+      "source_ports": "Privileged Export requires resvport; observe RPC before optional source1-1023 narrowing"
+    }
+  },
+  "variables": {
+    "REGION": {
+      "type": "region_identifier",
+      "source_owner": 0,
+      "source": "approved subscribed Region picker",
+      "value": null
+    },
+    "TENANCY_ID": {
+      "type": "ocid",
+      "source_owner": 0,
+      "source": "organization tenancy",
+      "value": null
+    },
+    "LAB_COMPARTMENT_ID": {
+      "type": "ocid",
+      "source_owner": 0,
+      "source": "new lab-root ACTIVE data.id",
+      "value": null
+    },
+    "VCN_CIDR": {
+      "type": "ipv4_cidr",
+      "value": "10.77.0.0/16",
+      "source_owner": 20
+    },
+    "PUBLIC_SUBNET_CIDR": {
+      "type": "ipv4_cidr",
+      "value": "10.77.10.0/24",
+      "source_owner": 23
+    },
+    "PRIVATE_SUBNET_CIDR": {
+      "type": "ipv4_cidr",
+      "value": "10.77.20.0/24",
+      "source_owner": 21
+    },
+    "FSS_SUBNET_CIDR": {
+      "type": "ipv4_cidr",
+      "value": "10.77.30.0/24",
+      "source_owner": 43
+    },
+    "VCN_ID": {
+      "type": "ocid",
+      "source_owner": 19,
+      "source": "shared-vcn data.id",
+      "value": null
+    },
+    "PUBLIC_SUBNET_ID": {
+      "type": "ocid",
+      "source_owner": 23,
+      "source": "public-admin data.id",
+      "value": null
+    },
+    "PRIVATE_SUBNET_ID": {
+      "type": "ocid",
+      "source_owner": 21,
+      "source": "private-app data.id",
+      "value": null
+    },
+    "PUBLIC_ROUTE_TABLE_ID": {
+      "type": "ocid",
+      "source_owner": 23,
+      "source": "rt-public data.id",
+      "value": null
+    },
+    "PRIVATE_ROUTE_TABLE_ID": {
+      "type": "ocid",
+      "source_owner": 21,
+      "source": "rt-private data.id",
+      "value": null
+    },
+    "IGW_ID": {
+      "type": "ocid",
+      "source_owner": 23,
+      "source": "igw-lab data.id",
+      "value": null
+    },
+    "INSTANCE_A_ID": {
+      "type": "ocid",
+      "source_owner": 10,
+      "source": "vm-a instance data.id",
+      "value": null
+    },
+    "INSTANCE_B_ID": {
+      "type": "ocid",
+      "source_owner": 22,
+      "source": "private-vm instance data.id",
+      "value": null
+    },
+    "A_PUBLIC_IP": {
+      "type": "ipv4_address",
+      "source_owner": 10,
+      "source": "vm-a primary VNIC public-ip",
+      "value": null
+    },
+    "A_PRIVATE_IP": {
+      "type": "ipv4_address",
+      "source_owner": 10,
+      "source": "vm-a primary VNIC private-ip",
+      "value": null
+    },
+    "B_PRIVATE_IP": {
+      "type": "ipv4_address",
+      "source_owner": 22,
+      "source": "private-vm primary VNIC private-ip",
+      "value": null
+    },
+    "MT_PRIVATE_IP": {
+      "type": "ipv4_address",
+      "source_owner": 43,
+      "source": "mt-lab actual private IP",
+      "value": null
+    },
+    "KEY": {
+      "type": "local_private_key_path",
+      "source_owner": 15,
+      "source": "dedicated generated file; secret contents never in registry",
+      "value": null
+    },
+    "NAMESPACE": {
+      "type": "string",
+      "source_owner": 0,
+      "source": "GetNamespace data; no optional compartmentId",
+      "value": null
+    },
+    "BUCKET": {
+      "type": "string",
+      "source_owner": 4,
+      "source": "lab-objects approved unique name",
+      "value": null
+    },
+    "IAM_BUCKET_A": {
+      "type": "string",
+      "source_owner": 33,
+      "value": "iam-proof-a",
+      "source": "must be checked for namespace collision before creation"
+    },
+    "IAM_BUCKET_B": {
+      "type": "string",
+      "source_owner": 33,
+      "value": "iam-proof-b",
+      "source": "must be checked for namespace collision before creation"
+    }
+  },
+  "aliases": {
+    "PUBLIC_IP": "A_PUBLIC_IP only in shared vm-a topics; explicit target export for temporary VM topics",
+    "INSTANCE_ID": "INSTANCE_A_ID in10/11/13/14/17; INSTANCE_B_ID in22/3; new burstable/preemptible ID in12/18",
+    "SUBNET_ID": "PUBLIC_SUBNET_ID for23/public checks; PRIVATE_SUBNET_ID for21/22/3",
+    "legacy_A_B": "A=vm-a; B=private-vm, not separate probe instances"
+  },
+  "phases": [
+    {
+      "id": "00.ready",
+      "index": 0,
+      "document_path": "Docs/00_Introduction/00_Introduction.md",
+      "anchor": "baseline-00-ready",
+      "requires": [],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "01.ready",
+      "index": 1,
+      "document_path": "Docs/00_Introduction/01_Cloud_Computing.md",
+      "anchor": "baseline-01-ready",
+      "requires": [
+        "04.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "02.ready",
+      "index": 2,
+      "document_path": "Docs/00_Introduction/02_IaaS_PaaS_SaaS.md",
+      "anchor": "baseline-02-ready",
+      "requires": [
+        "10.ready",
+        "23.ready",
+        "19.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "03.ready",
+      "index": 3,
+      "document_path": "Docs/00_Introduction/03_Cloud_Deployment_Models.md",
+      "anchor": "baseline-03-ready",
+      "requires": [
+        "22.ready",
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "04.ready",
+      "index": 4,
+      "document_path": "Docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md",
+      "anchor": "baseline-04-ready",
+      "requires": [
+        "00.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "05.ready",
+      "index": 5,
+      "document_path": "Docs/01_Introduction_to_OCI/01_Regions.md",
+      "anchor": "baseline-05-ready",
+      "requires": [
+        "19.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "06.ready",
+      "index": 6,
+      "document_path": "Docs/01_Introduction_to_OCI/02_Availability_Domains.md",
+      "anchor": "baseline-06-ready",
+      "requires": [
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "07.ready",
+      "index": 7,
+      "document_path": "Docs/01_Introduction_to_OCI/03_Fault_Domains.md",
+      "anchor": "baseline-07-ready",
+      "requires": [
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "08.ready",
+      "index": 8,
+      "document_path": "Docs/01_Introduction_to_OCI/04_Shared_Security_Model.md",
+      "anchor": "baseline-08-ready",
+      "requires": [
+        "23.prepare",
+        "04.ready",
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "09.ready",
+      "index": 9,
+      "document_path": "Docs/01_Introduction_to_OCI/05_Well_Architected_Framework.md",
+      "anchor": "baseline-09-ready",
+      "requires": [
+        "07.ready",
+        "08.ready",
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "10.ready",
+      "index": 10,
+      "document_path": "Docs/02_Compute/00_Compute.md",
+      "anchor": "baseline-10-ready",
+      "requires": [
+        "15.prepare",
+        "23.prepare",
+        "06.prepare",
+        "11.prepare",
+        "13.prepare",
+        "17.prepare"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "11.ready",
+      "index": 11,
+      "document_path": "Docs/02_Compute/01_Shapes.md",
+      "anchor": "baseline-11-ready",
+      "requires": [
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "12.ready",
+      "index": 12,
+      "document_path": "Docs/02_Compute/02_Burstable_Instances.md",
+      "anchor": "baseline-12-ready",
+      "requires": [
+        "15.prepare",
+        "23.prepare"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "13.ready",
+      "index": 13,
+      "document_path": "Docs/02_Compute/03_Boot_Volume.md",
+      "anchor": "baseline-13-ready",
+      "requires": [
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "14.ready",
+      "index": 14,
+      "document_path": "Docs/02_Compute/04_Block_Volume.md",
+      "anchor": "baseline-14-ready",
+      "requires": [
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "15.ready",
+      "index": 15,
+      "document_path": "Docs/02_Compute/05_SSH_Keys.md",
+      "anchor": "baseline-15-ready",
+      "requires": [
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "16.ready",
+      "index": 16,
+      "document_path": "Docs/02_Compute/06_Public_IP_Addresses.md",
+      "anchor": "baseline-16-ready",
+      "requires": [
+        "10.ready",
+        "15.prepare",
+        "23.prepare"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "17.ready",
+      "index": 17,
+      "document_path": "Docs/02_Compute/07_Cloud_init_User_Data.md",
+      "anchor": "baseline-17-ready",
+      "requires": [
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "18.ready",
+      "index": 18,
+      "document_path": "Docs/02_Compute/08_Capacity_Types.md",
+      "anchor": "baseline-18-ready",
+      "requires": [
+        "10.ready",
+        "15.prepare",
+        "23.prepare"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "19.ready",
+      "index": 19,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md",
+      "anchor": "baseline-19-ready",
+      "requires": [
+        "00.ready",
+        "20.prepare",
+        "05.prepare"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "20.ready",
+      "index": 20,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md",
+      "anchor": "baseline-20-ready",
+      "requires": [
+        "19.ready",
+        "23.ready",
+        "21.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "21.ready",
+      "index": 21,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/02_Subnets.md",
+      "anchor": "baseline-21-ready",
+      "requires": [
+        "19.ready",
+        "20.prepare"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "22.ready",
+      "index": 22,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md",
+      "anchor": "baseline-22-ready",
+      "requires": [
+        "21.ready",
+        "10.ready",
+        "15.prepare"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "23.ready",
+      "index": 23,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "anchor": "baseline-23-ready",
+      "requires": [
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "24.ready",
+      "index": 24,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md",
+      "anchor": "baseline-24-ready",
+      "requires": [
+        "19.ready",
+        "21.ready",
+        "22.ready",
+        "10.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "25.ready",
+      "index": 25,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md",
+      "anchor": "baseline-25-ready",
+      "requires": [
+        "24.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "26.ready",
+      "index": 26,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md",
+      "anchor": "baseline-26-ready",
+      "requires": [
+        "24.ready",
+        "25.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "27.ready",
+      "index": 27,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/08_Ingress_Egress.md",
+      "anchor": "baseline-27-ready",
+      "requires": [
+        "24.ready",
+        "25.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "28.ready",
+      "index": 28,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/09_Stateful_Stateless_Rules.md",
+      "anchor": "baseline-28-ready",
+      "requires": [
+        "24.ready",
+        "27.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "29.ready",
+      "index": 29,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/10_Internet_Gateway.md",
+      "anchor": "baseline-29-ready",
+      "requires": [
+        "24.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "30.ready",
+      "index": 30,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md",
+      "anchor": "baseline-30-ready",
+      "requires": [
+        "24.ready",
+        "29.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "31.ready",
+      "index": 31,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/12_Service_Gateway.md",
+      "anchor": "baseline-31-ready",
+      "requires": [
+        "24.ready",
+        "30.ready",
+        "33.ready",
+        "36.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "32.ready",
+      "index": 32,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/13_VNICs.md",
+      "anchor": "baseline-32-ready",
+      "requires": [
+        "24.ready",
+        "25.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "33.ready",
+      "index": 33,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md",
+      "anchor": "baseline-33-ready",
+      "requires": [
+        "00.ready",
+        "04.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "34.ready",
+      "index": 34,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/01_Users.md",
+      "anchor": "baseline-34-ready",
+      "requires": [
+        "33.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "35.ready",
+      "index": 35,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/02_Groups.md",
+      "anchor": "baseline-35-ready",
+      "requires": [
+        "33.ready",
+        "34.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "36.ready",
+      "index": 36,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/03_Dynamic_Groups.md",
+      "anchor": "baseline-36-ready",
+      "requires": [
+        "33.ready",
+        "24.ready",
+        "30.prepare"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "37.ready",
+      "index": 37,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/04_Policies.md",
+      "anchor": "baseline-37-ready",
+      "requires": [
+        "33.ready",
+        "34.ready",
+        "35.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "38.ready",
+      "index": 38,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/05_Compartments.md",
+      "anchor": "baseline-38-ready",
+      "requires": [
+        "33.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "39.ready",
+      "index": 39,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/06_OCID.md",
+      "anchor": "baseline-39-ready",
+      "requires": [
+        "33.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "40.ready",
+      "index": 40,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/07_Policy_Conditions.md",
+      "anchor": "baseline-40-ready",
+      "requires": [
+        "33.ready",
+        "34.ready",
+        "37.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "41.ready",
+      "index": 41,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/08_Policy_Scope_Inheritance.md",
+      "anchor": "baseline-41-ready",
+      "requires": [
+        "38.ready",
+        "34.ready",
+        "37.ready",
+        "40.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "42.ready",
+      "index": 42,
+      "document_path": "Docs/04_Identity_and_Access_Management_IAM/09_Resource_Principals.md",
+      "anchor": "baseline-42-ready",
+      "requires": [
+        "33.ready",
+        "36.ready",
+        "31.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "43.ready",
+      "index": 43,
+      "document_path": "Docs/05_File_Storage/00_File_Storage.md",
+      "anchor": "baseline-43-ready",
+      "requires": [
+        "24.ready",
+        "22.ready",
+        "25.ready",
+        "26.ready",
+        "30.prepare"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "44.ready",
+      "index": 44,
+      "document_path": "Docs/05_File_Storage/01_Mount_Targets.md",
+      "anchor": "baseline-44-ready",
+      "requires": [
+        "43.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "45.ready",
+      "index": 45,
+      "document_path": "Docs/05_File_Storage/02_Exports.md",
+      "anchor": "baseline-45-ready",
+      "requires": [
+        "43.ready",
+        "44.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "46.ready",
+      "index": 46,
+      "document_path": "Docs/05_File_Storage/03_Export_Options.md",
+      "anchor": "baseline-46-ready",
+      "requires": [
+        "43.ready",
+        "44.ready",
+        "45.ready"
+      ],
+      "kind": "FUNCTIONAL_COMPLETION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "15.prepare",
+      "index": 15,
+      "document_path": "Docs/02_Compute/05_SSH_Keys.md",
+      "anchor": "key-preparation",
+      "requires": [
+        "00.ready"
+      ],
+      "kind": "PRE_CREATE_OR_INSTALL_PREPARATION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "20.prepare",
+      "index": 20,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md",
+      "anchor": "cidr-planning",
+      "requires": [
+        "00.ready"
+      ],
+      "kind": "PRE_CREATE_OR_INSTALL_PREPARATION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "05.prepare",
+      "index": 5,
+      "document_path": "Docs/01_Introduction_to_OCI/01_Regions.md",
+      "anchor": "region-selection",
+      "requires": [
+        "00.ready"
+      ],
+      "kind": "PRE_CREATE_OR_INSTALL_PREPARATION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "06.prepare",
+      "index": 6,
+      "document_path": "Docs/01_Introduction_to_OCI/02_Availability_Domains.md",
+      "anchor": "ad-selection",
+      "requires": [
+        "00.ready"
+      ],
+      "kind": "PRE_CREATE_OR_INSTALL_PREPARATION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "11.prepare",
+      "index": 11,
+      "document_path": "Docs/02_Compute/01_Shapes.md",
+      "anchor": "shape-selection",
+      "requires": [
+        "00.ready"
+      ],
+      "kind": "PRE_CREATE_OR_INSTALL_PREPARATION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "13.prepare",
+      "index": 13,
+      "document_path": "Docs/02_Compute/03_Boot_Volume.md",
+      "anchor": "boot-selection",
+      "requires": [
+        "00.ready"
+      ],
+      "kind": "PRE_CREATE_OR_INSTALL_PREPARATION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "17.prepare",
+      "index": 17,
+      "document_path": "Docs/02_Compute/07_Cloud_init_User_Data.md",
+      "anchor": "user-data-preparation",
+      "requires": [
+        "15.prepare"
+      ],
+      "kind": "PRE_CREATE_OR_INSTALL_PREPARATION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "23.prepare",
+      "index": 23,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md",
+      "anchor": "public-network-preparation",
+      "requires": [
+        "19.ready",
+        "20.prepare"
+      ],
+      "kind": "PRE_CREATE_OR_INSTALL_PREPARATION",
+      "execution_status": "NOT_EXECUTED"
+    },
+    {
+      "id": "30.prepare",
+      "index": 30,
+      "document_path": "Docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md",
+      "anchor": "nat-installation-preparation",
+      "requires": [
+        "22.ready",
+        "23.prepare",
+        "21.ready"
+      ],
+      "kind": "PRE_CREATE_OR_INSTALL_PREPARATION",
+      "execution_status": "NOT_EXECUTED"
+    }
+  ],
+  "verified_topological_order": [
+    "00.ready",
+    "04.ready",
+    "15.prepare",
+    "20.prepare",
+    "05.prepare",
+    "06.prepare",
+    "11.prepare",
+    "13.prepare",
+    "01.ready",
+    "33.ready",
+    "17.prepare",
+    "19.ready",
+    "34.ready",
+    "38.ready",
+    "39.ready",
+    "05.ready",
+    "21.ready",
+    "23.prepare",
+    "35.ready",
+    "10.ready",
+    "12.ready",
+    "37.ready",
+    "06.ready",
+    "07.ready",
+    "11.ready",
+    "13.ready",
+    "14.ready",
+    "15.ready",
+    "16.ready",
+    "17.ready",
+    "18.ready",
+    "22.ready",
+    "23.ready",
+    "40.ready",
+    "03.ready",
+    "24.ready",
+    "30.prepare",
+    "02.ready",
+    "08.ready",
+    "20.ready",
+    "41.ready",
+    "25.ready",
+    "29.ready",
+    "36.ready",
+    "09.ready",
+    "26.ready",
+    "27.ready",
+    "32.ready",
+    "30.ready",
+    "43.ready",
+    "28.ready",
+    "31.ready",
+    "44.ready",
+    "42.ready",
+    "45.ready",
+    "46.ready"
+  ],
+  "resource_reuse": {
+    "base_public_vm": 1,
+    "approved_private_test_vm": 1,
+    "max_concurrent_vms_without_new_approval": 2,
+    "temporary_public_variants": "vm-b/ip-lab-vm/burstable-vm/preemptible-vm are explicit creator7/16/12/18 tracks, sequential before private-vm or after its authorized teardown; never create probe-a/probe-b in24",
+    "retention": "approved reserved consumers plus hard expiry; deletion/re-entry goes back to original creator phase with new OCID"
+  },
+  "cleanup_order": [
+    "restore changed policies/routes/security/export options",
+    "remove only lab files while mounted; stop HTTP",
+    "unmount NFS/block mounts",
+    "delete functions then apps then own OCIR images/repos",
+    "remove test export(s), own fs, unused MT",
+    "detach own secondary VNIC/data attachments",
+    "creator22/10 terminate approved instances and delete owned boot/data/backup/reserved IP resources",
+    "remove gateway target routes then owner30/31 NAT/SGW",
+    "owner43 optional fss subnet/table/SL/NSGs",
+    "owner21/23 private/public subnet and own gateway/RT/SL/NSG",
+    "owner19 VCN",
+    "creator33/38 fixture objects/buckets/policies/users/groups/children",
+    "owner00 lab-root last; exact deletion readback and residual billable resource check"
+  ],
+  "execution": {
+    "oci_calls_executed": false,
+    "secrets_written": false,
+    "all_checkpoints": null,
+    "offline_validation_not_cloud_success": true
+  }
+}
