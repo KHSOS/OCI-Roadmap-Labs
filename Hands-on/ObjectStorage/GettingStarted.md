@@ -2,7 +2,7 @@
 
 Object Storage는 파일을 object로 저장하는 서비스입니다. Bucket은 object를 담는 공간이며 object name은 그 안에서 파일을 찾는 이름입니다. 개인 계정에 새 private Standard bucket 하나를 만들고 작은 파일을 올려 내려받습니다. 다운로드한 내용이 원본과 같으면 첫 파일 사용을 마친 것입니다. 삭제·재업로드는 선택 연습이고, 마지막 자원 정리는 반드시 진행합니다. VM·VCN·SSH·Cloud Shell은 필요하지 않습니다.
 
-[실습 목록으로](README.md)
+[실습 목록으로](../README.md)
 
 **바로가기**: [1. 원본 준비](#1-작은-원본-만들기--pc) · [2. Bucket 생성](#2-새-private-standard-bucket-만들기--console) · [3. 업로드](#3-pc-원본-올리기) · [4. 다운로드·첫 성공](#4-내려받아-내용-비교하기) · [5. 선택 재업로드](#5-선택-삭제-후-재업로드하기) · [검증·문제해결](#결과검증과-문제해결) · [정리](#리소스정리)
 
@@ -103,6 +103,8 @@ PC 원본이 남아 있고 정상으로 열리는 것을 확인한 뒤 **Objects
 - 삭제가 거부되면 오류와 현재 설정을 읽습니다. retention을 임의로 해제하거나 권한을 무작정 넓히지 않습니다.
 
 ### 리소스정리
+
+기본은 지금 object와 bucket을 삭제하는 것입니다. **선택: 같은 세션에서 [Service Gateway](../Networking/ServiceGateway.md#사전준비)로 이어가려면**, NAT의 private VM 준비와 HTTPS 시험까지 완료했고 bucket이 그 VCN과 같은 Region인지 먼저 확인합니다. 그때만 이번 bucket·`lab/payload.txt`와 PC 원본을 잠시 남기고 SGW로 이동합니다. 이 Object Storage 실습 자체에는 VM이 필요하지 않습니다. SGW를 마치면 PAR를 먼저 삭제한 뒤 이 목록으로 돌아와 object와 bucket을 삭제합니다. 준비가 없거나 다음 실습을 하지 않으면 아래에서 바로 정리합니다.
 
 1. 필요한 PC 원본/다운로드 파일을 남긴 뒤 **Objects → 이번 lab/payload.txt → Actions → Delete**를 수행합니다. 목록을 새로고침하여 비어 있는지 확인합니다.
 2. **Buckets → 이번 bucket의 Actions → Delete**에서 대상 이름을 다시 확인하고 삭제합니다. 이번 실습에서 만들지 않은 object/version/PAR/replication 항목이 나오면 취소하여 대상을 재확인합니다. bucket 삭제는 되돌릴 수 없습니다.

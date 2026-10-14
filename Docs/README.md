@@ -1,6 +1,14 @@
 # OCI Roadmap 문서 연결 목록
 
-현재 93개 학습항목에 대응하는 **작성예정 초안**입니다. 실제 실습 본문과 OCI 실행 검증은 포함하지 않습니다. 사용자 검토와 수정 요청을 거쳐 후속 작성합니다.
+93개 학습항목의 서비스 개념과 관계를 찾는 목록입니다. 실제 자원 생성·확인·복구·정리는 [Hands-on 홈](../Hands-on/README.md)에서 시작하세요. 개념과 실습 문서는 분리되어 있으며 OCI 실행 검증은 완료되지 않았습니다.
+
+## Networking 기본 실행 경로
+
+- [NAT Gateway](../Hands-on/Networking/NATGateway.md)
+- [Service Gateway](../Hands-on/Networking/ServiceGateway.md)
+- [Network Security Groups](../Hands-on/Networking/NetworkSecurityGroups.md)
+
+위 주제별 실행 안내는 각 한 편이 기본 경로입니다. `Original-Provisional`은 legacy 절차 보존 자료이며 병렬 기본 튜토리얼이 아닙니다.
 
 ## 번호 규칙
 

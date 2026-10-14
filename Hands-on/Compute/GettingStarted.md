@@ -2,13 +2,13 @@
 
 Compute Instance는 OS와 프로그램을 실행하는 가상 서버입니다. 개인 실습 네트워크에 VM **한 대**를 만들고 Console에서 OS·CPU·메모리·디스크·네트워크를 확인합니다. SSH를 선택하면 Console이 만들어 주는 키로 로그인하여 `opc` 사용자와 OS를 확인합니다. 기본 경로는 2–3단계의 생성·Console 확인 후 정리입니다. SSH를 사용할 때만 1단계도 먼저 진행하고, 4–5단계를 이어서 선택합니다.
 
-[실습 목록으로](README.md)
+[실습 목록으로](../README.md)
 
 **바로가기**: [1. 선택 SSH 준비](#1-ssh를-선택할-때만-내-pc-접속-허용하기) · [2. VM 생성](#2-vm-한-대-만들기--console) · [3. Console 확인](#3-console에서-vm-확인하기) · [4. 선택 SSH 로그인](#4-선택-ssh로-로그인하여-os-확인하기) · [5. 선택 외부 HTTPS](#5-선택-같은-vm의-https-확인하기) · [검증·문제해결](#결과검증과-문제해결) · [정리](#리소스정리)
 
 ## VM은 어떤 구성으로 실행되나요
 
-Compute는 운영 체제와 프로그램을 실행할 서버를 제공합니다. 예를 들어 Linux 명령을 실행할 실습 서버가 필요하다면 VM을 만들고 SSH로 들어갈 수 있습니다. 파일 하나를 저장하고 내려받기만 한다면 VM 대신 [Object Storage](ObjectStorage.md)를 독립적으로 사용할 수 있습니다.
+Compute는 운영 체제와 프로그램을 실행할 서버를 제공합니다. 예를 들어 Linux 명령을 실행할 실습 서버가 필요하다면 VM을 만들고 SSH로 들어갈 수 있습니다. 파일 하나를 저장하고 내려받기만 한다면 VM 대신 [Object Storage](../ObjectStorage/GettingStarted.md)를 독립적으로 사용할 수 있습니다.
 
 ### Image와 Shape, Boot Volume의 관계
 
@@ -40,7 +40,7 @@ Oracle Linux VM 한 대를 생성하고 instance·boot volume·primary VNIC의 �
 
 ## 사전준비
 
-개인 OCI Console에 로그인합니다. [VCN 5단계: 네트워크 준비 완료](VCN.md#5-네트워크-준비-완료)까지 진행하고 **삭제하지 않은** `lab-vcn`과 `lab-public`을 사용합니다. 같은 Region과 Compartment를 선택합니다. 이미 VCN을 정리했다면 그 실습으로 새 네트워크를 먼저 준비합니다. VCN에는 VM이나 SSH 완료 조건이 없습니다.
+개인 OCI Console에 로그인합니다. [VCN 5단계: 네트워크 준비 완료](../Networking/VCN/GettingStarted.md#5-네트워크-준비-완료)까지 진행하고 **삭제하지 않은** `lab-vcn`과 `lab-public`을 사용합니다. 같은 Region과 Compartment를 선택합니다. 이미 VCN을 정리했다면 그 실습으로 새 네트워크를 먼저 준비합니다. VCN에는 VM이나 SSH 완료 조건이 없습니다.
 
 SSH를 선택한다면 내 PC에 OpenSSH client와 private key를 저장할 공간이 필요합니다. PC 터미널에서 `ssh -V`로 client가 있는지 확인합니다. 키는 2단계에서 내려받습니다. 아래 PC 명령은 **Linux 또는 WSL의 Bash 터미널** 기준입니다(macOS에서도 같은 SSH 명령을 사용할 수 있습니다). Windows에서는 WSL 경로를 권장합니다. WSL을 사용하지 않을 때는 아래 4단계의 Oracle Windows 안내를 따릅니다. PowerShell에서 Bash 변수 설정이나 `chmod`를 실행하지 않습니다. SSH를 선택하지 않으면 접속 규칙·키 다운로드·터미널 명령은 생략하고 Console 확인으로 끝낼 수 있습니다.
 
@@ -150,10 +150,12 @@ DNS 주소와 TLS 검증을 통과한 HTTP 2xx/3xx 응답을 확인합니다. 40
 
 ### 리소스정리
 
+기본은 지금 아래 순서로 삭제하는 것입니다. **선택: 같은 세션에서 [NAT Gateway](../Networking/NATGateway.md#사전준비)로 이어가려면**, 먼저 이 문서의 1–4단계 SSH 로그인을 완료하고 이번 `lab-vm`·boot volume·VCN과 PC의 같은 키를 잠시 남깁니다. Console-only VM은 그대로 NAT의 admin VM으로 사용할 수 없습니다. NAT에서 private VM 한 대를 추가하므로 두 VM의 비용을 확인하고, 네트워크 실습이 끝나면 NAT 정리를 따라 private 자원부터 삭제한 뒤 이 목록 1–3번과 VCN 정리로 돌아옵니다. 이어가지 않으면 바로 삭제합니다.
+
 1. VM에 남길 파일이 있다면 먼저 PC 등 별도 저장소에 보관합니다. **Compute → Instances → 이번 lab-vm → Actions → Terminate**를 엽니다.
 2. **Permanently delete the attached boot volume**을 체크합니다. 기본은 boot 보존이므로 체크 여부를 직접 확인하고 Terminate Instance를 누릅니다. 이번 VM/OS 디스크 삭제는 되돌릴 수 없습니다.
 3. 같은 instance가 `TERMINATED`인지, **Storage → Block Storage → Boot Volumes**의 같은 AD/Compartment에서 이 boot volume이 삭제되었는지 확인합니다. 종료 record는 잠시 남을 수 있습니다.
-4. [VCN 리소스정리](VCN.md#리소스정리)로 이번 네트워크를 삭제합니다. 다른 VM이 있다면 삭제를 진행하지 않습니다.
+4. [VCN 리소스정리](../Networking/VCN/GettingStarted.md#리소스정리)로 이번 네트워크를 삭제합니다. 다른 VM이 있다면 삭제를 진행하지 않습니다.
 5. 이번 VM을 더 쓰지 않을 때 다운로드한 이번 키 파일만 PC에서 정리합니다. 다른 키나 전체 `.ssh` 폴더를 지우지 않습니다.
 
 ### 공식문서

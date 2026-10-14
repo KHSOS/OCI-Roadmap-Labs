@@ -2,7 +2,7 @@
 
 VCN은 OCI 안에서 자원을 연결하는 가상 네트워크입니다. 이번에는 개인 계정에 **새로운 독립 실습 네트워크**를 만들고, Console에서 subnet·인터넷 경로·보안 설정의 연결을 확인한 뒤 정리합니다. VM, SSH, 키 준비는 필요하지 않습니다.
 
-[실습 목록으로](README.md)
+[실습 목록으로](../../README.md)
 
 **바로가기**: [1. VCN 생성](#1-vcn-만들기--console) · [2. 보안 목록·경로표](#2-전용-security-list와-route-table-만들기) · [3. IGW·경로](#3-인터넷-출입구와-경로-연결하기) · [4. Subnet 생성](#4-public-subnet-만들기) · [5. 준비 완료](#5-네트워크-준비-완료) · [검증·문제해결](#결과검증과-문제해결) · [정리](#리소스정리)
 
@@ -110,7 +110,7 @@ Create를 한 번 누릅니다. 상세에서 `AVAILABLE`, CIDR, 선택 Compartme
 
 `lab-public` 상세에서 **Public, Regional, `10.77.10.0/24`, route table=`rt-public`, security list=`sl-public` 하나, default DHCP**를 읽습니다. `rt-public`의 `0.0.0.0/0 → igw-lab`, IGW Enabled, `sl-public`의 양방향 빈 목록도 각각 확인합니다. 이 상태면 네트워크 생성과 연결 확인을 마쳤습니다. 통신할 VM은 아직 없고 security list도 비어 있으므로 인터넷 접속 시험은 하지 않습니다.
 
-여기서 끝내면 바로 아래 정리로 갑니다. VM을 직접 사용해 보고 싶을 때만 이 네트워크를 잠시 남기고 [Compute 시작하기](Compute.md#사전준비)로 이동합니다. Compute에서는 이 subnet을 선택하고 SSH를 선택할 때만 보안 규칙을 추가합니다. VM을 마치면 Compute의 VM/boot volume 정리 후 이 문서의 네트워크 정리로 돌아옵니다.
+여기서 끝내면 바로 아래 정리로 갑니다. VM을 직접 사용해 보고 싶을 때만 이 네트워크를 잠시 남기고 [Compute 시작하기](../../Compute/GettingStarted.md#사전준비)로 이동합니다. Compute에서는 이 subnet을 선택하고 SSH를 선택할 때만 보안 규칙을 추가합니다. VM을 마치면 Compute의 VM/boot volume 정리 후 이 문서의 네트워크 정리로 돌아옵니다.
 
 ### 결과검증과 문제해결
 
@@ -123,7 +123,7 @@ Create를 한 번 누릅니다. 상세에서 `AVAILABLE`, CIDR, 선택 Compartme
 
 ### 리소스정리
 
-1. 이 subnet에 VM이 남아 있다면 [Compute 리소스정리](Compute.md#리소스정리)의 1–3번으로 VM과 boot volume부터 정리한 뒤 이 목록의 2번을 진행합니다. Compute 정리를 마치고 온 경우나 VM을 만들지 않은 경우에는 곧바로 2번으로 갑니다.
+1. 이 subnet에 VM이 남아 있다면 [Compute 리소스정리](../../Compute/GettingStarted.md#리소스정리)의 1–3번으로 VM과 boot volume부터 정리한 뒤 이 목록의 2번을 진행합니다. Compute 정리를 마치고 온 경우나 VM을 만들지 않은 경우에는 곧바로 2번으로 갑니다.
 2. **Networking → Virtual cloud networks → 방금 만든 lab-vcn → Actions → Delete**에서 **Search compartments for resources associated with this VCN → All compartments → Scan**을 선택합니다.
 3. 검색 결과가 이번 VCN과 이번에 만든 네트워크 자원뿐인지 확인합니다. 모르는 자원이나 VM이 있으면 취소합니다. 맞으면 **Delete All**을 선택합니다. 자동 생성된 이 VCN의 default 자원도 이때 함께 정리합니다.
 4. 진행 결과를 확인하고 같은 Region·Compartment 목록을 새로고침하여 해당 VCN이 사라졌는지 확인합니다. 일부 삭제가 실패하면 오류에 나온 이번 자원을 확인하고, 목록 조회가 성공한 뒤 삭제 여부를 다시 확인합니다. Compartment 자체는 삭제하지 않습니다.
