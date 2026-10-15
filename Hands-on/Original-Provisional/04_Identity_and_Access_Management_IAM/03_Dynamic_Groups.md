@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · OCI 실행 미검증**: 이 Dynamic Groups 실습의 한정된 문서 결함과 선행 API 경로·반환 계약 수정은 검토 완료되었습니다. 실제 OCI 실행 성공이나 전체 curriculum 승인, publication/rendering 검증을 뜻하지 않습니다.
 
 # Dynamic Groups
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 통합 상태: 이 파일의 잔여 통합 수정 범위는 문서 검토 완료입니다. OCI 실행과 learner publication/rendering 검증은 아직 수행하지 않았으며, 전체 curriculum 승인을 뜻하지 않습니다. 실제 선행 출력·비용·권한 gate를 통과한 경우에만 실행하세요.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -24,19 +24,19 @@
 
 ## 사전준비
 
-33의 REGION/NS/IAM_LAB_OCID/A/B 실제 proof hash,24의 A/B SSH 정상,10의 INSTANCE_A_ID와22의 INSTANCE_B_ID를 받는다.30 설치 준비 링크는 설치용이고 B API 호출 전에는 본문 full-test 재진입의 실제 NAT route/443 egress readback이 추가로 필요하다. instance_principal API에는 user private key가 없다.31 SGW-only 전환 전에 A/B principal 결과와 gateway/fixture lease를 반환한다.
+33의 REGION/NS/IAM_LAB_OCID/A/B 실제 proof hash와 기존 A/B SSH 정상,10의 INSTANCE_A_ID와22의 INSTANCE_B_ID를 받는다.30 설치 준비 링크는 설치용이고 B API 호출 전에는 본문 API 준비/복원 subset의 실제 NAT route/443 egress readback이 추가로 필요하다. instance_principal API에는 user private key가 없다.31 SGW-only 전환 전에 A/B principal 결과와 gateway/fixture lease를 반환한다.
 
 ### 기준 계약과 실제 단계 선행조건
 
 [공통 baseline-contract.json](../../../baseline-contract.json)의 OS/CIDR/소유권을 따른다. Oracle Linux 9 / `opc` / `dnf` 외의 숨은 Ubuntu 또는 probe VM은 만들지 않는다. OCID/IP의 null은 실행 전 반드시 실제 출력으로 채우는 **실행 차단 입력**이다. approval/capacity/quota/identity 미확인은 완료가 아니다.
 
 - [33.ready Identity and Access Management (IAM) — FUNCTIONAL_COMPLETION](00_Identity_and_Access_Management_IAM.md#baseline-33-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
-- [24.ready Route Tables — FUNCTIONAL_COMPLETION](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md#baseline-24-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
+- **기존 A/B 접속 준비만 필수:** owner10의 public A, owner22의 private B 실제 OCID/IP와 대상별 host-key 신뢰값을 받고 A→B 새 SSH에서 `hostname; id -un` 성공을 확인한다. [Private Subnets](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md)의 실제 B 생성/SSH 경로를 사용한다. Route Tables의 HTTP8080 workload/route 장애시험 전체 완료는 선택 선행학습이다. API egress는 아래 NAT 복원 station에서 별도 확인한다.
 - [30.prepare NAT Gateway — PRE_CREATE_OR_INSTALL_PREPARATION](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md#nat-installation-preparation): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
 
 공유 A/B consumer는 INSTANCE_A_ID에 owner10 vm-a의 실제 OCID, INSTANCE_B_ID에 owner22 private-vm의 실제 OCID, `A_PUBLIC_IP`, `A_PRIVATE_IP`, `B_PRIVATE_IP`를 실제 생성 응답에서 전달받는다. 해당 주제에 필요하지 않은 VM/변수는 생성·요구하지 않는다.
 
-- [Identity and Access Management (IAM)](../../../Docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md) **IAM-fixture-ready** 완료. [Route Tables](../../../Docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md) **RT-ready** private B VM와 SSH 정상. CLI 설치용 NAT가 필요하면 [NAT 설치 준비](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md#nat-installation-preparation) **A 단계**의 경로를 일시 사용한다.
+- [Identity and Access Management (IAM) fixture](00_Identity_and_Access_Management_IAM.md#baseline-33-ready) **IAM-fixture-ready** 완료. 기존 private B VM와 A→B SSH 정상. CLI 설치용 NAT가 필요하면 [NAT 설치 준비](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md#nat-installation-preparation) **A 단계**의 경로를 일시 사용한다.
 - CLI는 B에 설치하되 사용자 API private key/config는 복사하지 않는다. 두 번째 비회원 VM은 A를 재사용한다. Instance principal 지원 CLI 설치와 object fixture 존재를 먼저 확인한다.
 - 실습은 Compute instance용 matching rule을 먼저 작성하고42에서 Function resource용 rule을 별도로 작성한다.42 전체 실행을 선행 요구하지 않는다.
 
@@ -89,9 +89,16 @@ exact instance membership와 bucket-scoped permission을 먼저 구성하고 같
 
 NAT 설치 후 CLI가 존재한다는 사실만으로 API 네트워크가 준비되지 않는다. 본 시험은 NAT default route/egress443가 활성인 동안 두 bucket get을 먼저 검증한다. 31로 넘길 때만 NAT route를 제거하고 SGW-only 경로로 전환한다. Download 결과는 exit code=0의 새 파일만 hash한다.
 
-**순서 고정:**CLI 설치 완료값은 network-ready가 아니다. [29 Internet Gateway](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/10_Internet_Gateway.md#baseline-29-ready)의 A public 경로를 완료하고, [30 NAT Gateway](../../../Docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md)의 **full-test 재진입**에서 owner30가 승인한 B default-route tuple 및 정확한 egress443를 복원/readback한 뒤 B API를 시작한다. 30.prepare 종료의 제거된 경로를 그대로 사용하지 않는다. 승인 route/egress OCID·rule ID/UTC lease를 owner30와 기록하고 단계5/6 후에만31로 반환한다. 네트워크 복원이 미확인이면 BLOCKED_NETWORK로 중단한다.
+**순서 고정:** CLI 설치 완료값은 network-ready가 아니다. [owner23 public 경로 준비](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md#public-network-preparation)의 실제 IGW enabled/default route와 기존 A의 새 SSH/승인 HTTPS를 확인하고, [30 API 준비/복원 subset](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md#nat-api-network-preparation)의1–5를 수행한다. owner30 승인 B default-route tuple/egress443의 실제 readback 뒤에만 B API를 시작한다.24 HTTP/route 장애시험,29 IGW disable/recovery,30 NAT block/full-test 완료는 이 준비 branch의 선행이 아니다. 설치-only 반환으로 제거된 경로는 반드시 복원한다. 정확한 tuple·추가 rule ID/추가 여부·이전 배열·UTC lease를 owner30와 기록하고 단계5/6 및 승인된 정리 서비스 호출까지 유지한 뒤 반환한다. 미확인이면 BLOCKED_NETWORK로 중단하며31 SGW-only와 동시 실행하지 않는다.
 
 ### A. Dynamic Group과 최소 정책
+
+owner33의 실제 BUCKET_A/BUCKET_B 이름을 각 VM shell에 입력한다. 아래 policy의 `<actual_BUCKET_A_name>`은 실제 이름으로 바꾸며 `$BUCKET_A` literal을 editor에 넣지 않는다.
+
+```bash
+export BUCKET_A='<owner33_actual_A_bucket_name>'
+export BUCKET_B='<owner33_actual_B_bucket_name>'
+```
 1. **Compute → private-vm → Details**에서 instance OCID를 복사한다. VNIC OCID를 넣지 않는다.
 2. **Identity & Security → Domains → 사용할 Domain → Dynamic groups → Create Dynamic Group**: `dg-private-vm`, Description `Exact B instance read proof`, matching rule:
 
@@ -102,13 +109,13 @@ instance.id = '<INSTANCE_B_ID>'
 3. 관리자 **Policies → iam-lab → Create**: `p-instance-read-a`. Dynamic Group 이름/Domain 표현이 환경마다 달라 혼동될 수 있으므로 공식 Policy Syntax의 `dynamic-group id`로 실제 Group OCID를 사용한다.
 
 ```text
-Allow dynamic-group id <DG_PRIVATE_VM_OCID> to read objects in compartment id <IAM_LAB_OCID> where target.bucket.name = 'iam-proof-a'
+Allow dynamic-group id <DG_PRIVATE_VM_OCID> to read objects in compartment id <IAM_LAB_OCID> where target.bucket.name = '<actual_BUCKET_A_name>'
 ```
 
 Object namespace는 관리자가33에서 기록해 전달한다. instance에 namespace 조회를 위해 불필요한 tenancy 전체 read를 주지 않는다.
 
 ### B. 실제 instance principal 호출
-4. B에 OCI CLI가 없는 경우 설치된 패키지/관리자 승인 방식으로 설치하고 `oci --version`을 기록한다. 설치 중 사용하는 NAT는 CLI 설치 후31의 SGW-only 검증에서 제거한다. Shell의 `OCI_CLI_AUTH`, `OCI_CLI_PROFILE`, config 환경변수를 확인한다. Oracle Linux 9 VM에서 CLI가 없으면 [OCI CLI Quickstart — Linux and UNIX](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm)의 공식 installer를 **보존한 NAT 경로로** 내려받아 검토한 뒤 실행한다. 설치 prompt의 경로는 `$HOME` 내부를 선택한다.
+4. B에 OCI CLI가 없는 경우 설치된 패키지/관리자 승인 방식으로 설치하고 `oci --version`을 기록한다. 설치 중 사용하는 NAT는 이 문서 단계5/6 및 승인된 정리 서비스 호출과 반환을 마친 뒤에만 owner30/31의 SGW-only 전환 절차에서 제거한다. Shell의 `OCI_CLI_AUTH`, `OCI_CLI_PROFILE`, config 환경변수를 확인한다. Oracle Linux 9 VM에서 CLI가 없으면 [OCI CLI Quickstart — Linux and UNIX](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm)의 공식 installer를 **보존한 NAT 경로로** 내려받아 검토한 뒤 실행한다. 설치 prompt의 경로는 `$HOME` 내부를 선택한다.
 
 ```bash
 set -euo pipefail
@@ -126,18 +133,22 @@ export PATH="$HOME/bin:$PATH"
 oci --version
 ```
 
-Instance principal은 User API config 없이 실행하며 `oci setup config`로 User 키를 VM에 만들지 않는다. A 비회원 VM에서도 CLI를 동일하게 준비한다. Installation network가 없으면 먼저30의 임시 NAT를 승인받고 준비 후31의 route 제거를 수행한다.
+Instance principal은 User API config 없이 실행하며 `oci setup config`로 User 키를 VM에 만들지 않는다. A 비회원 VM에서도 CLI를 동일하게 준비한다. Installation network가 없으면 먼저30의 임시 NAT를 승인받고 설치 후에도 단계5/6 API 검증 및 승인된 정리 서비스 호출까지 경로를 보존하고, 반환 후에만31의 route 제거를 수행한다.
+
+호출 전 각 VM의 새 shell에 `REGION`, `NS`, `BUCKET_A`, `BUCKET_B`를 owner33의 보존한 값으로 입력한다. `EXPECTED_A_SHA256`에는 owner33이 실제 proof.txt에서 기록한 A SHA256을 입력한다. placeholder나 빈 값이면 중단한다. 관리자 전용 환경에서 동일 Region/namespace의 A/B proof.txt를 각각 새 파일로 GET하고 owner33 hash와 일치함을 먼저 확인한다. 관리자 credential은 VM으로 복사하지 않는다. 이 positive control이 없거나 fixture/endpoint가 시험 도중 변경되면 deny 판정을 보류하고 원래 fixture를 owner33에게 복구 요청한다.
 
 ```bash
 set -euo pipefail
+: "${REGION:?owner33 Region}" "${NS:?owner33 namespace}" "${BUCKET_A:?actual A}" "${BUCKET_B:?actual B}" "${EXPECTED_A_SHA256:?owner33 actual A hash}"
+[[ "$EXPECTED_A_SHA256" =~ ^[[:xdigit:]]{64}$ ]] || exit 1
 GET_WORK=$(mktemp -d "$HOME/oci-principal36.XXXXXXXX") || exit 1
 # New directory per principal/state; record exact path and owner before API tests.
-timeout -k 5s 45s oci os object get --auth instance_principal --region '<REGION>' --namespace-name '<NS>' --bucket-name iam-proof-a --name proof.txt --file "$GET_WORK/instance-a.txt" --max-retries 0
+timeout -k 5s 45s oci os object get --auth instance_principal --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name proof.txt --file "$GET_WORK/instance-a.txt" --max-retries 0
 test "$?" -eq 0 || { printf 'STOP: failed A GET; no old-file hash\n'; exit 1; }
-python3 -c 'import pathlib,sys; assert pathlib.Path(sys.argv[1]).read_bytes()==b"iam-proof-a\n"' "$GET_WORK/instance-a.txt" || exit 1
+printf '%s  %s\n' "$EXPECTED_A_SHA256" "$GET_WORK/instance-a.txt" | sha256sum --check --status || exit 1
 sha256sum "$GET_WORK/instance-a.txt"
 ERR="$GET_WORK/b-error.json"
-if timeout -k 5s 45s oci os object get --auth instance_principal --region '<REGION>' --namespace-name '<NS>' --bucket-name iam-proof-b --name proof.txt --file "$GET_WORK/instance-b.txt" --max-retries 0 2>"$ERR"; then
+if timeout -k 5s 45s oci os object get --auth instance_principal --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_B" --name proof.txt --file "$GET_WORK/instance-b.txt" --max-retries 0 2>"$ERR"; then
   printf 'STOP: unexpected allowed B GET\n'; exit 1
 else rc=$?; fi
 python3 - "$rc" "$ERR" <<'PY'
@@ -154,8 +165,10 @@ PY
 6. A VM에서 같은 `--auth instance_principal` A get을 실행한다. A instance OCID는 matching rule에 없으므로 실패해야 한다. A에 다른 Dynamic Group policy가 없는지 관리자가 확인한다.
 **단계6 A VM 전용 negative (B positive fence를 복사하지 않음):**
 ```bash
+set -euo pipefail
+: "${REGION:?owner33 Region}" "${NS:?owner33 namespace}" "${BUCKET_A:?actual A}"
 A_DENY_WORK=$(mktemp -d "$HOME/oci-principal36-a-deny.XXXXXXXX") || exit 1
-if timeout -k 5s 45s oci os object get --auth instance_principal --region '<REGION>' --namespace-name '<NS>' --bucket-name iam-proof-a --name proof.txt --file "$A_DENY_WORK/proof.txt" --max-retries 0 2>"$A_DENY_WORK/error.txt"; then
+if timeout -k 5s 45s oci os object get --auth instance_principal --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name proof.txt --file "$A_DENY_WORK/proof.txt" --max-retries 0 2>"$A_DENY_WORK/error.txt"; then
   printf 'STOP: nonmember unexpectedly allowed\n'; exit 1
 else RC=$?; fi
 python3 - "$RC" "$A_DENY_WORK/error.txt" <<'PY'
@@ -188,7 +201,11 @@ if [ "$?" -ne 0 ]; then exit 1; fi
 
 ## 리소스정리
 
-31 및 승인된 후속42가 필요한 fixture를 각 owner의 consumer registry/expiry까지 보존한다. 전체 종료 시 `p-instance-read-a` 제거 → owner10/22의 모든 소비자 반환 뒤 creator가 수행하는 VM 종료(또는36 소유 matching rule membership 정리/전파 확인) → Dynamic Group 삭제 → registry의 exact GET_WORK instance-a.txt/instance-b.txt/b-error.json 새 파일만 제거하고 empty directory rmdir한다. INSTALL_WORK의 reviewed install.sh도 사용 종료 후 exact 삭제/rmdir하며 설치된 CLI는 공유 소비자 확인 전 uninstall하지 않는다. topic36은 공유 VM/Boot Volume을 삭제하지 않고 instance/CLI/fixture 사용 반환을 owner10(A)/owner22(B)에 전달한다. 모든 예약 consumer 반환 후에만 해당 creator가 자기 VM 및 boot를 정리한다. 공유 Dynamic Group은 삭제하지 않는다.
+실패·중단 시에도 먼저 새 API 호출을 멈춘다. 선택 rule 변경을 했다면 단계7의 snapshot으로 원복하고 전파 확인 또는 BLOCKED_PROPAGATION 상태를 관리자에게 전달한다. 이 실습이 만든 `p-instance-read-a`의 실제 OCID를 Console에서 대조한 뒤 관리자에게 삭제를 요청하고 삭제 목록/readback을 확인한다. 공식 문서는 Dynamic Group이 비어 있어야 삭제할 수 있다고 명시한다. 따라서 바로 삭제하지 않는다. 관리자에게 이 실습 전용 Group의 rule 변경 권한과 최대75분의 별도 전파/유지 예산을 승인받아, Edit All Matching Rules에서 원래 exact B rule을 `All {instance.id = '<INSTANCE_B_ID>', instance.id != '<INSTANCE_B_ID>'}`로 바꾼다(두 OCID 모두 실제 같은 B 값; 동시에 참일 수 없어 공유 VM을 변경하지 않는다). 원래 rule/Group OCID와 변경 시각을 보존하고 약1시간 전파 여유 후 B의 이전 A GET이 서비스 권한 거부로 바뀌는지 기존 negative 판정 방식으로 확인한다. 네트워크 오류는 membership 제외 증거가 아니다. 관리자 확인 후 전용 Group OCID를 대조하여 Console Delete하고 readback한다. 예산·권한 미승인, 전파 미확인 또는 삭제 실패 시 Group OCID/현재 rule/정책 삭제 상태를 관리자에게 잔여 정리로 반환하며 삭제 완료로 기록하지 않는다. 이미 policy를 삭제했으므로 GET 거부만으로 membership 비움을 증명하지 않으며, 모순 rule readback과 관리자 삭제 결과를 함께 확인한다. 이름이 같아도 기존/공유 Group이나 Policy는 삭제하지 않는다. 공유 VM의 종료는 이 정리의 선행조건이 아니며 topic36이 수행하지 않는다.
+
+각 VM에서 기록해 둔 exact `GET_WORK`/`A_DENY_WORK` 경로의 이 실행 소유 파일만 제거한다: `instance-a.txt`, `instance-b.txt`(실패 중 생성된 경우 포함), `b-error.json`, `proof.txt`, `error.txt`. 해당 디렉터리가 본 실행 소유인지 확인 후 파일을 개별 삭제하고 빈 디렉터리만 `rmdir`한다. 경로 기록을 잃었으면 임의 wildcard/재귀 삭제를 하지 말고 소유 경로부터 복구한다. `INSTALL_WORK`의 reviewed `install.sh`도 exact 삭제/빈 디렉터리 정리한다. 공유 CLI는 후속 소비자 확인 전 uninstall하지 않는다.
+
+단계5/6 및 승인된 정리 서비스 호출의 성공·거부 또는 중단 상태와 함께 NAT route/egress lease를 owner30/31에게 반환하고 그 owner의 전환/정리 station으로 돌아간다. owner33에는 A/B fixture 사용 반환을 전달하며31 및 승인된 후속42가 남았으면 해당 consumer registry/expiry까지 보존한다. owner10(A)/owner22(B)에 instance/CLI 사용 반환을 전달한다. 모든 예약 consumer 반환 후에만 해당 creator가 자기 VM/Boot Volume 및 bucket을 정리한다. 이 문서는 공유 VM·NAT·bucket을 직접 삭제하지 않는다.
 
 ## 공식문서
 

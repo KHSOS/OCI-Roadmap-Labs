@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **범위 한정 문서 검토 완료 · 실제 OCI 실행 미검증**: 이 File Storage 실습의 수정 범위는 문서 기준으로 검토 완료했습니다. 실행 가능한 절차에 대한 문서 검토이며 OCI에서의 생성·mount·복구·삭제 성공을 확인한 것은 아닙니다. 실제 권한·안전·비용·복구 조건은 아래 실행 gate를 그대로 따릅니다.
 
 # File Storage
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 통합 상태: 이번 잔여 통합 수정 범위에서 이 문서의 검토를 완료했습니다. OCI 실행과 learner publication/rendering 검증은 아직 수행하지 않았으며, 전체 curriculum 승인을 뜻하지 않습니다. 실제 선행 출력·비용·권한 gate를 통과한 경우에만 실행하세요.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -24,7 +24,7 @@
 
 ## 사전준비
 
-22의 기존 B_PRIVATE_IP/AD/SSH·24 client 경로,19 VCN_ID,20 현재 CIDR 계획,25/26 보안 owner 반환을 받는다.30 설치 준비는 nfs-utils 설치가 필요할 때만 사용한다. MT_PRIVATE_IP/FS_ID/MT_ID/EXPORT_ID/EXPORT_SET_ID는 아래 생성 후 출력이며 미리 추측하지 않는다. exact B→MT NFSv3 mount/source/rw와 proof hash를44–47에 인계한다.
+22의 기존 B_PRIVATE_IP/AD/SSH·24 client 경로,19 VCN_ID,20 현재 CIDR 계획,25/26 실험을 선택했다면 원래 보안 상태로 반환되었는지만 확인한다.30 설치 준비는 nfs-utils 설치가 필요할 때만 사용한다. MT_PRIVATE_IP/FS_ID/MT_ID/EXPORT_ID/EXPORT_SET_ID는 아래 생성 후 출력이며 미리 추측하지 않는다. exact B→MT NFSv3 mount/source/rw와 proof hash를44–47에 인계한다.
 
 ### 기준 계약과 실제 단계 선행조건
 
@@ -32,14 +32,14 @@
 
 - [24.ready Route Tables — FUNCTIONAL_COMPLETION](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md#baseline-24-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
 - [22.ready Private Subnets — FUNCTIONAL_COMPLETION](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md#baseline-22-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
-- [25.ready Network Security Groups — FUNCTIONAL_COMPLETION](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md#baseline-25-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
-- [26.ready Security Lists — FUNCTIONAL_COMPLETION](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md#baseline-26-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
+- [NSG 반환](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md#baseline-25-ready) / [Security List 반환](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md#baseline-26-ready): 해당 실험을 수행했다면 변경을 원복한 상태만 확인한다. 장애 실험 전체 완료는 FSS prerequisite가 아니다.
+- [VCN 준비](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/00_Virtual_Cloud_Network_VCN.md#baseline-19-ready)의 actual VCN_ID/REGION와 [20.prepare CIDR 계획 — PRE_CREATE_OR_INSTALL_PREPARATION](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/01_CIDR_Blocks.md#cidr-planning)의 단계 A에서 승인된 VCN/public/private CIDR·CONNECTED_CIDRS_JSON과 실제 로컬 계산 결과를 인수한다. 20.ready의 생성 후 API 비교 전체 완료는 요구하지 않는다. 이 계획은 아래 A.1에서 현재 VCN/전체 기존 subnet inventory와 신규 FSS CIDR을 다시 검증하는 입력이며, 계획만으로 FSS 생성 승인을 대신하지 않는다.
 - [30.prepare NAT Gateway — PRE_CREATE_OR_INSTALL_PREPARATION](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md#nat-installation-preparation): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
 
-공유 A/B consumer는 INSTANCE_A_ID에 owner10 vm-a의 실제 OCID, INSTANCE_B_ID에 owner22 private-vm의 실제 OCID, `A_PUBLIC_IP`, `A_PRIVATE_IP`, `B_PRIVATE_IP`를 실제 생성 응답에서 전달받는다. 해당 주제에 필요하지 않은 VM/변수는 생성·요구하지 않는다.
+이 실습에는 기존 B(private-vm)의 OCID·private IPv4·AD와 접속 경로만 필요하다. A는 기존 SSH 경로가 사용하는 경우에만 유지하며 별도 VM을 만들지 않는다. owner43은 이 문서의 생성자 역할이며 개인 실습에서는 본인이다.
 
-- [Route Tables](../../../Docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md) **RT-ready**의 SSH/Linux VM 보존, [Private Subnets](../../../Docs/03_Virtual_Cloud_Network_VCN/03_Private_Subnets.md) **private Subnet/Public IP 금지 완료**. mount client는 `private-vm`를 재사용하고 NFS 패키지를 설치할 Internet/NAT 경로가 필요하면 [NAT Gateway](../../../Docs/03_Virtual_Cloud_Network_VCN/11_NAT_Gateway.md)의 **nat-installation-preparation** 설치 경로를 일시 사용한다.
-- [Network Security Groups](../../../Docs/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md)/[Security Lists](../../../Docs/03_Virtual_Cloud_Network_VCN/07_Security_Lists.md)의 NSG/SL 이해 완료. 아래 전용 mount-target Subnet·NSG 생성은 Network 관리자 승인 작업이다. File Storage 생성 비용 승인·Region/AD/한도 확인 전에는 진행하지 않는다.
+- 위 보존된 Route Tables/Private Subnets의 SSH 경로와 기존 private-vm을 재사용한다. nfs-utils가 없을 때만 위 NAT installation preparation을 수행한다. NSG/SL 개념 읽기는 참고이며 전용 network 생성에는 필요한 관리자 권한·비용·Region/AD 한도를 확인한다.
+- **개인 격리 경로:** 같은 사용자가 creator/consumer 역할을 맡고 현재 VCN subnet 비중복, B/32 제한, 비용 종료 시각과 정리를 확인한다. 연결망이 없으면 CONNECTED_CIDRS_JSON은 `[]`다. 공유/조직 환경에만 각 owner 승인·전체 연결 CIDR 인수·독립 Console 복구 담당자를 적용한다. 개인 경로도 mount 실패 시 사용할 두 번째 관리 terminal은 먼저 열어 둔다.
 - Linux client와 File System/Mount Target은 동일 AD를 선택해 cross-AD 비용/지연을 최소화한다.44~47까지 선택된 consumer와 승인 expiry를 기록하고 같은 File System/Mount Target/Export/VM을 보존한다. 선택47 Snapshot 삭제/반환 전 owner43 최종 삭제 금지.
 
 ## 권한
@@ -108,7 +108,7 @@ File System `fs-lab`, 표준 Mount Target `mt-lab`, Export `/lab` 하나를 **�
 ## 실습절차
 
 ### 작업 순서 체크포인트
-network 준비→FS/MT/export 생성→checked mount→파일 쓰기/remount comparison→consumer return→unmount/export/MT/FS 순서로 수행한다. existing VM/network는 소비자 실습에서 삭제하지 않는다. 단계 실패는 다음 생성으로 넘기지 않고 같은 target의 복구/반환으로 처리한다.
+network 준비→FS/MT/export 생성→checked mount→파일 쓰기/remount comparison→consumer return→unmount/Export/FS/MT 순서로 수행한다. existing VM/network는 소비자 실습에서 삭제하지 않는다. 단계 실패는 다음 생성으로 넘기지 않고 같은 target의 복구/반환으로 처리한다.
 
 ### 개별 완주 보정 — 생성·검증·소유권
 
@@ -116,9 +116,9 @@ MT_PRIVATE_IP는 Mount Target Details의 실제 private IPv4를 B shell에서 ex
 
 ### A. NFS endpoint용 Subnet와 Security
 
-**첫 생성 전 owner43 abort/복구 station:** exact 신규 OCID/created-by43 flag를 제출마다 registry에 저장한다(기존 같은 이름은 소유하지 않음). 독립 Console 담당자와 최대120초 mount 요청 복구 창/전체 비용 expiry를 승인한다.8 실패/세션 손실에도 담당자는 원래 B/32 RW options·MT ACTIVE·통신을 복원/readback한다. deadline은 kernel 종료와 독립이다. 부분 생성 실패는 재Create하지 않고 승인 expiry 안에 실제 생성 목록을 읽어: owned test file(실제 NFS mount/rw 확인시에만) → 정상 client unmount/잔존 request 종료 → 생성된 Export → FS → 다른 Export 없는 MT → B의43 membership →43 NSG →43 subnet → 미참조 rt-fss/sl-fss 순으로 존재하는 owned 대상만 정리/readback한다. mount가 성공한 적 없어도 이 역순 abort를 따른다. D-state/미확인 mount면 endpoint 삭제 금지 및 아래 residual station으로 인계한다. 공유 A/B·기존 subnet/NSG는 삭제하지 않는다.
+**첫 생성 전 owner43 abort/복구 station:** exact 신규 OCID/created-by43 flag를 제출마다 registry에 저장한다(기존 같은 이름은 소유하지 않음). 개인 실습은 두 번째 관리 terminal을 열고, 공유 실습은 독립 Console 담당자와 함께 최대120초 mount 요청 복구 창/전체 비용 expiry를 승인한다.8 실패/세션 손실에도 담당자는 원래 B/32 RW options·MT ACTIVE·통신을 복원/readback한다. deadline은 kernel 종료와 독립이다. 부분 생성 실패는 재Create하지 않고 승인 expiry 안에 실제 생성 목록을 읽어: owned test file(실제 NFS mount/rw 확인시에만) → 정상 client unmount/잔존 request 종료 → 생성된 Export → FS → 다른 Export 없는 MT → B의43 membership →43 NSG →43 subnet → 미참조 rt-fss/sl-fss 순으로 존재하는 owned 대상만 정리/readback한다. mount가 성공한 적 없어도 이 역순 abort를 따른다. D-state/미확인 mount면 endpoint 삭제 금지 및 아래 residual station으로 인계한다. 공유 A/B·기존 subnet/NSG는 삭제하지 않는다.
 
-**A.1 제출 전 추가 CIDR 승인 gate (host: 관리자 Cloud Shell):** owner20의 현재 CONNECTED_CIDRS_JSON 전체 계획(없으면 조직 확인 []), VCN_ID/REGION과 신규 FSS_SUBNET_CIDR을 지정한다. 기존 subnet을 pagination 포함해 모두 조회한다. 실패/IPv6/overlap이면 rt-fss/sl-fss/subnet 생성 전 중단하고 새 계획을 승인받는다. [Subnet containment and non-overlap](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/create_subnet.htm).
+**A.1 제출 전 추가 CIDR 승인 gate (host: 관리자 Cloud Shell):** 연결망 없는 개인 격리 VCN만 CONNECTED_CIDRS_JSON=[]로 두고, 연결망/공유 VCN은 owner20의 현재 CONNECTED_CIDRS_JSON 전체 계획을 받아 VCN_ID/REGION과 신규 FSS_SUBNET_CIDR을 지정한다. 기존 subnet을 pagination 포함해 모두 조회한다. 실패/IPv6/overlap이면 rt-fss/sl-fss/subnet 생성 전 중단하고 새 계획을 승인받는다. [Subnet containment and non-overlap](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/create_subnet.htm).
 
 ```bash
 for p in fss43-vcn-plan.json fss43-existing-subnets.json; do
@@ -126,7 +126,10 @@ for p in fss43-vcn-plan.json fss43-existing-subnets.json; do
 done
 set -C
 export FSS_SUBNET_CIDR='10.77.30.0/24' 
-export CONNECTED_CIDRS_JSON='<owner20_current_approved_JSON_array>'
+: "${VCN_ID:?선행 VCN OCID 필요}" "${REGION:?선행 Region 필요}" "${LAB_COMPARTMENT_ID:?기존 subnet inventory Compartment OCID 필요}"
+# 개인 비연결 VCN에서만 다음을 입력: export CONNECTED_CIDRS_JSON='[]'
+# 연결망이 있으면 현재 계획의 JSON 배열을 먼저 export한다. 기존 값을 []로 덮어쓰지 않는다.
+: "${CONNECTED_CIDRS_JSON:?연결 CIDR 배열을 먼저 지정}"
 oci network vcn get --vcn-id "$VCN_ID" --region "$REGION" > fss43-vcn-plan.json || exit 1
 # 관리자가 VCN 전체 subnet inventory(다른 compartment 포함)를 Console에서 확인하고
 # 전부 LAB_COMPARTMENT_ID에 속함을 승인한 경우에만 아래 list가 전체 inventory다.
@@ -154,11 +157,11 @@ if [ "$?" -ne 0 ]; then exit 1; fi
 
 1. 관리자 **VCN → Subnets → Create Subnet**: `lab-fss`, regional, `10.77.30.0/24`, Private, VCN DNS/default DHCP, 외부 route 없는 전용 `rt-fss`, 명시적 ingress/egress 빈 `sl-fss`만 연결. 먼저 VCN → Route Tables → Create rt-fss(rule 없음), Security Lists → Create sl-fss(두 배열 비어 있음)를 생성하고 OCID를 기록한다. default SL을 연결하지 않는다. `/30`처럼 IP가 모자라는 CIDR은 사용하지 않는다. Mount Target은 내부 IP 세 개 여유가 필요하다.
 2. **NSG → Create** `nsg-fss-mt`와 `nsg-fss-client`. MT ingress source `<B_PRIVATE_IP>/32`, **stateful TCP** destination **111**, **2048-2050**; **stateful UDP** destination **111**, **2048**. NFS 관련 source port는 전체 범위로 두고 Export secure option의 privileged source port를 통해 제한한다. 공식 문서는 source1-1023도 권장하므로 적용하려면 mount/RPC source 관찰 후 일치 여부를 확인한다.
-3. B client NSG의 새 rule ID/기존 B VNIC NSG membership을 먼저 저장한다. **Compute → private-vm → Attached VNICs → primary VNIC → Network security groups → Edit**에서 기존 SSH용 NSG를 유지하고 `nsg-fss-client`를 추가/Save한다. exact B VNIC의 membership readback 전에는 NFS 시험을 시작하지 않는다. B client NSG stateful egress destination `<MT_PRIVATE_IP>/32`로 같은 TCP/UDP destination port를 넣는다. MT IP는 생성 후 실제 값으로 대체한다. B SSH 관리 rule은 보존한다. broad SL/NSG가 NFS를 허용하지 않도록 확인한다. NFS를 `0.0.0.0/0` source로 열지 않는다.
+3. B client NSG의 새 rule ID/기존 B VNIC NSG membership을 먼저 저장한다. **Compute → private-vm → Attached VNICs → primary VNIC → Network security groups → Edit**에서 기존 SSH용 NSG를 유지하고 `nsg-fss-client`를 추가/Save한다. exact B VNIC의 membership readback 전에는 NFS 시험을 시작하지 않는다. B client NSG egress는 이 단계에서는 만들지 말고 단계7에서 MT IP가 나온 후 생성한다. stateful egress destination `<MT_PRIVATE_IP>/32`로 같은 TCP/UDP destination port를 넣는다. MT IP는 생성 후 실제 값으로 대체한다. B SSH 관리 rule은 보존한다. broad SL/NSG가 NFS를 허용하지 않도록 확인한다. NFS를 `0.0.0.0/0` source로 열지 않는다.
 
 ### B. File System/Mount Target/Export 생성
 4. **Storage → File Storage → File Systems → Create file system**에서 **File system for NFS** 선택. Name `fs-lab`, 교육 Compartment, AD는 B와 동일, Encryption Oracle-managed, Attach Snapshot Policy off.
-5. **Export information**: path `/lab`, **Use secure export options on**, LDAP off. **Mount Target**: Create new `mt-lab`, 교육 Compartment, `shared-vcn`, `lab-fss`, 표준/default shape, `nsg-fss-mt`, hostname `mtlab`(VCN DNS 사용), unused private IP 자동. High Performance upgrade를 하지 않는다. 생성/ACTIVE를 기다린다.
+5. **Export information**: path `/lab`, **Use secure export options on**, LDAP off. **Mount Target**: Create new `mt-lab`, 교육 Compartment, 선행 `VCN_ID`와 일치하는 VCN, `lab-fss`, 표준/default shape, `nsg-fss-mt`, hostname `mtlab`(VCN DNS 사용), unused private IP 자동. High Performance upgrade를 하지 않는다. 생성/ACTIVE를 기다린다.
 6. Export details **NFS Export Options → Edit**: 기존 broad source를 제거하고 source `<B_PRIVATE_IP>/32`, Ports **Privileged**, Access **Read/Write**, Squash **None**, allowed authentication **SYS**, Anonymous access **Not Allowed**를 명시한다. UID/GID 기본65534는 squash none에서 적용되지 않지만 기록한다. 이 선택은 root 권한 POSIX 학습을 단순화하는 격리 실습용이며46에서 RO/RW를 구분한다.
 7. MT private IP로 step3 egress를 완성한다. File System/MT/Export OCID·AD·Export Set OCID·path를 저장한다.
 
@@ -188,9 +191,25 @@ if timeout -k 5s 15s rpcinfo -p "$MT_PRIVATE_IP"; then RC=0; else RC=$?; printf 
 
 기대 rpcinfo 결과의 NFS/mountd 프로그램·TCP/UDP port를 기록한다. firewall OUTPUT 제한이 있으면 임의 zone rich-rule이 outbound를 해결한다고 가정하지 말고 **host security owner가 해당 HOST-output policy의 MT/32·위 TCP/UDP ports만 별도 승인**한 exact rule ID/before/after/expiry/remove recipe를 전달할 때까지 BLOCKED_HOST_FIREWALL로 중단한다. 기본 unrestricted-output에서 guest rule 추가는0건이며 삭제도0건이다. 모든 query 오류는 mutation 허가가 아니다. SELinux/firewalld 전체 disable·permanent reload·전체 ruleset flush를 하지 않는다. NFS client mount 뒤 `systemctl is-active rpc-statd`로 NLM client 상태를 확인한다; `nfs-server` 활성 여부는 client 준비 기준이 아니다. [Oracle Linux9 NFS client](https://docs.oracle.com/en/operating-systems/oracle-linux/9/nfs/mounting_task.html).
 
-**단계8 전 capture station:** **capture terminal을 먼저 시작하고 다른 B request terminal에서8의 mount/read를 실행한다.** server MT에는 SSH하지 않는다. B에서 `sudo timeout 25s tcpdump -ni any 'host <MT_PRIVATE_IP> and (port 111 or port 2048 or port 2049 or port 2050)'`로 RPC/NFS packet을 관찰한다. 데이터는 1KiB 미만.
+**선택 packet capture:** 기본 mount/RW 완료 기준에 포함하지 않는다. 패키지 준비 terminal에서 `rpm -q tcpdump`를 확인하고 없다면 승인된 설치 경로로 `sudo dnf install -y tcpdump` 후 재확인한다. 아래 mount block을 request terminal에 준비한 뒤 별도 B terminal에서 `sudo timeout -k 5s 90s tcpdump -ni any 'host <MT_PRIVATE_IP> and (port 111 or port 2048 or port 2049 or port 2050)'`를 시작한다. `listening on`을 확인한 즉시 request terminal의 단계8을 실행한다. server MT에는 SSH하지 않는다. capture 창을 놓쳐도 기본 mount를 반복하지 않으며 선택 관찰만 미완료로 남긴다. packet payload를 공개 기록에 저장하지 않는다.
 
 ### C. 실제 Linux mount와 공유 데이터
+
+입력 보존: B terminal을 새로 열면 단계7에서 기록한 MT_PRIVATE_IP와 mount directory 생성 flag를 다시 확인한다. 아래 block은 성공 경로에서 한 번만 실행하며 재진입 시 기존 mount/proof를 덮어쓰지 않는다. 생성한 proof.txt의 exact path·고정 본문·hash도 개인 기록에 남긴다.
+
+**비파괴 negative control:** 단계8 앞의 mountpoint guard를 먼저 확인한다. 아래 local test는 NFS나 /mnt를 건드리지 않고 비어 있지 않은 directory를 거부하는지만 시험한다(B guest). 예상 STOP 후 본래 mount 절차로 돌아온다. 실제 NFS 접근 거부 실험은 선택46에서만 수행한다.
+
+```bash
+(
+  set -eu
+  d=$(mktemp -d "$HOME/fss43-guard.XXXXXX") || exit 1
+  trap 'rm -f -- "$d/owned-marker"; rmdir -- "$d"' EXIT
+  printf 'owned-negative-fixture\n' > "$d/owned-marker"
+  entries=$(find "$d" -mindepth 1 -maxdepth 1 -print -quit) || exit 1
+  if test -z "$entries"; then printf 'FAIL: nonempty guard\n'; exit 1; fi
+  printf 'STOP expected: nonempty directory rejected; fixture cleanup follows\n'
+)
+```
 8. B의 Oracle Linux 9에서 NFS client를 준비하고 실제 mount를 수행한다. 공식 mount samples를 Console에서 복사해 IP/path/options와 대조한다.
 
 ```bash
@@ -231,7 +250,7 @@ sudo timeout -k 5s 10s sha256sum /mnt/oci-lab/proof.txt
 **residual-kernel station (모든 timeout/실패 직후):** timeout20초+kill유예5초는 user request 상한이지 hard NFS kernel I/O 종료 보장이 아니다. request terminal 손실에도 담당자가120초 안에 options/통신을 먼저 복원한다. B 관리 terminal에서 `ps -eo pid,ppid,stat,args`와 exact `findmnt -rn -M /mnt/oci-lab`을 읽고 mount/helper/NFS request의 D-state/잔존 여부를 확인한다. 요청 종료 확인 뒤만 `sudo timeout -k 5s 20s umount /mnt/oci-lab`을 정상 수행/readback한다. D-state·timeout·query 오류는 BLOCKED_RECOVERY로 owner43/host 관리자에게 인계하며 새 mount/write/endpoint delete/강제 lazy unmount/reboot를 하지 않는다. 정상 요청 종료/정상 unmount의 exact 부재 확인 후에만 abort cleanup을 진행한다. timeout을 mount 성공/deny 증거로 쓰지 않는다.
 
 공식 Linux task body의 `sudo yum install nfs-utils`는 Oracle Linux 9에서 dnf 호환 경로다. `soft,rw`는 사용하지 않는다. 패키지 설치 실패와 NFS mount 실패를 섞지 않도록 설치를 먼저 끝낸다.
-9. 단계8 전에 시작한 bounded capture 결과를 확인한다. 추가 mount/write fence를 반복하지 않는다.
+9. 선택 capture를 수행한 경우에만 관찰 결과를 확인한다. 기본 성공은 mount/source/hash/remount로 판정하며 capture 누락 때문에 추가 mount/write를 반복하지 않는다.
 
 ## 결과검증
 
@@ -249,7 +268,66 @@ timeout: MT ACTIVE/IP/Subnet route/MT ingress/client egress/host firewall/UDP RP
 
 ## 리소스정리
 
-owner43은 44–46 및 선택 [47 Snapshots](../../../Docs/05_File_Storage/04_Snapshots.md)의 실제 예약 consumer/owner/EXPIRY_UTC/비용 상한을 registry에 기록한다. 47이 선택되면 46은 B/32 RW와 mounted `/lab`을 복구해 File System/MT/Export OCID·mount source·실제 RW 증거를 47에 인계하며 공유 자원을 삭제하지 않는다. 47이 NOT_SELECTED이거나 예약 소비자가 없으면 즉시 정리한다. 승인 expiry 이후 idle 상태로 무기한 보존하지 않는다; 미완료 소비자는 중단/반환하고 새 승인을 받기 전 재개하지 않는다. 47의 snapshot/파일 복구·삭제 완료 또는 NOT_SELECTED 인계 후 **owner43만** test files 삭제 → 모든 client unmount → 모든 해당 Export 삭제 → File System 삭제 → MT 삭제 → B VNIC에서 이번 nsg-fss-client membership만 제거/readback(기존 SSH NSG 보존) → 이번 NSG/전용 Subnet/table 삭제를 수행한다. File System 삭제는 영구 데이터 손실이므로 test OCID 확인. Mount Target에 다른 File System export가 남으면 공유 MT를 삭제하지 않는다.
+owner43은 44–46 및 선택 [47 Snapshots](04_Snapshots.md)의 실제 예약 consumer/owner/EXPIRY_UTC/비용 상한을 registry에 기록한다. 47이 선택되면 46은 B/32 RW와 mounted `/lab`을 복구해 File System/MT/Export OCID·mount source·실제 RW 증거를 47에 인계하며 공유 자원을 삭제하지 않는다. 47이 NOT_SELECTED이거나 예약 소비자가 없으면 즉시 정리한다. 승인 expiry 이후 idle 상태로 무기한 보존하지 않는다; 미완료 소비자는 중단/반환하고 새 승인을 받기 전 재개하지 않는다. 47의 snapshot/파일 복구·삭제 완료 또는 NOT_SELECTED 인계 후 **owner43만** test files 삭제 → 모든 client unmount → 모든 해당 Export 삭제 → File System 삭제 → MT 삭제 → B VNIC에서 이번 nsg-fss-client membership만 제거/readback(기존 SSH NSG 보존) → 이번 NSG/전용 Subnet/table 삭제를 수행한다. File System 삭제는 영구 데이터 손실이므로 test OCID 확인. Mount Target에 다른 File System export가 남으면 공유 MT를 삭제하지 않는다.
+
+**정상 반환 후 B 파일 정리:** consumer가 모두 반환하고 잔존 요청이 없을 때만 수행한다. exact SOURCE=`$MT_PRIVATE_IP:/lab`, FSTYPE=`nfs`를 다시 확인한다. 이번 실행이 만든 regular non-symlink `proof.txt`인지 기록·고정 본문·hash로 확인한 뒤 `sudo timeout -k 5s 10s rm -- /mnt/oci-lab/proof.txt`로 그 파일만 삭제한다. 다른 파일은 각 consumer의 소유 기록에 따라 반환받으며 recursive 삭제하지 않는다. 이후 아래 alt-proof 최종 정리까지 mounted 상태에서 완료한 뒤 정상 unmount 후 exact mount 부재를 확인하고 위 순서로 Export부터 정리한다. 오류/timeout이면 residual station으로 돌아가며 endpoint를 삭제하지 않는다.
+
+### alt-proof 최종 정리
+
+owner43은 owner45의 `alt-proof.txt` 수신/최종 삭제 책임을 명시 승인한다. 모든 consumer 반환·잔존 요청 없음·변경 없는 exclusive cleanup 창을 확인하고, proof.txt 정리와 **별도로 unmount 전** 아래를 실행한다. owner45 registry의 exact FS/MT/ExportSet/IP와 성공 생성 기록, `/mnt/oci-lab/alt-proof.txt`, `same-filesystem` + LF(16 bytes), actual hash/device/inode를 대조한다. NOT_CREATED(45 미선택 포함)도 파일 부재를 확인하고, PENDING_RECOVERY/기록 누락/불명은 자동 삭제 금지다. 아래 환경값은 기록에서만 복원한다(현재 파일을 stat해서 소유권을 새로 만들지 않는다). remount 후 device 변경 등은 owner45와 재조정하기 전 STOP이다. 동명 unknown/symlink/다른 내용은 보존하며 endpoint 삭제도 중단한다. 모든 오류/timeout은 residual station으로 인계한다; timeout은 hard NFS kernel 종료 보장이 아니다.
+
+```bash
+# B guest Bash; ALT45_STATE=OWNED 또는 NOT_CREATED 및 기록값을 먼저 export한다.
+# OWNED일 때 ALT45_DEV/ALT45_INO/ALT45_SHA256은 owner45 수신 기록의 값이다.
+: "${MT_PRIVATE_IP:?actual owner43 IP}" "${ALT45_STATE:?owner45 return state}"
+sudo timeout -k 5s 10s python3 - "$MT_PRIVATE_IP" "$ALT45_STATE" "${ALT45_DEV:-}" "${ALT45_INO:-}" "${ALT45_SHA256:-}" <<'PY'
+import os, sys, stat, hashlib, subprocess
+ip, state, dev, ino, digest = sys.argv[1:]
+assert state in ('OWNED', 'NOT_CREATED'), 'STOP: unresolved ownership'
+root = '/mnt/oci-lab'
+assert not os.path.islink(root), 'STOP: mountpoint symlink'
+def checked_mount():
+    p = subprocess.run(['findmnt', '-rn', '-M', root, '-o', 'SOURCE,FSTYPE'],
+                       capture_output=True, text=True, timeout=2, check=True)
+    assert p.stdout.splitlines() == [ip + ':/lab nfs'], 'STOP: wrong SOURCE/FSTYPE'
+checked_mount()
+d = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+try:
+    name = 'alt-proof.txt'
+    try:
+        s = os.stat(name, dir_fd=d, follow_symlinks=False)
+    except FileNotFoundError:
+        print('ABSENT: no deletion; owner45 return reconciled')
+        sys.exit(0)
+    assert state == 'OWNED', 'STOP: existing unowned file'
+    assert stat.S_ISREG(s.st_mode), 'STOP: nonregular/symlink'
+    assert (s.st_dev, s.st_ino) == (int(dev), int(ino)), 'STOP: ownership identity mismatch'
+    f = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=d)
+    try:
+        t = os.fstat(f)
+        assert (t.st_dev, t.st_ino) == (s.st_dev, s.st_ino)
+        data = os.read(f, 17)
+        assert data == b'same-filesystem\n', 'STOP: different content'
+        assert hashlib.sha256(data).hexdigest() == digest, 'STOP: recorded hash mismatch'
+        checked_mount()
+        u = os.stat(name, dir_fd=d, follow_symlinks=False)
+        assert stat.S_ISREG(u.st_mode) and (u.st_dev, u.st_ino) == (t.st_dev, t.st_ino)
+        os.unlink(name, dir_fd=d)
+        try:
+            os.stat(name, dir_fd=d, follow_symlinks=False)
+        except FileNotFoundError:
+            print('REMOVED: exact owner45 alt-proof.txt; absence read back')
+        else:
+            raise RuntimeError('STOP: file reappeared')
+    finally:
+        os.close(f)
+finally:
+    os.close(d)
+PY
+if [ "$?" -ne 0 ]; then printf 'BLOCKED_RECOVERY: preserve endpoints; reconcile owner45 return\n'; exit 1; fi
+```
+
+이 block은 absence 또는 검증된 한 파일만 처리한다. 동시 writer/rename가 있는 공유 환경은 check/unlink race를 완전히 막지 못하므로 exclusive 창이 없으면 실행하지 않는다. 결과를 registry에 기록한 뒤만 정상 unmount/exact mount 부재와 나머지 consumer 소유 파일 반환을 확인하고 endpoint 정리로 진행한다. recursive 삭제와 symlink 따라가기는 하지 않는다.
 
 **owner43 삭제 readback/로컬 종료:**삭제 전에 fs/mt/export/NSG/subnet/rt-fss/sl-fss exact OCID 목록을 저장한다. 각 Delete 뒤 성공 응답만 믿지 말고 Console의 동일 Compartment/AD 목록을 새로 열어 exact OCID 부재/종료 상태를 확인한다. Export 전부 부재 → FS 부재 → MT 부재 → B 기존 NSG 배열 유지/이번 membership 부재 → 전용 NSG 부재 → lab-fss subnet 부재 → rt-fss와 **sl-fss 둘 다 부재**를 각각 기록한다. 권한/필터 오류는 부재 증거가 아니다. 공유 NSG/table/SL은 삭제하지 않는다. B의 mount dir은 exact mount 부재와 잔존 kernel 요청 없음 확인 후 **FSS43_MOUNT_DIR_CREATED=1 기록인 경우에만** `sudo rmdir /mnt/oci-lab`한다. 관리자 PC의 이번 fss43-vcn-plan.json/fss43-existing-subnets.json 및 실행 중 등록된 own snapshot/capture 파일만 제거한다. 기존 파일/symlink는 보존하며 다음 실행의 gate 출력은 noclobber로 생성한다.
 

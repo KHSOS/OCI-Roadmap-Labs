@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · OCI 실행 미검증**: 이 Users 실습의 절차·검증·복구·정리를 문서 범위에서 검토했습니다. 실제 OCI 실행 성공이나 전체 교육과정의 승인을 뜻하지 않습니다.
 
 # Users
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 수용 범위: **Users 단일 실습의 실행 가능한 문서 절차 검토 완료**. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 아래 권한·선행 산출물·관찰 상한·복구·소비자 반환 조건은 실행 시 충족해야 합니다. 전체 교육과정 상태는 [통합 상태](../../../Docs/README.md)와 별개입니다.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -83,18 +83,31 @@ outsider User를 만들고 membership 추가·제거로 인증과 권한을 분�
 
 ### B. 인증과 권한 분리
 
+본인 PC의 Linux/WSL Bash에서 OCI CLI, GNU `timeout`, Python 3를 준비한다. API profile 준비는 선행 33의 인증 준비 단계를 따르되 본인 User의 key만 `LAB_OUTSIDER`에 등록한다. 브라우저 로그인 성공만으로 API 인증을 확인한 것으로 보지 않는다. 관리자 탭에서 생성한 User의 실제 그룹 목록을 조회하여 **빈 배열**임을 먼저 확인한다. 자동 할당된 그룹이 있으면 임의로 삭제하지 말고 관리자가 그 권한을 확인할 때까지 중단한다.
+
+owner33에서 받은 A bucket 이름과 원본 `proof.txt` SHA256를 별도로 보존한다. 이름을 바꾸어도 원본 hash를 bucket 이름으로 다시 계산하지 않는다. 시작 직전 관리자에게 같은 Region/namespace/A/proof.txt의 GET 성공과 그 hash를 확인받고, 세 단계 동안 object·policy·다른 그룹·credentials를 변경하지 않는다. 각 deny 판정 전에도 동일 대상이 존재하고 관리자 GET이 성공하는지 확인한다. 관리자도 읽지 못하면 404를 권한 거부로 판정하지 않고 중단한다.
+
+각 단계 시작 직전(가입/탈퇴는 **변경 직전**) 같은 Bash에서 `now=$(date +%s); export PROP_DEADLINE_EPOCH=$((now+600))`를 실행하고 이 값을 기록한다. 함수가 fixture expiry와 더 이른 시각을 적용한다. 아래 초기 설정의 deadline placeholder에는 이 실제 숫자를 넣는다. 이후 단계는 이 변수만 새 변경 직전에 갱신하고 함수 정의/다른 입력은 유지한다. 재시도에는 새 deadline을 만들지 않는다. 최초 no-group 검사도 같은 600초 상한을 적용한다.
+
 ### 유한 propagation request station — 본인 PC LAB_OUTSIDER 전용 Bash
 
-`PROP_DEADLINE_EPOCH`은 관리자가 해당 mutation **이전** 승인한 절대 deadline이다. 같은 mutation의 여러 operation/retry/새 terminal에서 그대로 유지하며 초기화하지 않는다. 다음 별도 mutation은 직전 상태 확인/readback 및 새 원복값·deadline 재승인 뒤에만 새 절대 deadline을 전달받는다. 첫 grant/membership 변경 **이전** 관리자는 원래 전체 statement/group 배열, exact OCID, 독립 복구담당자와 실제 UTC deadline을 저장한다. 각 변경 관찰은 최대600초/60초 시작 간격/10시도이며 교육용 상한이지 OCI SLA가 아니다. 비용/fixture expiry가 더 빠르면 그 시각을 사용한다. 담당자는 shell 종료와 무관하게 deadline에 원래 제한된 statement/group-free 상태를 복원/readback한다. 허용 관찰 성공 후에도 다음 단계의 원복을 생략하지 않는다. 아래 함수를 같은 전용 shell에 정의하고 각 단계의 호출을 실행한다. retry는 mutation 재제출이 아니라 동일 credentials/Region/namespace/key의 새 request뿐이다. stale만 재시도하고 auth401/timeout124·137/로컬오류/변조bytes는 즉시 중단한다.
+개인 격리 실습에서는 관리자 브라우저 탭을 유지하고 변경 전 원래 group 배열과 exact User/Group OCID를 저장한다. 각 membership 변경 직전에 현재 시각+최대600초와 fixture expiry 중 이른 시각을 `PROP_DEADLINE_EPOCH`으로 정한다. 같은 변경의 재시도/새 terminal에서도 이 deadline을 유지한다. 60초 간격/최대10회이며 SLA가 아니다. 시간 초과·오류면 관리자 탭에서 이번 membership만 제거하고 원래 group-free 배열을 readback한 후 중단한다. 공유 교육환경에서 별도 운영자가 실습할 경우에만 독립 복구담당자와 deadline을 함께 전달한다.
 
+아래 함수는 같은 credentials/Region/namespace/object의 새 요청만 반복한다. stale만 재시도하고 auth401/timeout124·137/로컬오류/원본 SHA256 불일치는 즉시 중단한다.
 ```bash
 set -euo pipefail
 umask 077
 export REGION='<owner33_actual_region>'
 export NS='<owner33_actual_namespace>'
+export BUCKET_A='<owner33_actual_A_bucket_name>'
+export EXPECTED_A_SHA256='<owner33_original_A_SHA256>'
+[[ $EXPECTED_A_SHA256 =~ ^[0-9a-f]{64}$ ]] || exit 1
 export EXPIRY_EPOCH='<approved_UTC_expiry_epoch_seconds>'
-export PROP_DEADLINE_EPOCH='<independent_owner_absolute_mutation_deadline_epoch>'
-case "$REGION:$NS" in *'<'*|*'>'*|:|*:|:*) exit 1;; esac
+export PROP_DEADLINE_EPOCH='<absolute_mutation_deadline_epoch>'
+for value in "$REGION" "$NS" "$BUCKET_A"; do
+  case "$value" in ''|*'<'*|*'>'*) exit 1;; esac
+done
+command -v oci >/dev/null && command -v timeout >/dev/null && command -v python3 >/dev/null || exit 1
 for n in "$EXPIRY_EPOCH" "$PROP_DEADLINE_EPOCH"; do case "$n" in ''|*[!0-9]*) exit 1;; esac; done
 # PARENT must be owned/real. Every phase exclusively creates a private run directory.
 test -d "$HOME" && test ! -L "$HOME" && test -O "$HOME" || exit 1
@@ -122,7 +135,7 @@ import hashlib,json,pathlib,sys
 op,expected,bucket,rc,d=sys.argv[1:]; rc=int(rc); d=pathlib.Path(d)
 if rc==0:
     if op=='get':
-        assert (d/'proof.txt').read_bytes()==(bucket+'\n').encode(), 'STOP: unexpected bytes'
+        assert hashlib.sha256((d/'proof.txt').read_bytes()).hexdigest()==__import__('os').environ['EXPECTED_A_SHA256'], 'STOP: unexpected bytes'
         print('fresh proof SHA256',hashlib.sha256((d/'proof.txt').read_bytes()).hexdigest())
     else:
         x=json.loads((d/'list.json').read_text())['data']['objects']
@@ -144,20 +157,20 @@ PY
     [ "$i" -lt 10 ] && [ $((started+60+50)) -le "$deadline" ] || break
     if [ "$now" -lt $((started+60)) ]; then sleep $((started+60-now)) || return 2; fi
   done
-  printf '%s\n' 'BLOCKED_PROPAGATION: independent owner restore original state/readback now' >&2
+  printf '%s\n' 'BLOCKED_PROPAGATION: retained administrator tab must restore original group-free state/readback now' >&2
   return 3
 }
 ```
 
-각 호출 실패(2 invalid/3 budget)는 후속 mutation을 금지하고 독립 담당자가 원복한다. `75`는 함수 내부 stale 전용이며 shell 종료가 아니다. 전체 성공은 모든 지정 상태와 원복 readback을 요구한다. directory 충돌 시 삭제/재사용하지 말고 owner evidence를 보존한다. 새 terminal로 재개하면 같은 실제 입력과 **원래 deadline**을 다시 넣고 승인된 새 phase 이름만 사용하며600초 budget을 초기화하지 않는다.
+각 호출 실패(2 invalid/3 budget)는 후속 mutation을 금지하고 관리자 탭에서 원복한다. `75`는 함수 내부 stale 전용이며 shell 종료가 아니다. 전체 성공은 모든 지정 상태와 원복 readback을 요구한다. directory 충돌 시 삭제/재사용하지 말고 owner evidence를 보존한다. 새 terminal로 재개하면 같은 실제 입력과 **원래 deadline**을 다시 넣고 충돌하지 않는 새 phase 이름만 사용하며600초 budget을 초기화하지 않는다.
 
-단계4의 group-free baseline: `propagate_probe user34-no-group get deny iam-proof-a || exit 1`. 단계5 가입 저장/readback 후: `propagate_probe user34-joined get allow iam-proof-a || exit 1`. 단계6 제거 저장/readback 후: `propagate_probe user34-removed get deny iam-proof-a || exit 1`. no-group의 예상밖 allow도 제한된 budget 동안만 관찰하며 관리자 positive와 alternate grant audit 없이는 deny를 승인하지 않는다.
+단계4의 group-free baseline: `propagate_probe user34-no-group get deny "$BUCKET_A" || exit 1`. 단계5 가입 저장/readback 후: `propagate_probe user34-joined get allow "$BUCKET_A" || exit 1`. 단계6 제거 저장/readback 후: `propagate_probe user34-removed get deny "$BUCKET_A" || exit 1`. no-group의 예상밖 allow도 제한된 budget 동안만 관찰하며 관리자 positive와 alternate grant audit 없이는 deny를 승인하지 않는다.
 
 4. Bucket A `proof.txt` get/download를 시도한다. 로그인은 성공했으나 read는 실패해야 한다. Console가 compartment 탐색을 숨기면33의 GetObject 명령을 신규 사용자 전용 profile로 실행한다. 본인 PC에 API key 설정이 필요하면 private key를 저장소 밖에 두고 credential 등록 후 user OCID/fingerprint가 이 User의 것인지 확인한다.
-**membership 전파 관찰 budget:** 위 함수만 사용한다. joined/removed 각각 mutation 이전 독립 담당자의 절대 deadline을 입력하며 try1~10은 함수가 독점 생성한다. stale75만 재시도하고10분/expiry 내 미확인은 BLOCKED_PROPAGATION 및 원래 group-free 복구다.
+**membership 전파 관찰 budget:** 위 함수만 사용한다. joined/removed 각각 mutation 이전에 정한 절대 deadline을 입력하며 try1~10은 함수가 독점 생성한다. stale75만 재시도하고10분/expiry 내 미확인은 BLOCKED_PROPAGATION 및 원래 group-free 복구다.
 
 5. 관리자가 **lab-readers → Users → Add user**로 `lab-outsider`를 추가한다. 변경 시각을 기록하고 적용 전파 후 새 세션/새 요청으로 동일 object를 읽는다.
-6. 멤버십을 다시 제거하고 동일 read가 실패하는지 확인한다. 실패 판정 전에 정책 적용 지연·다른 그룹·cached credentials를 확인한다. `lab-outsider`는 deny control로 남긴다.
+6. 관리자 탭의 같은 Group 사용자 목록에서 exact `lab-outsider`를 찾아 **Remove**하고 확인한다. 제거 후 User 그룹 목록이 원래 빈 배열인지 readback한 뒤 동일 read가 실패하는지 확인한다. 실패 판정 전에 정책 적용 지연·다른 그룹·cached credentials를 확인한다. `lab-outsider`는 deny control로 남긴다.
 
 ## 결과검증
 
@@ -175,7 +188,7 @@ PY
 
 ## 리소스정리
 
-36~42 deny control이 필요하면 그룹 없는 `lab-outsider`와 fixture를 보존한다. 단독 종료라면 API key/token revoke → membership 없는지 확인 → 신규 User 삭제.33의 Reader나 업무 User는 삭제하지 않는다.
+36~42 deny control이 필요하면 그룹 없는 `lab-outsider`와 fixture를 owner33의 기존 expiry 안에서만 보존하고, 실제 User OCID·group-free readback·API profile 주체·A hash·expiry를 후속 소비자에게 전달한다. 후속 작업이 끝나거나 expiry에 도달하면 소비자의 사용 종료를 확인하고 이 절로 돌아온다. fixture bucket/object/group/policy 삭제는 owner33에게 반환하며 이 문서에서 삭제하지 않는다. 단독 종료라면 API key/token revoke → membership 없는지 확인 → 신규 User 삭제.33의 Reader나 업무 User는 삭제하지 않는다.
 
 **전용 로컬 산출물 정리:** 각 probe가 이번 run에 독점 생성한 `$HOME/<phase>/try1`부터 실제 등록된 `try10`까지의 exact 파일 `proof.txt`(부분 download 포함), `error.txt`, `list.json`만 증거 보존 승인 종료 후 제거한다. regular/non-symlink/현재 사용자 소유를 각각 확인하고 실제 생성된 파일만 `rm -- <exact-path>`, 빈 try directory와 phase만 `rmdir`한다. 미등록 phase/타인 파일은 보존; wildcard/recursive 삭제 금지. 이 Users lab은 PUT-control/다른 topic 파일을 만들거나 정리하지 않는다. retry fixture를 이전 출력과 바꾸지 않는다.
 

@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · OCI 실행 미검증**: 이 Policies 실습의 한정된 문서 결함은 보완되었습니다. 문서상 실행 절차의 검토이며 실제 OCI 실행 성공이나 전체 교육과정의 승인을 뜻하지 않습니다.
 
 # Policies
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 검토 범위: **이 Policies 실습의 문서상 실행 절차**. 선행 입력, 권한, 비용·기한, 실패 복구 및 정리 조건을 충족한 경우에만 실행합니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 전체 교육과정·게시 상태는 별도이며 [통합 상태](../../../Docs/README.md)를 확인하세요.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -32,10 +32,10 @@
 
 - [33.ready Identity and Access Management (IAM) — FUNCTIONAL_COMPLETION](00_Identity_and_Access_Management_IAM.md#baseline-33-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
 - [34.ready Users — FUNCTIONAL_COMPLETION](01_Users.md#baseline-34-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
-- [35.ready Groups — FUNCTIONAL_COMPLETION](02_Groups.md#baseline-35-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
+- [Groups 선택 선행학습](02_Groups.md#baseline-35-ready): 전체 실행은 필수가 아니다. 선택해서 실행했다면 test policy/Group 삭제와 outsider group-free 반환을 먼저 확인한다. 필수 입력은33 fixture와34 인증된 outsider이며 모든 임시 grant/membership가 없어야 한다.
 
 - [Identity and Access Management (IAM)](../../../Docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md) **IAM-fixture-ready**, [Users](../../../Docs/04_Identity_and_Access_Management_IAM/01_Users.md) **USER-tested** 완료.33의 `lab-readers` policy와 겹치는 새 정책을 만들면 권한 축소가 보이지 않으므로 outsider를 별도 Group에 넣는다.
-- [Groups](../../../Docs/04_Identity_and_Access_Management_IAM/02_Groups.md) **GROUP-tested**에서 test Group를 삭제했다면 새 `lab-policy-test` Group를 만들고 outsider만 추가한다. 기존 Reader policy는 수정하지 않는다.
+- Groups 전체 실습은 선택이다. 여기서 새 `lab-policy-test` Group를 만들고 outsider만 추가한다. 같은 이름의 기존 Group/policy가 있으면 재사용·수정하지 말고 중단한다. 기존 Reader policy는 수정하지 않는다.
 
 ## 권한
 
@@ -66,12 +66,12 @@ isolated Group의 inspect/read를 바꾸고 실제 list/get/put를 비교한다.
 |---|---|---|---|---|
 |`IAM_LAB_OCID`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 |`OUTSIDER_USER_OCID`|owner34의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`POLICY_TEST_GROUP_OCID`|owner37의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
+|`POLICY_TEST_GROUP_OCID`|이 문서 단계 A.1에서 생성한 Group의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 |`NS`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
 |Console field|실제 입력/선택|이유|
 |---|---|---|
-|Policy verb / bucket condition|p-verb-test; inspect→read objects; bucket iam-proof-a only|이번 기능/실패 원인을 한 변수로 분리|
+|Policy verb / bucket condition|p-verb-test; inspect→read objects; bucket <actual_BUCKET_A_name> only|이번 기능/실패 원인을 한 변수로 분리|
 
 **생성·변경 범위:** lab-policy-test:IdentityGroup,p-verb-test:IamPolicy. **완료 비교:** inspect list allow/get deny; read get allow/new put deny. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
@@ -81,19 +81,23 @@ isolated Group의 inspect/read를 바꾸고 실제 list/get/put를 비교한다.
 
 ### 개별 완주 보정 — 생성·검증·소유권
 
-6번 put 전에 관리자가 선택된 새 object 이름이 존재하지 않음을 확인한다. 사용자 PC 전용 디렉터리에 한 줄 deny-upload.txt를 준비하고 oci os object put --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name iam-proof-a --name deny-upload.txt --file ./deny-upload.txt 로 호출하되 아래6의 if/else fenced block만 사용한다. 예상 밖 성공이면 admin이 이번 object만 삭제하고 다른 grant를 조사한다.
+6번 put 전에 관리자가 선택된 새 object 이름이 존재하지 않음을 확인한다. 사용자 PC 전용 디렉터리에 한 줄 deny-upload.txt를 준비하고 oci os object put --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name deny-upload.txt --file ./deny-upload.txt 로 호출하되 아래6의 if/else fenced block만 사용한다. 예상 밖 성공이면 admin이 이번 object만 삭제하고 다른 grant를 조사한다.
 
 ### 유한 propagation request station — 본인 PC LAB_OUTSIDER 전용 Bash
 
-`PROP_DEADLINE_EPOCH`은 관리자가 해당 mutation **이전** 승인한 절대 deadline이다. 같은 mutation의 여러 operation/retry/새 terminal에서 그대로 유지하며 초기화하지 않는다. 다음 별도 mutation은 직전 상태 확인/readback 및 새 원복값·deadline 재승인 뒤에만 새 절대 deadline을 전달받는다. 첫 grant/membership 변경 **이전** 관리자는 원래 전체 statement/group 배열, exact OCID, 독립 복구담당자와 실제 UTC deadline을 저장한다. 각 변경 관찰은 최대600초/60초 시작 간격/10시도이며 교육용 상한이지 OCI SLA가 아니다. 비용/fixture expiry가 더 빠르면 그 시각을 사용한다. 담당자는 shell 종료와 무관하게 deadline에 원래 제한된 statement/group-free 상태를 복원/readback한다. 허용 관찰 성공 후에도 다음 단계의 원복을 생략하지 않는다. 아래 함수를 같은 전용 shell에 정의하고 각 단계의 호출을 실행한다. retry는 mutation 재제출이 아니라 동일 credentials/Region/namespace/key의 새 request뿐이다. stale만 재시도하고 auth401/timeout124·137/로컬오류/변조bytes는 즉시 중단한다.
+`PROP_DEADLINE_EPOCH`은 관리자가 해당 mutation **이전** 승인한 절대 deadline이다. 같은 mutation의 여러 operation/retry/새 terminal에서 그대로 유지하며 초기화하지 않는다. 다음 별도 mutation은 직전 상태 확인/readback 및 새 원복값·deadline 재승인 뒤에만 새 절대 deadline을 전달받는다. 첫 grant/membership 변경 **이전** 관리자는 원래 전체 statement/group 배열, exact OCID, 복구용 관리자 Console 탭과 실제 UTC deadline을 저장한다. 각 변경 관찰은 최대600초/60초 시작 간격/10시도이며 교육용 상한이지 OCI SLA가 아니다. 비용/fixture expiry가 더 빠르면 그 시각을 사용한다. 개인 실습자는 shell 종료 시 관리자 탭으로 즉시 복구하고 늦어도 deadline에 원래 제한된 statement/group-free 상태를 복원/readback한다. 허용 관찰 성공 후에도 다음 단계의 원복을 생략하지 않는다. 아래 함수를 같은 전용 shell에 정의하고 각 단계의 호출을 실행한다. retry는 mutation 재제출이 아니라 동일 credentials/Region/namespace/key의 새 request뿐이다. stale만 재시도하고 auth401/timeout124·137/로컬오류/변조bytes는 즉시 중단한다.
 
 ```bash
 set -euo pipefail
 umask 077
 export REGION='<owner33_actual_region>'
 export NS='<owner33_actual_namespace>'
+export BUCKET_A='<owner33_actual_A_bucket_name>'
+export EXPECTED_A_SHA256='<owner33_original_A_SHA256>'
+[[ $EXPECTED_A_SHA256 =~ ^[0-9a-f]{64}$ ]] || exit 1
 export EXPIRY_EPOCH='<approved_UTC_expiry_epoch_seconds>'
-export PROP_DEADLINE_EPOCH='<independent_owner_absolute_mutation_deadline_epoch>'
+export PROP_DEADLINE_EPOCH='<saved_absolute_mutation_deadline_epoch>'
+case "$BUCKET_A" in ''|*'<'*|*'>'*) exit 1;; esac
 case "$REGION:$NS" in *'<'*|*'>'*|:|*:|:*) exit 1;; esac
 for n in "$EXPIRY_EPOCH" "$PROP_DEADLINE_EPOCH"; do case "$n" in ''|*[!0-9]*) exit 1;; esac; done
 # PARENT must be owned/real. Every phase exclusively creates a private run directory.
@@ -122,7 +126,7 @@ import hashlib,json,pathlib,sys
 op,expected,bucket,rc,d=sys.argv[1:]; rc=int(rc); d=pathlib.Path(d)
 if rc==0:
     if op=='get':
-        assert (d/'proof.txt').read_bytes()==(bucket+'\n').encode(), 'STOP: unexpected bytes'
+        assert hashlib.sha256((d/'proof.txt').read_bytes()).hexdigest()==__import__('os').environ['EXPECTED_A_SHA256'], 'STOP: unexpected bytes'
         print('fresh proof SHA256',hashlib.sha256((d/'proof.txt').read_bytes()).hexdigest())
     else:
         x=json.loads((d/'list.json').read_text())['data']['objects']
@@ -144,12 +148,14 @@ PY
     [ "$i" -lt 10 ] && [ $((started+60+50)) -le "$deadline" ] || break
     if [ "$now" -lt $((started+60)) ]; then sleep $((started+60-now)) || return 2; fi
   done
-  printf '%s\n' 'BLOCKED_PROPAGATION: independent owner restore original state/readback now' >&2
+  printf '%s\n' 'BLOCKED_PROPAGATION: restore original state/readback in admin tab now' >&2
   return 3
 }
 ```
 
-각 호출 실패(2 invalid/3 budget)는 후속 mutation을 금지하고 독립 담당자가 원복한다. `75`는 함수 내부 stale 전용이며 shell 종료가 아니다. 전체 성공은 모든 지정 상태와 원복 readback을 요구한다. directory 충돌 시 삭제/재사용하지 말고 owner evidence를 보존한다. 새 terminal로 재개하면 같은 실제 입력과 **원래 deadline**을 다시 넣고 승인된 새 phase 이름만 사용하며600초 budget을 초기화하지 않는다.
+각 호출 실패(2 invalid/3 budget)는 후속 mutation을 금지하고 관리자 탭에서 즉시 원복한다. `75`는 함수 내부 stale 전용이며 shell 종료가 아니다. 전체 성공은 모든 지정 상태와 원복 readback을 요구한다. directory 충돌 시 삭제/재사용하지 말고 owner evidence를 보존한다. 새 terminal로 재개하면 같은 실제 입력과 **원래 deadline**을 다시 넣고 승인된 새 phase 이름만 사용하며600초 budget을 초기화하지 않는다.
+
+개인 격리 실습에서는 별도 복구담당자가 필수가 아니다. 본인이 유지한 관리자 탭으로 복구한다. 공유 환경에서만 별도 담당자를 정한다. 실패/중단/시간 초과 시 아래 리소스정리 순서로 이번 test policy와 membership/Group을 제거하고 group-free를 확인한다. 기존 Reader나33 fixture는 제거하지 않는다.
 
 ### A. 분리된 테스트 그룹/정책 생성
 1. 관리자가 **Domains → Groups → Create**로 `lab-policy-test`를 만들고 `lab-outsider`만 넣는다. Subject는 실제 Group OCID.
@@ -157,15 +163,15 @@ PY
 
 ```text
 Allow group id <POLICY_TEST_GROUP_OCID> to inspect buckets in compartment id <IAM_LAB_OCID>
-Allow group id <POLICY_TEST_GROUP_OCID> to inspect objects in compartment id <IAM_LAB_OCID> where target.bucket.name = 'iam-proof-a'
+Allow group id <POLICY_TEST_GROUP_OCID> to inspect objects in compartment id <IAM_LAB_OCID> where target.bucket.name = '<actual_BUCKET_A_name>'
 ```
 
-3. outsider의 별도 profile로 실행한다. API authentication 준비가 안 되면33 절차대로 본인 PC config를 설정하고 CLI user OCID를 확인한다.
+3. outsider의 별도 profile로 실행한다. API authentication 준비가 안 되면34 Users의 LAB_OUTSIDER 준비 절차대로 본인 PC config를 설정하고 CLI user OCID를 확인한다.
 
 ```bash
 # initial grant: list positive must precede get negative, same frozen identity
-propagate_probe verb37-inspect-list list allow iam-proof-a || exit 1
-propagate_probe verb37-inspect-get get deny iam-proof-a || exit 1
+propagate_probe verb37-inspect-list list allow "$BUCKET_A" || exit 1
+propagate_probe verb37-inspect-get get deny "$BUCKET_A" || exit 1
 ```
 
 ### B. inspect/read 작업 차이
@@ -174,7 +180,7 @@ propagate_probe verb37-inspect-get get deny iam-proof-a || exit 1
 **단계5 read statement 전파 후 같은 outsider PC:**
 
 ```bash
-propagate_probe verb37-read get allow iam-proof-a || exit 1
+propagate_probe verb37-read get allow "$BUCKET_A" || exit 1
 ```
 
 
@@ -184,12 +190,16 @@ propagate_probe verb37-read get allow iam-proof-a || exit 1
 
 ```bash
 # LAB_OUTSIDER 본인 PC: 새 전용 작업 directory 안에서만
+# inspect→read 변경 때 저장한 deadline/fixture expiry를 그대로 사용한다.
+NOW=$(date +%s) || exit 1
+[ $((NOW+50)) -le "$PROP_DEADLINE_EPOCH" ] && [ $((NOW+50)) -le "$EXPIRY_EPOCH" ] || exit 1
 mkdir -m 700 verb37-put || exit 1
 cd verb37-put || exit 1
+pwd -P # 정리용 exact 절대 경로를 기록한다
 if test -e ./deny-upload.txt || test -L ./deny-upload.txt; then printf '%s\n' 'STOP: local fixture exists'; exit 1; fi
 test ! -e verb37-put-error.txt && test ! -L verb37-put-error.txt || exit 1
 (umask 077; set -C; printf '%s\n' 'iam-deny-create' > ./deny-upload.txt) || exit 1
-if timeout -k 5s 45s oci os object put --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name iam-proof-a --name deny-upload.txt --file ./deny-upload.txt --max-retries 0 2>verb37-put-error.txt; then
+if timeout -k 5s 45s oci os object put --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name deny-upload.txt --file ./deny-upload.txt --max-retries 0 2>verb37-put-error.txt; then
   RC=0
   printf '%s\n' 'STOP: unexpected put allowed; admin remove only this test object and restore test grant'; exit 1
 else RC=$?; fi
@@ -225,9 +235,9 @@ inspect인데 get 성공하면 User가 다른 권한 그룹에 있는지 확인�
 
 ## 리소스정리
 
-`p-verb-test` 삭제 → outsider membership 제거 → `lab-policy-test` 삭제 → test download/upload 파일 제거.33 baseline은 유지한다. 삭제 후 outsider GetObject deny와 Reader get 정상으로 영향 범위를 확인한다.
+`p-verb-test` 삭제 → outsider membership 제거 → `lab-policy-test` 삭제 → test download/upload 파일 제거.33 baseline은 유지한다. 삭제한 policy/Group의 exact OCID와 outsider membership 부재를 Console에서 확인한다. 삭제 mutation 직전 저장한 새 deadline으로 같은 probe를 `propagate_probe verb37-cleanup-get get deny "$BUCKET_A" || exit 1` 호출하고,33의 기존 Reader profile로 같은 A/proof.txt를 새 파일에 GET하여 원래 EXPECTED_A_SHA256와 비교한다. 실패하면 다음 실습으로 넘기지 말고 관리자 탭에서 잔여 test grant를 조사한다. fixture 소비 종료를33 creator에게 반환하며 A/B bucket·proof·Reader·outsider 자체는 각 creator의 정리 절차에 맡긴다.
 
-**전용 로컬 산출물 정리:** 각 probe가 이번 run에 독점 생성한 `$HOME/<phase>/try1`부터 실제 등록된 `try10`까지의 exact 파일 `proof.txt`(부분 download 포함), `error.txt`, `list.json`만 증거 보존 승인 종료 후 제거한다. regular/non-symlink/현재 사용자 소유를 각각 확인하고 실제 생성된 파일만 `rm -- <exact-path>`, 빈 try directory와 phase만 `rmdir`한다. 미등록 phase/타인 파일은 보존; wildcard/recursive 삭제 금지. 관리자 snapshot과 PUT-control/verb37-put 파일은 기존 exact ownership 기록대로 별도 정리한다. retry fixture를 이전 출력과 바꾸지 않는다.
+**전용 로컬 산출물 정리:** 각 probe가 이번 run에 독점 생성한 `$HOME/<phase>/try1`부터 실제 등록된 `try10`까지의 exact 파일 `proof.txt`(부분 download 포함), `error.txt`, `list.json`만 증거 보존 승인 종료 후 제거한다. regular/non-symlink/현재 사용자 소유를 각각 확인하고 실제 생성된 파일만 `rm -- <exact-path>`, 빈 try directory와 phase만 `rmdir`한다. 미등록 phase/타인 파일은 보존; wildcard/recursive 삭제 금지. PUT 작업 directory는 생성 시 `pwd -P`로 절대 경로를 기록한다. 그 exact `verb37-put` 안의 이번 run 소유 regular/non-symlink `deny-upload.txt`, `verb37-put-error.txt`만 제거하고 빈 directory를 `rmdir`한다. 관리자 PUT-control의 원본/다운로드 파일도 기록한 exact 경로만 제거한다. 관리자 snapshot은 정책·멤버십 삭제 readback 이후에만 제거한다. retry fixture를 이전 출력과 바꾸지 않는다.
 
 ## 공식문서
 

@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · 실제 OCI 실행 미검증**: 이 Groups 실습의 시나리오·권한 조건·검증·복구·정리 절차를 문서 범위에서 검토했습니다. 전체 교육과정 승인이나 OCI 실행 성공을 뜻하지 않습니다.
 
 # Groups
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 수용 범위: **이 파일의 실행 절차에 대한 문서 검토 완료**. 실제 OCI 실행은 수행하지 않았으며 모든 예상 출력은 패턴이지 실측값이 아닙니다. 아래 실제 권한·선행 산출물·비용·관찰 기한·복구 조건은 실행 전과 실행 중에 충족해야 합니다. 게시 및 렌더링 검증은 별도입니다.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -83,8 +83,35 @@ policy 생성 전에 outsider의 LAB_OUTSIDER user/fingerprint를 확인한다. 
 ```bash
 export REGION='<owner33-actual-region>'
 export NS='<owner33-actual-namespace>'
+export BUCKET_A='<owner33-actual-A-bucket-name>'
+export BUCKET_B='<owner33-actual-B-bucket-name>'
+export PROOF_A_SHA256='<owner33-actual-A-sha256>'
+export PROOF_B_SHA256='<owner33-actual-B-sha256>'
 ```
-**첫 membership 변경 전 복구 gate:**34의 그룹 없는 원래 배열을 관리자에게 전달하고 독립 Console 복구담당자/UTC 종료시각을 지정한다. 각 변경은 최대10분/60초 간격/최대10회이며 마지막 요청은 종료50초 이전에만 시작한다. 아래 directory는 재시도마다 `group35-removed-try1`처럼 승인된 새 이름으로 전부 바꾼다. 요청 timeout45초/max-retries0, 만료/오류에는 관리자가 이번 policy/membership만 제거하고 그룹 없는 baseline을 readback한다; 예산 연장 금지.
+위 입력은 관리자 PC에도 같은 값으로 설정한다. hash는33에서 관리자가 확인한 원본의 SHA256이며 이 실습에서 받은 파일로 새로 정의하지 않는다. 각 shell에서 다음 사전검사를 실행한다.
+
+```bash
+for name in REGION NS BUCKET_A BUCKET_B PROOF_A_SHA256 PROOF_B_SHA256; do
+  value=${!name}
+  if [[ -z "$value" || "$value" == *'<'* || "$value" == *'>'* ]]; then
+    printf 'STOP: actual input required: %s\n' "$name"; exit 1
+  fi
+done
+[[ "$BUCKET_A" != "$BUCKET_B" ]] || exit 1
+[[ "$PROOF_A_SHA256" =~ ^[[:xdigit:]]{64}$ && "$PROOF_B_SHA256" =~ ^[[:xdigit:]]{64}$ ]] || exit 1
+```
+
+**첫 membership 변경 전 복구:** 개인 실습은 관리자 탭을 유지하고34의 그룹 없는 원래 배열·exact User/Group OCID·UTC 종료시각을 저장한다. 공유 교육환경에서만 별도 Console 복구담당자를 지정한다. 각 변경은 최대10분/60초 간격/최대10회이며 마지막 요청은 종료50초 이전에만 시작한다. 아래 directory는 재시도마다 `group35-removed-try1`처럼 충돌하지 않는 새 이름으로 전부 바꾼다. 요청 timeout45초/강제종료 유예5초/max-retries0, 만료/오류에는 관리자가 이번 policy/membership만 제거하고 그룹 없는 baseline을 readback한다; 예산 연장 금지. 아래 shell의 `exit 1`은 관리자 Console 변경을 자동 복구하지 않는다. 어떤 STOP/실패/터미널 종료든 관리자 탭에서 이번 policy 삭제 → 이번 Group의 outsider membership 제거 → 원래 그룹 없는 배열 readback 순으로 복구하고 중단한다. 다른 그룹/정책/사용자는 변경하지 않는다. 전파 관찰 재시도는 같은 상태에서만 하며 기존 증거 디렉터리를 덮어쓰지 않는다.
+
+no-policy와 removed의 A deny를 판정하기 직전에 관리자 PC에서 동일 A의 존재와 원본 hash를 다음처럼 확인한다. 첫 실행은 단계2 요청 전, 두 번째는 단계5 제거 후 outsider 요청 전이다. 두 번째 실행은 아래 모든 `group35-admin-a` 경로를 `group35-admin-a-removed`로 바꾼다. 이 검사가 실패하면 outsider의 오류를 deny로 판정하지 않고 복구 후 중단한다. 관리자와 outsider의 Region/namespace/bucket/object를 같게 유지하고 outsider의 profile/user/fingerprint 및 다른 권한 경로를 바꾸지 않는다.
+
+```bash
+mkdir -m 700 group35-admin-a || exit 1
+timeout -k 5s 45s oci os object get --profile LAB_ADMIN --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name proof.txt --file group35-admin-a/proof.txt --max-retries 0 || exit 1
+printf '%s  %s\n' "$PROOF_A_SHA256" group35-admin-a/proof.txt | sha256sum -c - || exit 1
+```
+
+각 상태의 요청은 해당 mutation 뒤에 실행하되 위 관리자 대조를 먼저 끝낸다.
 
 ### A. Group 생성
 1. **Domains → 동일 Domain → Groups → Create group**: Name `lab-observers`, Description `IAM group membership test`, **User can request access off**. 생성 시 User는 넣지 않는다. Group OCID를 기록한다.
@@ -94,17 +121,18 @@ export NS='<owner33-actual-namespace>'
 
 ```bash
 mkdir -m 700 "group35-no-policy" || exit 1
-if timeout 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name iam-proof-a --name proof.txt --file "group35-no-policy/proof.txt" --max-retries 0 2>"group35-no-policy/error.txt"; then
+if timeout -k 5s 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name proof.txt --file "group35-no-policy/proof.txt" --max-retries 0 2>"group35-no-policy/error.txt"; then
   printf '%s\n' 'STOP: unexpected allow; restore owner test grant/membership'; exit 1
 else
   RC=$?
   printf 'deny candidate RC=%s; inspect request-id and service code\n' "$RC"
-  python3 - "group35-no-policy/error.txt" <<'PY'
+  python3 - "group35-no-policy/error.txt" "$RC" <<'PY'
 import sys,json
+assert int(sys.argv[2]) not in (0,124,137), 'STOP: timeout is not deny'
 s=open(sys.argv[1]).read()
 try: x=json.loads(s[s.index('{'):s.rindex('}')+1])
 except (ValueError,json.JSONDecodeError): raise SystemExit('STOP: not a structured service authorization error')
-assert x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
+assert x.get('status') in (403,404) and x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
 print('authorization candidate; mandatory same-target admin positive and frozen credentials')
 PY
   if [ "$?" -ne 0 ]; then exit 1; fi
@@ -119,38 +147,56 @@ printf 'GetObject RC=%s\n' "$RC"
 
 ```text
 Allow group id <LAB_OBSERVERS_GROUP_OCID> to inspect buckets in compartment id <IAM_LAB_OCID>
-Allow group id <LAB_OBSERVERS_GROUP_OCID> to read objects in compartment id <IAM_LAB_OCID> where target.bucket.name = 'iam-proof-a'
+Allow group id <LAB_OBSERVERS_GROUP_OCID> to read objects in compartment id <IAM_LAB_OCID> where target.bucket.name = '<actual_BUCKET_A_name>'
 ```
 
-4. 변경 전파 후 outsider PC에서 입력 `REGION`, `NS`를33의 실제 fixture 값으로 다시 설정하고 전용 빈 `group35-policy` 디렉터리를 만든 뒤 아래 A/B를 실행한다. 기존 디렉터리가 있으면 중단/새 전용 이름 승인한다. A exit0/hash=33 A, B는 service authorization 거부를 요구하며 관리자는 same B GET/hash로 존재를 대조한다.
+4. 변경 전파 후 outsider PC에서 입력 `REGION`, `NS`를33의 실제 fixture 값으로 다시 설정하고 전용 빈 `group35-policy` 디렉터리를 만든 뒤 아래 A/B를 실행한다. 기존 디렉터리가 있으면 중단하고 충돌하지 않는 새 전용 이름을 사용한다. A exit0/hash=33 A, B는 service authorization 거부를 요구하며 관리자는 same B GET/hash로 존재를 대조한다.
 ```bash
-mkdir group35-policy || exit 1
-timeout -k 5s 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name iam-proof-a --name proof.txt --file group35-policy/a.txt --max-retries 0 || exit 1
-sha256sum group35-policy/a.txt
+mkdir -m 700 group35-policy || exit 1
+timeout -k 5s 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name proof.txt --file group35-policy/a.txt --max-retries 0 || exit 1
+printf '%s  %s\n' "$PROOF_A_SHA256" group35-policy/a.txt | sha256sum -c - || exit 1
 # deliberate negative: capture rc immediately, do not let set -e suppress the recovery steps
-if timeout -k 5s 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name iam-proof-b --name proof.txt --file group35-policy/b.txt --max-retries 0 2> group35-policy/b-error.txt; then
+if timeout -k 5s 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_B" --name proof.txt --file group35-policy/b.txt --max-retries 0 2> group35-policy/b-error.txt; then
   printf 'UNEXPECTED B allow: stop and remove this test membership/grant\n'; exit 1
 else
-  rc=$?; printf 'B exit=%s; inspect authorization service diagnostic/request-id\n' "$rc"
+  rc=$?
 fi
+python3 - "$rc" group35-policy/b-error.txt <<'CHECK'
+import json,sys
+rc=int(sys.argv[1]); assert rc not in (0,124,137), 'STOP: timeout is not deny'
+s=open(sys.argv[2]).read(); x=json.loads(s[s.index('{'):s.rindex('}')+1])
+assert x.get('status') in (403,404) and x.get('code') in ('NotAuthorized','NotAuthorizedOrNotFound'), 'STOP: authentication/transport/local error'
+CHECK
+[ "$?" = 0 ] || exit 1
 ```
+
+후속 membership 변경 전에 관리자 별도 PC에서 같은 REGION/NS/BUCKET_B와 LAB_ADMIN으로 B positive control을 실행한다. 관리자도 같은 실제 BUCKET_B 값을 설정한다.
+
+```bash
+mkdir -m 700 group35-admin-b || exit 1
+timeout -k 5s 45s oci os object get --profile LAB_ADMIN --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_B" --name proof.txt --file group35-admin-b/proof.txt --max-retries 0 || exit 1
+printf '%s  %s\n' "$PROOF_B_SHA256" group35-admin-b/proof.txt | sha256sum -c - || exit 1
+```
+
+관리자 B 성공과 outsider B 구조화 거부가 모두 있어야 단계5로 진행한다. 401/timeout/로컬 오류/원본 불일치는 복구 후 중단한다.
 5. policy는 유지하고 Group에서 User를 제거한 뒤 아래 removed block으로 A service deny를 기록한다.
 
 **단계5 membership 제거 직후:**
 
 ```bash
 mkdir -m 700 "group35-removed" || exit 1
-if timeout 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name iam-proof-a --name proof.txt --file "group35-removed/proof.txt" --max-retries 0 2>"group35-removed/error.txt"; then
+if timeout -k 5s 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name proof.txt --file "group35-removed/proof.txt" --max-retries 0 2>"group35-removed/error.txt"; then
   printf '%s\n' 'STOP: unexpected allow; restore owner test grant/membership'; exit 1
 else
   RC=$?
   printf 'deny candidate RC=%s; inspect request-id and service code\n' "$RC"
-  python3 - "group35-removed/error.txt" <<'PY'
+  python3 - "group35-removed/error.txt" "$RC" <<'PY'
 import sys,json
+assert int(sys.argv[2]) not in (0,124,137), 'STOP: timeout is not deny'
 s=open(sys.argv[1]).read()
 try: x=json.loads(s[s.index('{'):s.rindex('}')+1])
 except (ValueError,json.JSONDecodeError): raise SystemExit('STOP: not a structured service authorization error')
-assert x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
+assert x.get('status') in (403,404) and x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
 print('authorization candidate; mandatory same-target admin positive and frozen credentials')
 PY
   if [ "$?" -ne 0 ]; then exit 1; fi
@@ -165,10 +211,9 @@ printf 'GetObject RC=%s\n' "$RC"
 
 ```bash
 mkdir -m 700 "group35-rejoined" || exit 1
-if timeout 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name iam-proof-a --name proof.txt --file "group35-rejoined/proof.txt" --max-retries 0 2>"group35-rejoined/error.txt"; then
+if timeout -k 5s 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name proof.txt --file "group35-rejoined/proof.txt" --max-retries 0 2>"group35-rejoined/error.txt"; then
   RC=0
-  python3 -c 'import pathlib,sys; assert pathlib.Path(sys.argv[1]).read_bytes()==b'"'"'iam-proof-a\n'"'"'' "group35-rejoined/proof.txt" || exit 1
-  sha256sum "group35-rejoined/proof.txt" || exit 1
+  printf '%s  %s\n' "$PROOF_A_SHA256" "group35-rejoined/proof.txt" | sha256sum -c - || exit 1
 else
   RC=$?
   printf 'STOP: expected positive RC=%s\n' "$RC"; exit 1
@@ -176,7 +221,7 @@ fi
 printf 'GetObject RC=%s\n' "$RC"
 ```
 
-각 deny 전에 관리자가33의 동일 A positive/hash를 유지한다. 이 블록은 각 mutation 직후에만 실행한다. 마지막 outsider 탈퇴 readback 뒤37/40에 반환한다.
+마지막 outsider 탈퇴 readback 뒤37/40에 반환한다.
 
 관리자가 테스트 끝에 다시 User를 제거하고 membership readback을 기록한다.
 6. Group→User 관계와 Policy subject Group OCID를 대응표로 남긴다. Console에 그룹이 보이는 것과 Group member의 리소스 권한은 별개다.
@@ -199,7 +244,7 @@ printf 'GetObject RC=%s\n' "$RC"
 
 test policy `p-observer-read-a` 삭제 → User membership 제거 → `lab-observers` 삭제.33의 `lab-readers`/policy와 fixture는 후속 IAM까지 보존한다. 삭제 후 exact Group OCID 조회 불가와 기존 Reader A read 정상 여부를 확인한다.
 
-**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: group35-no-policy의 proof.txt/error.txt、group35-policy의 a.txt/b.txt/b-error.txt、group35-removed/rejoined의 proof.txt/error.txt 및 승인 retry directory의 동일 파일. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
+**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: group35-no-policy의 proof.txt/error.txt、group35-admin-b/proof.txt、group35-admin-a/proof.txt、group35-admin-a-removed/proof.txt、group35-policy의 a.txt/b.txt/b-error.txt、group35-removed/rejoined의 proof.txt/error.txt 및 승인 retry directory의 동일 파일. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
 
 ## 공식문서
 

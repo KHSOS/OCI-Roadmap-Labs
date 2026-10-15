@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · OCI 실행 미검증**: 이 Policy Conditions 실습의 제한된 문서 범위에서 시나리오·허용/불허 대조·복구·정리 절차를 검토했습니다. 전체 교육과정 승인이나 실제 OCI 실행 성공을 뜻하지 않습니다.
 
 # Policy Conditions
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 상태: **제한된 실습 문서 검토 완료**. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 실행 전 권한·비용·선행 산출물·독립 복구 담당자와 절대 deadline 확인은 아래 절차대로 유지합니다. 전체 교육과정 및 공개 상태는 [통합 상태](../../../Docs/README.md)와 별개입니다.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -24,7 +24,7 @@
 
 ## 사전준비
 
-33의 REGION/NS/IAM_LAB_OCID/A/B fixture와34의 group-free outsider/LAB_OUTSIDER를 받는다.37 test grant/membership 정리 반환 후에만 새 condition Group를 사용한다. 관리자 same-target GET/LIST positive와 원래 statements/절대 복구 deadline을 변경 전에 보관한다.
+33의 REGION/NS/IAM_LAB_OCID/A/B 실제 bucket 이름·원본 SHA256와34의 group-free outsider/LAB_OUTSIDER를 받는다.37 Policies 실험 전체는 필수가 아니다. 이전 실험을 수행했다면 그 test grant/membership을 먼저 정리하고 group-free 반환을 확인한 뒤 새 condition Group를 사용한다. 관리자 same-target GET/LIST positive와 원래 statements/절대 복구 deadline을 변경 전에 보관한다.
 
 ### 기준 계약과 실제 단계 선행조건
 
@@ -32,9 +32,9 @@
 
 - [33.ready Identity and Access Management (IAM) — FUNCTIONAL_COMPLETION](00_Identity_and_Access_Management_IAM.md#baseline-33-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
 - [34.ready Users — FUNCTIONAL_COMPLETION](01_Users.md#baseline-34-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
-- [37.ready Policies — FUNCTIONAL_COMPLETION](04_Policies.md#baseline-37-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
+- [37.ready Policies — 선택 학습/기존 변경 반환](04_Policies.md#baseline-37-ready): 이 실험을 이미 수행한 경우에만 test policy/membership 정리 결과를 확인한다. 여기서 새 Group/policy를 만들므로37 전체 실험을 먼저 실행할 필요는 없다.
 
-- [Identity and Access Management (IAM)](../../../Docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md) **IAM-fixture-ready**, [Users](../../../Docs/04_Identity_and_Access_Management_IAM/01_Users.md) **USER-tested**, [Policies](../../../Docs/04_Identity_and_Access_Management_IAM/04_Policies.md) **POLICY-tested** 완료 후 test group/policy 정리. outsider는 baseline reader group에 없어야 한다.
+- 필수 실행 경로는 위33/34 Hands-on 링크다. Docs의 [IAM](../../../Docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md), [Users](../../../Docs/04_Identity_and_Access_Management_IAM/01_Users.md), [Policies](../../../Docs/04_Identity_and_Access_Management_IAM/04_Policies.md)는 개념 참고다. outsider는 baseline reader group 및 이전 test group에 없어야 한다.
 - A/B 두 private bucket `proof.txt`를 관리자가 모두 read 성공으로 확인한다. 조건 변수가 요청에 실제로 제공되는 서비스/API만 선택한다.
 
 ## 권한
@@ -72,7 +72,7 @@ bucket/permission all 조건으로 direct GetObject와 ListObjects를 분리한�
 
 |Console field|실제 입력/선택|이유|
 |---|---|---|
-|Policy condition / permission / bucket|all {target.bucket.name=iam-proof-a, request.permission=OBJECT_READ}|이번 기능/실패 원인을 한 변수로 분리|
+|Policy condition / permission / bucket|단계 A의 따옴표 포함 all 식에 실제 BUCKET_A 이름 입력|이번 기능/실패 원인을 한 변수로 분리|
 
 **생성·변경 범위:** lab-condition-test:IdentityGroup,p-condition-test:IamPolicy. **완료 비교:** A get allow/list deny/B get deny; remove condition list allow→restore deny. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
@@ -93,6 +93,13 @@ set -euo pipefail
 umask 077
 export REGION='<owner33_actual_region>'
 export NS='<owner33_actual_namespace>'
+export BUCKET_A='<owner33_actual_A_bucket_name>'
+export BUCKET_B='<owner33_actual_B_bucket_name>'
+export EXPECTED_A_SHA256='<owner33_original_A_SHA256>'
+export EXPECTED_B_SHA256='<owner33_original_B_SHA256>'
+for h in "$EXPECTED_A_SHA256" "$EXPECTED_B_SHA256"; do [[ $h =~ ^[0-9a-f]{64}$ ]] || exit 1; done
+for b in "$BUCKET_A" "$BUCKET_B"; do case "$b" in ''|*'<'*|*'>'*) exit 1;; esac; done
+[[ ${BUCKET_A,,} != "${BUCKET_B,,}" ]] || exit 1
 export EXPIRY_EPOCH='<approved_UTC_expiry_epoch_seconds>'
 export PROP_DEADLINE_EPOCH='<independent_owner_absolute_mutation_deadline_epoch>'
 case "$REGION:$NS" in *'<'*|*'>'*|:|*:|:*) exit 1;; esac
@@ -103,6 +110,7 @@ propagate_probe() {
   local phase=$1 op=$2 expected=$3 bucket=$4 work now deadline i started rc verdict
   case "$phase" in ''|*[!a-zA-Z0-9-]*) return 2;; esac
   case "$op:$expected" in get:allow|get:deny|list:allow|list:deny) ;; *) return 2;; esac
+  case "$bucket" in "$BUCKET_A"|"$BUCKET_B") ;; *) return 2;; esac
   now=$(date +%s) || return 2
   deadline=$((now+600)); [ "$EXPIRY_EPOCH" -ge "$deadline" ] || deadline=$EXPIRY_EPOCH
   [ "$PROP_DEADLINE_EPOCH" -ge "$deadline" ] || deadline=$PROP_DEADLINE_EPOCH
@@ -123,7 +131,9 @@ import hashlib,json,pathlib,sys
 op,expected,bucket,rc,d=sys.argv[1:]; rc=int(rc); d=pathlib.Path(d)
 if rc==0:
     if op=='get':
-        assert (d/'proof.txt').read_bytes()==(bucket+'\n').encode(), 'STOP: unexpected bytes'
+        env=__import__('os').environ
+        expected_hash=env['EXPECTED_A_SHA256'] if bucket==env['BUCKET_A'] else env['EXPECTED_B_SHA256']
+        assert hashlib.sha256((d/'proof.txt').read_bytes()).hexdigest()==expected_hash, 'STOP: unexpected bytes'
         print('fresh proof SHA256',hashlib.sha256((d/'proof.txt').read_bytes()).hexdigest())
     else:
         x=json.loads((d/'list.json').read_text())['data']['objects']
@@ -157,7 +167,7 @@ PY
 
 ```text
 Allow group id <CONDITION_GROUP_OCID> to inspect buckets in compartment id <IAM_LAB_OCID>
-Allow group id <CONDITION_GROUP_OCID> to read objects in compartment id <IAM_LAB_OCID> where all {target.bucket.name = 'iam-proof-a', request.permission = 'OBJECT_READ'}
+Allow group id <CONDITION_GROUP_OCID> to read objects in compartment id <IAM_LAB_OCID> where all {target.bucket.name = '<actual_BUCKET_A_name>', request.permission = 'OBJECT_READ'}
 ```
 
 2. 공식 Object Storage policy reference의 GetObject=`OBJECT_READ`, ListObjects=`OBJECT_INSPECT`를 읽고 condition 평가 대상을 표시한다. `read` verb가 기본적으로 inspect를 포함해도 `where`가 그 operation의 permission을 제한할 수 있다.
@@ -166,22 +176,28 @@ Allow group id <CONDITION_GROUP_OCID> to read objects in compartment id <IAM_LAB
 3. outsider profile로 아래 세 operation을 실행하고 return code/request-id를 기록한다.
 
 ```bash
-propagate_probe condition40-all-get-a get allow iam-proof-a || exit 1
-propagate_probe condition40-all-list list deny iam-proof-a || exit 1
-propagate_probe condition40-all-get-b get deny iam-proof-b || exit 1
+propagate_probe condition40-all-get-a get allow "$BUCKET_A" || exit 1
+propagate_probe condition40-all-list list deny "$BUCKET_A" || exit 1
+propagate_probe condition40-all-get-b get deny "$BUCKET_B" || exit 1
 ```
 
 4. A GetObject 성공, A ListObjects 실패, B GetObject 실패를 기대한다. Console의 Objects list가 숨겨져도 direct get 성공이 유효하므로 Console 메타데이터 권한을 추가해 조건을 무력화하지 않는다.
+**관리자 snapshot 준비:** outsider PC shell과 별개의 LAB_ADMIN 전용 Bash shell을 열어 `umask 077`과 `export REGION='<owner33_actual_region>'`을 먼저 실행하고 실제 Region으로 대체했는지 확인한다. 이 shell의 현재 directory 절대 경로를 기록한다.
+
 **snapshot 충돌 gate:**관리자 shell에서 `test ! -e condition40-original-policy.json && test ! -L condition40-original-policy.json` 성공 후 `set -C`(noclobber)를 켠다. 실패면 widening을 시작하지 않는다.
 
 **조건 widening 전 recovery gate:** LAB_ADMIN config를 준비한 관리자 본인 PC 전용 shell에서 exact p-condition-test OCID/원래 전체 statements를 `oci iam policy get --policy-id '<actual_p-condition-test_OCID>' --profile LAB_ADMIN --region "$REGION" > condition40-original-policy.json || exit 1`로 저장한다. 복구 Console 담당자·원래 all statement와 최대10분 UTC deadline/fixture lease를 승인받는다. widened 관찰은 아래 유한 함수로 stale만 최대10회 관찰하되 성공/invalid/절대 deadline 도달 즉시 원래 all 조건으로 복원한다. PROP_DEADLINE_EPOCH은 widening 이전 승인된 deadline이며 restored 관찰에도 동일 값으로 남은 budget만 사용한다. 시간 내 전파 미확인은 BLOCKED_PROPAGATION이며 담당자가 deadline에 원래 statements를 반드시 복원/readback한다. 새 broad grant를 추가하거나 deadline을 연장하지 않는다.
 
-5. test statement를 일시적으로 `where target.bucket.name = 'iam-proof-a'`로 바꾸고 readback한다 → **아래 widened block**으로 A ListObjects 성공을 확인한다 → 즉시 원래 all 조건으로 복원/readback한다 → **아래 restored block**으로 ListObjects 거부와 A GetObject 성공을 확인한다. 다른 scope policy는 바꾸지 않는다.
+관리자 shell은 위 outsider shell과 별개이므로 실제 `REGION`을 다시 설정한다. snapshot을 JSON으로 열어 `data.id`가 이번 policy OCID이고 `data.statements` 전체가 단계 A의 두 문장과 일치하는지 확인한다. 빈 파일/오류/불일치면 widening하지 않는다. snapshot의 절대 경로와 전체 문장을 복구 담당자에게 전달하고 복구 Console을 미리 연다. snapshot 충돌 guard와 저장은 같은 관리자 shell/작업 directory에서 수행한다. `set -C`는 이 전용 shell에만 적용한다.
+
+이번 widening용 deadline을 변경 전에 outsider shell의 `PROP_DEADLINE_EPOCH`에 `export`하고 숫자·미래 시각·fixture expiry 이내인지 확인한다. 앞선 단계 A/B 관찰용 deadline을 무심코 재사용하지 않는다. widening 후에는 이 값을 갱신하지 않으며 restored 관찰도 같은 값만 쓴다. 새 terminal이면 같은 함수/입력/절대 deadline을 복원하고, `WIDENED_RESULT`는 보존한 관찰 기록이 PASS일 때만 PASS로 복원한다. 기록이 없거나 불명확하면 BLOCKED_PROPAGATION으로 두고 복구만 수행한다.
+
+5. test statement를 일시적으로 `where target.bucket.name = '<actual_BUCKET_A_name>'`로 바꾸고 readback한다 → **아래 widened block**으로 A ListObjects 성공을 확인한다 → 즉시 원래 all 조건으로 복원/readback한다 → **아래 restored block**으로 ListObjects 거부와 A GetObject 성공을 확인한다. 다른 scope policy는 바꾸지 않는다.
 **단계5 widened 조건 저장 후 outsider PC:**
 
 ```bash
 # Widened observation only; failure is NOT permission to retain the wider condition.
-if propagate_probe condition40-widened-list list allow iam-proof-a; then WIDENED_RESULT=PASS; else WIDENED_RESULT=BLOCKED_PROPAGATION; fi
+if propagate_probe condition40-widened-list list allow "$BUCKET_A"; then WIDENED_RESULT=PASS; else WIDENED_RESULT=BLOCKED_PROPAGATION; fi
 printf '%s\n' 'MANDATORY: independent Console owner restore complete original all statements NOW and read back'
 ```
 
@@ -189,8 +205,8 @@ printf '%s\n' 'MANDATORY: independent Console owner restore complete original al
 
 ```bash
 # Restored-state only, after independent Console restoration readback
-propagate_probe condition40-restored-list list deny iam-proof-a || exit 1
-propagate_probe condition40-restored-get-a get allow iam-proof-a || exit 1
+propagate_probe condition40-restored-list list deny "$BUCKET_A" || exit 1
+propagate_probe condition40-restored-get-a get allow "$BUCKET_A" || exit 1
  test "$WIDENED_RESULT" = PASS || { printf 'BLOCKED_PROPAGATION: widening was not observed\n'; exit 1; }
 ```
 
@@ -205,7 +221,7 @@ propagate_probe condition40-restored-get-a get allow iam-proof-a || exit 1
 ### baseline-40-ready
 
 
-완료 단계 **CONDITION-tested**: all 조건 A get 성공/list 실패/B get 실패, permission condition 제거 시 list 성공/복원 실패. 관리자 같은 object/list 성공 positive control. 공식문서의 변수 미존재 요청은 거부될 수 있다는 내용을 결과 해석에 적용한다.
+완료 단계 **CONDITION-tested**: all 조건 A get 성공/list 실패/B get 실패, permission condition 제거 시 ListObjects 성공, 원래 전체 all statements 복원/readback 성공 후 ListObjects 거부·GetObject 성공. 관리자 같은 object/list 성공 positive control. 공식문서의 변수 미존재 요청은 거부될 수 있다는 내용을 결과 해석에 적용한다.
 
 **실행 기록(아직 미작성):** 실행자/Region/시각, exact resource OCID, 설정 전·후, 성공 출력, deny 오류·exit code/request-id, positive control, 정리 결과. 문서 검증은 실제 OCI 실행 성공을 뜻하지 않는다.
 
@@ -215,7 +231,7 @@ ListObjects가 성공하면 broad read objects 정책 또는 다른 Group를 찾
 
 ## 리소스정리
 
-test policy 삭제 → outsider membership 제거 → test Group 삭제 → 다운로드 파일 제거. baseline Reader/Bucket는41/42까지 보존한다. 조정했던 condition statement를 남긴 채 broad 정책을 추가해 해결하지 않는다.
+원래 statements 복구/readback을 먼저 확인한 뒤 test policy 삭제 → outsider membership 제거 → test Group 삭제 → 다운로드 파일 제거. Console에서 이번 policy와 Group이 사라지고 outsider가 원래 group-free 상태인지 확인한다. baseline Reader/Bucket는 이 문서가 삭제하지 않는다. 선택한41/42 등 소비자가 있으면 creator33/34에 보존을 알리고, 없으면 이번 소비 종료를 반환해 creator의 정리 절차로 종료한다. 조정했던 condition statement를 남긴 채 broad 정책을 추가해 해결하지 않는다.
 
 **전용 로컬 산출물 정리:** 각 probe가 이번 run에 독점 생성한 `$HOME/<phase>/try1`부터 실제 등록된 `try10`까지의 exact 파일 `proof.txt`(부분 download 포함), `error.txt`, `list.json`만 증거 보존 승인 종료 후 제거한다. regular/non-symlink/현재 사용자 소유를 각각 확인하고 실제 생성된 파일만 `rm -- <exact-path>`, 빈 try directory와 phase만 `rmdir`한다. 미등록 phase/타인 파일은 보존; wildcard/recursive 삭제 금지. 관리자 condition40-original-policy.json은 해당 관리자가 collision guard 후 만든 exact snapshot만 증거 보존 승인 뒤 별도 정리한다.37 PUT 파일은 이 topic이 삭제하지 않는다. retry fixture를 이전 출력과 바꾸지 않는다.
 

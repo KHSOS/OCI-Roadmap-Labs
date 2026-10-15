@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 — OCI 실행 미검증**: 이 Burstable Instances 시나리오의 실행 절차와 정리 경로를 문서 범위에서 검토했습니다. 실제 OCI 생성·SSH·metric 관찰·삭제를 검증한 결과는 아닙니다.
 
 # Burstable Instances
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 승인 범위: **이 시나리오의 실행 가능한 절차에 대한 문서 검토 완료**. 권한·지원 shape·예산·trust·Monitoring 준비·복구·정리 gate는 실제 실행 전에 충족해야 합니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 전체 교육과정 승인이나 원격 게시 완료를 뜻하지 않습니다.
 
 > 실행 절차 작성본 / OCI 미실행. Oracle 공식 본문 근거와 교육용 선택을 구분한다. secrets·실제 고객값·diagram 없음.
 
@@ -26,7 +26,7 @@
 
 [공통 baseline-contract.json](../../../baseline-contract.json)의 Oracle Linux 9 / opc / CIDR / 비용 상한을 따른다. 문서 번호는 실행 순서가 아니다. **준비 station과 생성 이후 ready를 분리**한다. 아래 단계 외의 기능완료를 소급하여 요구하지 않는다.
 
-- [10 Compute — 완료 선행](00_Compute.md#baseline-10-ready): **기존 vm-a RUNNING/새 SSH 완료와 같은 identity로 oci_computeagent chart 실제 데이터 확인**. owner10이 이번 gate 종료까지 같은 vm-a를 보존한다. chart 없음/권한 오류면 추가 paid Create 금지; 신규 VM으로 preflight를 대신하지 않는다.
+- [10 Compute — 완료 선행](00_Compute.md#baseline-10-ready): **기존 vm-a RUNNING/새 SSH 완료**. owner10이 이번 gate 종료까지 같은 vm-a를 보존한다. Monitoring 준비는 Compute 완료 산출물이 아니라 아래 paid Create 이전 metric 준비 gate에서 별도로 확인한다. chart 없음/권한 오류면 추가 paid Create 금지; 신규 VM으로 preflight를 대신하지 않는다.
 
 - [15 SSH Keys — 단계 링크](05_SSH_Keys.md#key-preparation): **Part A 전용 공개키**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
 - [23 Public Subnets — 단계 링크](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md#public-network-preparation): **단계 A 완료**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
@@ -125,11 +125,15 @@ INSTANCE_ID/PUBLIC_IP를 신규 burstable-vm에 지정한다. metrics 조회 권
 
 관리자가 `Allow group <domain>/<lab-group> to read metrics in compartment lab-root where target.metrics.namespace='oci_computeagent'`를 승인한다. 공식 [Monitoring permission table](https://docs.oracle.com/en-us/iaas/Content/Identity/Reference/monitoringpolicyreference.htm)의 ListMetrics=METRIC_INSPECT, SummarizeMetricsData=METRIC_INSPECT+METRIC_READ다. alarm 생성/metric write는 필요 없다. 기존 vm-a의 Compute → Metrics → namespace `oci_computeagent`에 실제 데이터가 표시되는지 확인하여 read 접근/공유 public path를 사전 점검한다. unauthorized면 paid Create를 금지한다. 새 instance 데이터 존재를 생성 전 확인했다고 쓰지 않는다.
 
-[Enabling Monitoring](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/enablingmonitoring.htm)에 따라 새 launch의 Oracle Cloud Agent 탭에서 **Compute Instance Monitoring Enabled**, plugins running을 선택·확인한다. 지원 OL9 platform image/agent 설치, public IP+IGW route와 승인 TCP443 egress가 필요하다. agent 설치가 빠진 custom/old image는 사용하지 않는다. RUNNING 후 같은 instance Oracle Cloud Agent 탭의 plugin enabled/running과 Metrics `oci_computeagent`/CpuUtilization을 대조한다. 작업 전후 UTC 창/1분 interval을 저장하고 30초 간격 **최대 10분 또는 승인 expiry 중 먼저 오는 시점**까지 조회한다. 빈 chart는 NOT_OBSERVED; 권한/API 오류는 BLOCKED다. 짧은 spike가 안 보인 것과 수집 자체가 없는 것을 구분하고 추가 장시간 부하·VM 재생성 없이 cleanup한다.
+[Enabling Monitoring](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/enablingmonitoring.htm)에 따라 새 launch의 Oracle Cloud Agent 탭에서 **Compute Instance Monitoring Enabled**, plugin 활성화를 선택한다. running 상태 확인은 생성 후에만 수행한다. 지원 OL9 platform image/agent 설치, public IP+IGW route와 승인 TCP443 egress가 필요하다. agent 설치가 빠진 custom/old image는 사용하지 않는다. RUNNING 후 같은 instance Oracle Cloud Agent 탭의 plugin enabled/running과 Metrics `oci_computeagent`/CpuUtilization을 대조한다. 작업 전후 UTC 창/1분 interval을 저장하고 30초 간격 **최대 10분 또는 승인 expiry 중 먼저 오는 시점**까지 조회한다. 빈 chart는 NOT_OBSERVED; 권한/API 오류는 BLOCKED다. 짧은 spike가 안 보인 것과 수집 자체가 없는 것을 구분하고 추가 장시간 부하·VM 재생성 없이 cleanup한다.
 
 1. 현재 공식 supported shapes와 Console의 Burstable 옵션을 확인한다. baseline은 **12.5% 또는 50%**이며 A1을 지원 shape로 추정하지 않는다. 비용 승인된 **VM.Standard.E4.Flex, total 1 OCPU, memory 2 GB, baseline 12.5%**를 primary로 쓴다. 이 값/shape가 현재 UI에서 지원되지 않으면 제출을 중단하고 compatible supported shape를 재승인받는다. [Burstable Instances — baseline, supported shapes, limitations](https://docs.oracle.com/en-us/iaas/Content/Compute/References/burstable-instances.htm).
+Create 제출 전에는 아래 두 항목을 준비한다. 먼저 [owner17 원본 YAML](07_Cloud_init_User_Data.md#user-data-preparation)의 public-host-key 출력을 제출한다. 또한 Create 실패·부분 생성·trust/SSH/metric 실패 또는 expiry 도달 시 재생성하지 않고 아래 리소스정리로 이동할 것을 확인한다. 정리에 필요한 신규 instance/boot OCID·AD는 생성 직후 기록한다.
+
 2. Compute → Instances → Create: Name `burstable-vm`, lab-root, 승인 AD/FD, Oracle Linux x86-compatible image, On-demand, public-admin/nsg-admin, ephemeral IP, `.pub`, image-default boot. Image and shape → Change shape → E4 Flex → **Burstable** 선택 → total OCPU 1/memory 2/baseline 12.5%. 나머지 값은 공유 launch recipe와 같게 한 뒤 Create 제출한다. option이 launch UI의 다른 위치에 있으면 공식 body의 동등 항목을 사용하고 actual field 기록한다.
-Create 전 [owner17 원본 YAML](07_Cloud_init_User_Data.md#user-data-preparation)의 public-host-key 출력을 제출한다. RUNNING 뒤 첫 SSH 전에 [대상별 trust bootstrap](00_Compute.md#guest-trust-bootstrap)을 신규 burstable-vm의 **INSTANCE_ID**로 완료한다. 실제 OCID/UTC/ED25519 handoff 없으면 BLOCKED_TRUST이며 INSTANCE_A_ID의 신뢰값을 쓰지 않는다. 로컬 전용 Bash에 KEY/PUBLIC_IP를 이 guest 값으로 다시 지정한다.
+
+
+Create 성공 직후, 첫 SSH와 CPU 작업 **전에**, 아래 “Create 이후 값 전달”을 수행하고 Cloud Shell에서 결과검증의 세 조회 명령으로 RUNNING/shape-config/primary VNIC를 확인한다. 그 실제 public-ip를 로컬 PUBLIC_IP에 넣는다. RUNNING 뒤 첫 SSH 전에 [대상별 trust bootstrap](00_Compute.md#guest-trust-bootstrap)을 신규 burstable-vm의 **INSTANCE_ID**로 완료한다. 실제 OCID/UTC/ED25519 handoff 없으면 BLOCKED_TRUST이며 INSTANCE_A_ID의 신뢰값을 쓰지 않는다. 로컬 전용 Bash에 KEY/PUBLIC_IP를 이 guest 값으로 다시 지정한다.
 
 3. RUNNING/SSH 후 instance shape-config의 baseline 설정을 조회한다. below-baseline idle와 아주 짧은 CPU 작업을 수행한다. 1시간 sustained 부하나 SLA 성능 시험은 하지 않는다.
 
@@ -143,9 +147,16 @@ while time.monotonic()<end:
     x=(x+1)%1000003
 print('bounded CPU task complete')
 PY
+TASK_RC=$?
+if [ "$TASK_RC" -ne 0 ]; then
+    printf 'STOP: SSH/task exit=%s; diagnose then cleanup owned VM, do not repeat load\n' "$TASK_RC"
+    exit 1
+fi
 ```
+SSH 또는 task가 실패하면 결과를 BLOCKED로 기록하고 문제해결 후 정리한다. 세션 중단은 VM 삭제가 아니므로 Console에서 신규 instance/boot 정리를 끝낸다.
+
 4. Instance → Metrics → CPU Utilization에서 작업 전후 UTC 시간범위와 interval을 기록한다. 15초 task가 1분 평균에 희석될 수 있고 metric 수집에는 agent/시간 지연이 있을 수 있다. Bursting은 자동·자원상황 의존이며 필요한 시점에 full OCPU를 보장하지 않는다. metric 없음을 성공한 burst 측정으로 쓰지 않는다.
-5. 비용을 줄이기 위해 검증 후 즉시 terminate하고 boot도 삭제한다.
+5. 종료 전에 아래 [결과검증](#baseline-12-ready)의 RUNNING/API 및 위 새 SSH/유한 task 결과를 대조하고 metric 결과 또는 NOT_OBSERVED를 기록한다. 그 뒤 [리소스정리](#리소스정리)에서 전용 burstable-vm/boot를 한 번만 종료한다. 이 단계에서 먼저 terminate하지 않는다.
 
 ### Create 이후 값 전달 — 이름으로 추정하지 않는다
 
@@ -198,8 +209,10 @@ Burstable 옵션이 없으면 지원 shape/total OCPU/baseline 조건을 확인�
 
 ## 리소스정리
 
+[공식 Terminating an Instance](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/terminatinginstance.htm): boot는 기본 보존이므로 아래 삭제 선택을 명시적으로 확인한다. Terminated 기록은 최소 12시간 목록에 남을 수 있으며 목록 행의 존재만으로 실행 중이라고 판정하지 않는다.
+
 1. 신규 burstable-vm/boot만 owner12 삭제; vm-a 유지. 예약 소비자가 없거나 expiry가 끝나면 즉시 정리한다. 공유 vm-a/boot/public network는 삭제하지 않는다.
-2. 대상 burstable-vm의 OCID와 attachment를 확인하고 guest workload를 종료한다. mount가 있으면 unmount/detach한다. Compute → 대상 → Terminate에서 Permanently delete attached boot volume을 선택한다. 정확한 instance TERMINATED/boot 잔존을 다시 읽으며 권한 오류를 삭제 성공으로 처리하지 않는다.
+2. 대상 burstable-vm의 OCID와 생성 직후 기록한 boot OCID/AD를 확인한다. 이 실습은 추가 mount/volume을 만들지 않으며 공유 자원을 unmount/detach하지 않는다. task 실패나 연결 불가여도 정리를 미루지 말고 Console에서 정확한 신규 instance를 확인한다. Compute → 대상 → Terminate에서 Permanently delete attached boot volume을 선택한다. 정확한 instance TERMINATED와 기록한 boot의 잔존 여부를 Console에서 다시 확인하며 권한 오류를 삭제 성공으로 처리하지 않는다. boot가 남으면 기록한 OCID/AD와 신규 VM의 연결 관계를 owner12가 재확인한 뒤 해당 boot만 삭제한다. 확인·삭제 권한이 없으면 BLOCKED_CLEANUP으로 관리자에게 그 OCID/AD를 전달하고 잔존 비용을 알린다. vm-a·네트워크·NSG·키는 각 creator에게 반환하며 이 문서에서 삭제하지 않는다.
 
 
 ## 공식문서

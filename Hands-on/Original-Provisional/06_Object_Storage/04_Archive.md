@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 — OCI 실행 미검증**: 이 Archive 실습의 한정된 절차·복구·정리 문서 검토를 완료했습니다. 실제 OCI 실행, 전체 커리큘럼 승인 또는 게시 검증을 뜻하지 않습니다.
 
 # Archive
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 상태: **한정된 실습절차 검토 완료**. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 권한·비용·lease·복구·정리의 실행 조건은 아래 절차대로 확인하세요. 전체 범위의 상태는 [통합 상태](../../../Docs/README.md)를 확인하세요.
 
 > 절차 작성본 / OCI 미실행 — 아래 예상값은 실측 결과가 아닙니다. 비용·권한·사전준비 gate를 통과한 전용 환경에서만 실행하세요.
 
@@ -19,7 +19,7 @@
 - Roadmap 경로: **Object Storage → Archive**
 - Node ID: `sequence-6-4`
 - 상위 항목: **Object Storage** (`sequence-6-0`)
-- 문서 범위: 이 항목의 개념과 작성된 실습절차. 통합 품질검토는 BLOCKED이며 실제 실행은 NOT_EXECUTED입니다.
+- 문서 범위: 이 항목의 개념과 작성된 실습절차. 이 Archive 절차의 한정된 문서 검토는 완료했으며 실제 OCI 실행은 NOT_EXECUTED입니다.
 - [전체 항목 목록](../../../Docs/README.md)
 
 ## 사전준비
@@ -108,7 +108,7 @@ done
 Remote PUT도 같은 key의 기존 object 충돌을 owner48 목록에서 확인하고 충돌이면 중단한다. 새 PUT은 `--no-overwrite`를 추가한다. 다음 절차의 출력 파일은 이 directory에서만 생성한다.
 
 
-1. [Object Storage](../../../Docs/06_Object_Storage/00_Object_Storage.md)의 private Standard bucket을 사용한다. Archive bucket을 별도 생성하지 않는다. 복구와 최소 보관 과금을 승인한다.
+1. [Object Storage](00_Object_Storage.md#실습절차)의 private Standard bucket을 사용한다. Archive bucket을 별도 생성하지 않는다. 복구와 최소 보관 과금을 승인한다.
 2. `printf 'archive restore payload\n' > archive.txt; oci os object put -ns "$NS" -bn "$BUCKET" --name lab/archive.txt --file archive.txt --storage-tier Archive --no-overwrite`를 실행한다.
 3. **Restore 제출 전에** 아래 same-key Archived negative를 실행하고 HEAD 성공/실제 archive 상태와 GET 서비스 진단을 함께 확인한다.
 ```bash
@@ -129,6 +129,19 @@ fi
 ### Restore 이후 관찰/반환
 Restore는 위3에서 한 번만 제출한다. Restoring이면 재제출하지않고조회한다. 60분초과관찰은위bucketlease갱신승인필수이며,미승인시deadline전에52/48이중단/삭제/반환한다. download window1시간은복원완료부터이고90일최소비용은삭제로취소되지않는다.
 
+
+### 5분 간격 관찰과 재개
+첫 PUT 직후 private 기록에 REGION/NS/BUCKET/bucket OCID/key/LAB_WORK/원본 hash/BUCKET_EXPIRY_UTC/cleanup 담당자를 저장한다. Restore 제출 성공 시 UTC와 hours=1을 추가한다. 응답 손실이면 실제 상태부터 조회하고 재제출하지 않는다. fresh shell은 이 기록의 실제 변수를 다시 설정하고 같은 Region/bucket OCID를 readback한 뒤 restore-status를 한 번 조회한다.
+
+|실제 상태|다음 행동|종료 조건|
+|---|---|---|
+|Restoring|다음 확인을 **현재 UTC+5분**으로 기록하고 그때 한 번 조회; 자동 tight loop/Restore 재제출 금지|lease 10분 전까지 Restored가 아니면 owner48과 abort/owned-key 삭제·반환; 연장은 별도 사전 승인|
+|Restored|실제 restore expiration time을 object details/HEAD에서 읽고 즉시 새 filename GET/cmp|download deadline은 `min(BUCKET_EXPIRY_UTC, 실제 expiration time)-10분`; 종료 전에 key 정리|
+|Archived(미제출/만료)|제출 기록·서비스 상태를 대조한다. 미제출이 확실한 최초3단계 외에는 새 Restore를 제출하지 않는다|만료/불명 상태는 미완료로 반환하고 owned key 정리|
+|조회 실패/다른 상태|credential/Region/bucket을 고정하고 담당자에 인계; 상태를 추측하지 않는다|deadline에 정리/반환, 무기한 대기하지 않는다|
+
+예: lease 종료15:00Z, 실제 restore expiration14:40Z이면 다운로드/정리 deadline은14:30Z다. Restored를14:05Z에 관찰했다면 관찰 시각+1시간을 만료라고 가정하지 않는다. 실제 expiration을 읽지 못하면 다운로드 창을 확정하지 말고 즉시 GET/cmp 또는 owner와 abort한다. 5분 주기는 이 작은 실습의 요청 상한을 위한 선택이며 Oracle 보장 주기가 아니다.
+
 ## 결과검증
 
 Archive tier, restore 진행/완료 상태, cmp 0을 순서대로 확인한다. 복구는 즉시 완료를 보장하지 않는다.
@@ -143,9 +156,18 @@ Archived GET실패는restore상태와구분;OBJECT_RESTORE권한확인;Restoring
 
 ## 리소스정리
 
-로컬은 registry의 이 실행 LAB_WORK 안에 생성한 archive.txt / archive-before.txt / archive-before-error.txt / restored-archive.txt만 확인 후 `rm -- archive.txt archive-before.txt archive-before-error.txt restored-archive.txt`로 제거한다(생성되지 않은 파일은 건너뛴다). 먼저 증거를 저장하고 `cd "$HOME"` 후 exact LAB_WORK에 `rmdir -- "$LAB_WORK"`를 실행한다. nonempty이면 추가 파일을 조사하고 recursive/glob 삭제하지 않는다.
+먼저 owner52 PUT 성공/etag와 exact key를 대조하고 `oci os object delete -ns "$NS" -bn "$BUCKET" --name lab/archive.txt`를 수행한다. 성공한 object list에서 exact key 부재를 확인하고 owner48에게 반환한다. HEAD 실패만으로 부재를 단정하지 않는다. Restore 진행 중에도 삭제/조회가 실패하면 원본/evidence를 보존하고 owner48과 expiry 전에 잔여 정리를 조율한다.90일 최소기간/조기삭제 비용은 취소되지 않는다. remote 정리/반환 후에만 아래 local cleanup을 수행한다.
 
-`oci os object delete -ns "$NS" -bn "$BUCKET" --name lab/archive.txt`; list/head의key없음확인.90일조기삭제비용취소아님.
+```bash
+cd -- "$LAB_WORK" || exit 1
+for name in archive.txt archive-before.txt archive-before-error.txt restored-archive.txt; do
+  test ! -L "$name" || exit 1
+  if test -e "$name"; then test -f "$name" || exit 1; rm -- "$name" || exit 1; fi
+done
+cd "$HOME" || exit 1
+rmdir -- "$LAB_WORK" || exit 1
+```
+예상 Archive GET 거부로 archive-before.txt가 없으면 건너뛴다. nonempty directory는 조사하며 recursive/glob 삭제하지 않는다.
 
 정리 UTC/namespace/bucket/owned key·목록 readback과 owner48 반환을 기록한다. shared bucket은 consumer가 삭제하지 않는다.
 

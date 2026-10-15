@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 — OCI 실행 미검증**: 이 Capacity Types 실습의 한정된 절차·검증·정리 문서를 검토했습니다. 실제 OCI 실행이나 전체 교육과정 승인을 뜻하지 않습니다.
 
 # Capacity Types
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 승인 범위: **한정된 실행 절차의 문서 검토 완료**. preemptible 검증·종료 순서와 선택 reservation/host의 소비 VM 관계·정리 절차를 검토했습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 본문의 권한·신뢰·예산·지원·capacity·복구 gate는 실행 전에 충족해야 합니다. 전체 교육과정·게시 상태는 [통합 상태](../../../Docs/README.md)와 별도입니다.
 
 > 실행 절차 작성본 / OCI 미실행. Oracle 공식 본문 근거와 교육용 선택을 구분한다. secrets·실제 고객값·diagram 없음.
 
@@ -125,7 +125,7 @@ oci --version
 
 1. Compute의 same vm-a launch에서 On-demand를 선택한 증거를 확보한다. capacity를 보장하는 reservation과 달리 현재 가용 capacity에 의존한다. 기존 vm-a는 공유하고 중복하지 않는다.
 2. preemptible 작은 VM의 짧은 실행 예산/boot/전송 비용을 승인한다. Compute → Instances → Create: `preemptible-vm`, lab-root, 승인 AD/FD, compatible Oracle Linux x86 image, **VM.Standard.E4.Flex 1 OCPU/2 GB**(현재 supported shape인 경우), public-admin/nsg-admin/.pub/default boot. Placement → Advanced options → Capacity type **Preemptible capacity**. **Permanently delete attached boot volume on preemption = Yes**. 선택 후 Create를 제출한다. [Creating a preemptible instance, limitations](https://docs.oracle.com/en-us/iaas/Content/Compute/Concepts/preemptible.htm).
-3. RUNNING과 preemptible config/boot delete option을 readback한다. 새 SSH로 `hostname; id -un`을 확인한다. preemption은 provider가 회수하는 것이며 실습자가 억지로 기다리지 않는다. preemptible은 start/stop/reboot가 제한되고 on-demand로 convert하지 못한다. 검증 뒤 **Terminate**한다.
+3. RUNNING과 preemptible config/boot delete option을 readback한다. 새 SSH로 `hostname; id -un`을 확인한다. preemption은 provider가 회수하는 것이며 실습자가 억지로 기다리지 않는다. preemptible은 start/stop/reboot가 제한되고 on-demand로 convert하지 못한다. Terminate 전 [baseline-18-ready](#baseline-18-ready)의 API/새 SSH 검증을 먼저 완료하고 UTC·exit·JSON을 저장한다. 검증 후 아래 비용/수량 gate에서 한 번만 **Terminate**한다.
 
 ### 비용/수량 gate — optional은 반드시 순차로 진행한다
 
@@ -193,12 +193,34 @@ PY
 
 7. Compute → Dedicated Virtual Machine Hosts → Create. Name `lab-dedicated-host`, lab-root, 승인 AD/FD, **현재 supported host shape 중 승인된 최소 적합 shape**를 선택한다. UI의 host shape는 VM shape가 아니며 비용이 크게 다를 수 있다. host shape/시간 cap을 승인하지 못하면 제출 금지. Create 후 ACTIVE까지 기다린다(공식 본문은 최대 약 15분 언급). [Creating a Dedicated VM Host — AD/FD/ACTIVE](https://docs.oracle.com/en-us/iaas/Content/Compute/Concepts/dedicatedvmhosts_topic-Creating_a_Dedicated_Virtual_Machine_Host.htm).
 8. Compute Create에서 Name `dedicated-vm`, Capacity type **Dedicated host** → lab-dedicated-host, host와 같은 AD/FD, **host에서 지원하는 VM shape**/최소 승인 OCPU/memory, compatible image/public-admin/key/NSG/default boot를 선택한다. RUNNING/SSH와 dedicated-vm-host-id를 확인한다. 삭제는 VM/boot → host 순이다.
+Cloud Shell에서 dedicated consumer가 RUNNING일 때 다음 관계를 확인한 후 VM/boot를 종료한다. 두 ID는 이번 Create의 실제 응답에서만 채운다.
+
+```bash
+export DEDICATED_HOST_ID='<actual_lab-dedicated-host_OCID>'
+export DEDICATED_INSTANCE_ID='<actual_dedicated-vm_OCID>'
+oci compute dedicated-vm-host get --dedicated-vm-host-id "$DEDICATED_HOST_ID" --region "$REGION" > dedicated-host.json || exit 1
+oci compute instance get --instance-id "$DEDICATED_INSTANCE_ID" --region "$REGION" > dedicated-instance.json || exit 1
+python3 - <<'VERIFY'
+import json,os
+h=json.load(open('dedicated-host.json'))['data']; v=json.load(open('dedicated-instance.json'))['data']
+assert h['id']==os.environ['DEDICATED_HOST_ID'] and h['lifecycle-state']=='ACTIVE'
+assert v['id']==os.environ['DEDICATED_INSTANCE_ID'] and v['lifecycle-state']=='RUNNING'
+assert v['dedicated-vm-host-id']==h['id']
+assert v['availability-domain']==h['availability-domain']
+assert v['fault-domain']==h['fault-domain']
+print('same dedicated host consumer AD/FD verified')
+VERIFY
+[ "$?" = 0 ] || exit 1
+```
+
 9. reservation/host를 생성했다는 사실과 실제 instance가 그 capacity를 사용했다는 사실을 분리한다. 전용 host를 private cloud와 같다고 쓰지 않는다. optional host shape 자동 추정이나 tenancy default 변경을 하지 않는다.
 
 ## 결과검증
 
 
 ### baseline-18-ready
+
+이 station은 기본 단계3에서 **Terminate 전에** 실행한다. optional branch 이후에는 저장한 preemptible.json·SSH exit/UTC 증거를 읽으며 종료한 VM에 다시 SSH하지 않는다.
 
 
 ```bash

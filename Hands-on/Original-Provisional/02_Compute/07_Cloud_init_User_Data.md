@@ -1,10 +1,10 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 절차 검토 완료 / 실제 OCI 실행 미검증**: 이 문서의 최초 boot user-data 준비·업로드·검증·소유권별 정리 절차에 한정한 문서 검토입니다. 전체 교육과정 승인이나 OCI 실행 성공을 뜻하지 않습니다.
 
 # Cloud-init / User Data
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 수용 범위: **bounded documentation-reviewed**. 기존 지적사항이 닫힌 이 파일의 실행 가능한 절차를 검토한 상태입니다. 실제 OCI 실행은 `NOT_EXECUTED`이며 모든 예상 출력은 대조할 패턴이지 실측값이 아닙니다. 권한·예산·지원·접속 신뢰·복구·소비자 반환 gate는 실행 시 그대로 충족해야 합니다. 게시 및 렌더링 검증은 이 문서 검토와 별개입니다.
 
-> 실행 절차 작성본 / OCI 미실행. Oracle 공식 본문 근거와 교육용 선택을 구분한다. secrets·실제 고객값·diagram 없음.
+> Oracle 공식 본문 근거와 교육용 선택을 구분합니다. 실제 실행 전에는 checkpoint와 실행 결과를 비워 둡니다.
 
 ## 학습목표
 
@@ -110,6 +110,8 @@ set -euo pipefail
 for tool in python3 stat readlink; do command -v "$tool" >/dev/null || exit 1; done
 test ! -L "$HOME" && test "$(readlink -f "$HOME")" = "$HOME" && test -O "$HOME" || exit 1
 LAB_DIR="$HOME/oci-roadmap-lab"
+export CLOUD_CONFIG_PATH="$LAB_DIR/cloud-config.yaml"
+# 충돌이면 이 변수만 새 절대경로로 변경한다. parent는 위 LAB_DIR 그대로 사용한다.
 test ! -L "$LAB_DIR" || { printf '%s\n' 'STOP: lab parent symlink'; exit 1; }
 if test -e "$LAB_DIR"; then
   test -d "$LAB_DIR" && test -O "$LAB_DIR" || exit 1
@@ -117,11 +119,11 @@ if test -e "$LAB_DIR"; then
 else
   (umask 077; mkdir "$LAB_DIR") || exit 1
 fi
-test ! -e "$LAB_DIR/cloud-config.yaml" && test ! -L "$LAB_DIR/cloud-config.yaml" || { printf '%s\n' 'STOP: cloud-config exists or is symlink'; exit 1; }
+test ! -e "$CLOUD_CONFIG_PATH" && test ! -L "$CLOUD_CONFIG_PATH" || { printf '%s\n' 'STOP: cloud-config exists or is symlink'; exit 1; }
 # noclobber prevents a late existing-file collision; private owner-only parent prevents other-user replacement.
 set -C
 umask 077
-cat > "$LAB_DIR/cloud-config.yaml" <<'YAML'
+cat > "$CLOUD_CONFIG_PATH" <<'YAML'
 #cloud-config
 write_files:
   - path: /var/tmp/oci-roadmap-marker.txt
@@ -136,7 +138,8 @@ YAML
 # 본인 local: 원문 bytes를 Create 전에 고정한다.
 python3 - <<'PY'
 import pathlib,hashlib,os,json
-p=pathlib.Path(os.environ['HOME'])/'oci-roadmap-lab/cloud-config.yaml'
+p=pathlib.Path(os.environ['CLOUD_CONFIG_PATH'])
+assert p.is_absolute() and p.parent == pathlib.Path(os.environ['HOME'])/'oci-roadmap-lab'
 b=p.read_bytes()
 assert b.startswith(b'#cloud-config\n') and 0<len(b)<=32000
 record={'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
@@ -150,7 +153,8 @@ PY
 ```bash
 python3 - <<'PY'
 import pathlib,hashlib,json,os
-p=pathlib.Path(os.environ['HOME'])/'oci-roadmap-lab/cloud-config.yaml'
+p=pathlib.Path(os.environ['CLOUD_CONFIG_PATH'])
+assert p.is_absolute() and p.parent == pathlib.Path(os.environ['HOME'])/'oci-roadmap-lab'
 r=json.load(open(str(p)+'.prelaunch.json')); b=p.read_bytes()
 assert len(b)==r['bytes'] and hashlib.sha256(b).hexdigest()==r['sha256']
 print('upload bytes match prelaunch evidence')
@@ -158,7 +162,7 @@ PY
 ```
 실패하면 Create하지 않는다. 파일을 수정했다면 이전 증거를 보존하고 새 승인 path/event로 준비부터 다시 시작한다; postlaunch hash를 prelaunch 증거로 소급하지 않는다.
 
-2. Compute Create instance → Advanced options → Management → Initialization script에 이 파일을 업로드한다. Console이 base64 변환하므로 YAML 원문을 올린다. User data와 기타 metadata 최대 크기 합계 32,000 bytes, reboot 금지, secrets 금지를 적용한다. [Initialization script/User data exact constraints](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/launchinginstance.htm).
+2. Compute Create instance → Advanced options → Management → Initialization script에 `CLOUD_CONFIG_PATH`가 가리키는 원문 파일을 업로드한다. Console이 base64 변환하므로 YAML 원문을 올린다. User data와 기타 metadata 최대 크기 합계 32,000 bytes, reboot 금지, secrets 금지를 적용한다. [Initialization script/User data exact constraints](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/launchinginstance.htm).
 3. 다른 launch fields를 완료하고 vm-a Create를 한 번 제출한다. same launch event에 user-data 파일 hash를 연결한다. RUNNING이 cloud-init 완료를 뜻하지 않으므로 guest 상태를 별도로 읽는다.
 
 ```bash
@@ -174,8 +178,8 @@ timeout --foreground -k 5s 60s ssh -i "$KEY" -o IdentitiesOnly=yes -o StrictHost
 
 
 ```bash
-sha256sum "$HOME/oci-roadmap-lab/cloud-config.yaml"
-ssh -i "$KEY" opc@"$PUBLIC_IP" 'test "$(sudo cat /var/tmp/oci-roadmap-marker.txt)" = roadmap-lab-created && sudo cloud-init status --long'
+sha256sum "$CLOUD_CONFIG_PATH"
+timeout --foreground -k 5s 60s ssh -i "$KEY" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -o ConnectionAttempts=1 -o ControlMaster=no -o ControlPath=none opc@"$PUBLIC_IP" 'test "$(sudo cat /var/tmp/oci-roadmap-marker.txt)" = roadmap-lab-created && sudo cloud-init status --long'
 ```
 기대 패턴 marker exact match, cloud-init done/실제 warning 없음 또는 원인 해소 기록, 생성 후 UTC marker timestamp. guest YAML 실행 없이 Console upload만으로 통과하지 않는다.
 
@@ -210,7 +214,7 @@ cloud-init warning/error는 status --long/log의 failing module·YAML indent/use
 
 local YAML/hash와 guest 두 파일; VM owner10 유지, clean/reboot 금지. 공유 기반 리소스는 이 consumer가 직접 삭제하지 않는다. 실제 소비자/expiry를 creator에게 반환하고 creator의 리소스정리 절차를 사용한다. VM을 Stop했다고 boot/IP/backup 비용이 끝난 것으로 처리하지 않는다. 로컬/guest 파일은 자신이 만든 정확한 경로만 제거하며 기록된 증거를 보존한다.
 
-guest marker/created-at가 10/17 checkpoint 검증에 더 이상 필요하지 않을 때만 두 lab 파일을 제거한다. 로컬 cloud-config/hash는 비민감 증거 보존 기한 후 정리한다.
+guest marker/created-at가 10/17 checkpoint 검증에 더 이상 필요하지 않을 때만 두 lab 파일을 제거한다. 로컬 cloud-config/hash는 비민감 증거 보존 기한 후 `rm -- "$CLOUD_CONFIG_PATH" "$CLOUD_CONFIG_PATH.prelaunch.json"`으로 정확한 두 파일만 정리한다. 새 terminal에서는 생성 때 기록한 exact `CLOUD_CONFIG_PATH`를 다시 export하고 내용/hash부터 대조한다.
 
 
 ## 공식문서

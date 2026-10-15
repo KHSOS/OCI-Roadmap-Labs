@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 — SSH Keys 한정**: 로컬 키 준비, 공개키 제출, SSH 검증 및 정리 절차의 문서 검토 범위입니다. 실제 OCI 실행은 미검증이며 전체 교육과정 승인이나 게시 완료를 뜻하지 않습니다.
 
 # SSH Keys
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 검토 상태: **SSH Keys 범위 문서 검토 완료 / OCI 실행 미검증**. 이 절차의 문서상 결함 보정과 시나리오·안전·정리 검토에 한정합니다. 실제 권한·신뢰 확인·예산·소비자 반환 등 본문의 실행 gate는 그대로 적용됩니다. 모든 예상 출력은 패턴이며 실측값이 아닙니다. 전체 과정 상태는 [통합 상태](../../../Docs/README.md)를 확인하세요.
 
 > 실행 절차 작성본 / OCI 미실행. Oracle 공식 본문 근거와 교육용 선택을 구분한다. secrets·실제 고객값·diagram 없음.
 
@@ -97,20 +97,17 @@ set -euo pipefail
 for tool in stat timeout ssh ssh-keygen; do command -v "$tool" >/dev/null || exit 1; done
 stat --version >/dev/null || exit 1
 ssh -V
-export KEY="$HOME/.ssh/oci-roadmap-lab-ed25519"
+# 기존 .ssh가 없거나 mode가 다르면 기존 디렉터리를 고치지 않고 전용 경로를 쓴다.
+export KEY_DIR="$HOME/oci-roadmap-keys"
+if test -L "$KEY_DIR" || test -e "$KEY_DIR"; then
+  printf '%s\n' 'STOP: choose a new dedicated KEY_DIR path'; exit 1
+fi
+(umask 077; mkdir "$KEY_DIR") || exit 1
+export KEY="$KEY_DIR/oci-roadmap-lab-ed25519"
 if test -e "$KEY" || test -L "$KEY" || test -e "$KEY.pub" || test -L "$KEY.pub"; then
   printf '%s\n' 'STOP: key already exists; choose another filename'
   exit 1
 else
-# collision 검사가 끝난 뒤에만 directory 생성; 기존 mode는 변경하지 않는다.
-if test -L "$HOME/.ssh"; then printf '%s\n' 'STOP: .ssh symlink needs owner review'; exit 1; fi
-if test -e "$HOME/.ssh"; then
-  test -d "$HOME/.ssh" || exit 1
-  test "$(stat -c '%a' "$HOME/.ssh")" = 700 || { printf '%s\n' 'STOP: existing .ssh mode requires separate owner approval'; exit 1; }
-else
-  (umask 077; mkdir "$HOME/.ssh") || exit 1
-fi
-
   ssh-keygen -t ed25519 -f "$KEY" -C 'oci-roadmap-lab' || exit 1
 fi
 chmod 400 "$KEY"
@@ -163,12 +160,11 @@ Part A 기대: public key fingerprint 두 개가 같고 private permission 400. 
 
 ## 문제해결
 
-### 공통 오류의 진단 순서
+### Part A 로컬 오류
 
-1. `NotAuthorizedOrNotFound` 또는 목록에 리소스가 없음: 먼저 Region/Compartment/OCID와 identity domain/group을 확인한다. 존재하지 않는 OCID와 권한 부족 모두 같은 오류로 보일 수 있다. 관리자에게 request-id·작업 시각·서비스·가려진 대상 OCID를 제공한다. 비밀키/토큰은 보내지 않는다.
-2. `LimitExceeded`/quota/capacity 부족: Billing & Cost Management → Limits, Quotas and Usage와 생성 화면의 지원 shape/AD를 확인한다. 운영 quota 증가나 다른 Region 구독을 임의 요청하지 않는다. 승인 범위 안의 더 작은 compatible shape 또는 다른 AD를 선택하거나 `BLOCKED_CAPACITY`를 기록한다.
-3. 장시간 provisioning/예상 밖 state: Work Requests/오류 상세를 읽고 같은 요청을 반복 제출하지 않는다. 만들어진 부분 리소스(boot/IP/attachment 포함)를 먼저 조사한다.
-4. 메뉴 이름이 다름: 공식 task body의 동등한 탭(예: Storage 또는 Attached Block Volumes)을 찾는다. 필드가 문서와 다르면 값·스크린샷에서 secrets를 가린 뒤 관리자 또는 Oracle Support에 확인하고 제출을 중단한다. 이 문서는 현재 tenancy의 live Console 화면을 검사한 결과가 아니다.
+`command not found`이면 Linux/WSL의 OpenSSH와 GNU coreutils 설치 여부를 확인한다. `Permission denied`이면 KEY_DIR의 본인 소유권·쓰기 권한을 확인하고 기존 `.ssh`를 자동 chmod하지 않는다. 경로 충돌은 새 KEY_DIR을 정해 처음부터 재개한다. fingerprint가 다르면 서로 다른 pair이므로 원본 private key에 대응하는 `.pub`를 확인한다. private key 내용을 출력하지 않는다.
+
+Part B의 VM 생성/shape/quota/state 오류는 [Compute 문제해결](00_Compute.md#문제해결)에서 처리한다. 로컬 key 생성 실패를 해결하려고 새 VM을 생성하지 않는다.
 
 ### SSH 실패
 

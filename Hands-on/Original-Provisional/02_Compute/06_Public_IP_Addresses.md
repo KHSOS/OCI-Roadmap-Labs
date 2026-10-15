@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 — OCI 실행 미검증**: 이 Public IP Addresses 실습의 한정된 절차·복구·정리 범위를 문서 기준으로 검토했습니다. 실제 OCI 실행 검증이나 전체 교육과정 승인을 뜻하지 않습니다.
 
 # Public IP Addresses
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 승인 범위: **한정된 실행 절차의 문서 검토 완료**. 확인된 기존 보정사항을 반영한 이 문서의 시나리오와 복구·정리 절차에 한정합니다. 실제 OCI 실행은 미검증이며 모든 예상 출력은 실측값이 아닙니다. 실행 시 권한·안전·예산·복구·지원 gate는 그대로 적용됩니다. 게시 및 렌더링 검증은 별도이며 [통합 상태](../../../Docs/README.md)는 전체 교육과정의 상태입니다.
 
 > 실행 절차 작성본 / OCI 미실행. Oracle 공식 본문 근거와 교육용 선택을 구분한다. secrets·실제 고객값·diagram 없음.
 
@@ -81,7 +81,7 @@ ip-lab-reserved의 Create/Get/assign/unassign/Delete와 대상 disposable privat
 ## 비용및주의사항
 
 - reserved IPv4는 ip-lab-reserved 1개만 승인한다. 남아 있는 disposable vm-b를 우선 재사용하고 없을 때만 승인된 ip-lab-vm/boot 1세트를 순차 생성한다. vm-a 관리 주소는 변경하지 않는다. 주소 보유·VM·boot·전송 단가와 종료시각을 따로 확인한다.
-- ephemeral 해제 후 같은 주소 복구를 보장하지 않는다. same private IP OCID/reserved OCID와 독립 Console 담당자를 확보하고 전환 최대120초 창을 지킨다. reserved unassign/delete를 먼저 확인한 뒤 전용 VM owner에게 반환·종료한다.
+- ephemeral 해제 후 같은 주소 복구를 보장하지 않는다. same private IP OCID/reserved OCID와 열린 Console 관리 창을 확보하고 전환 최대120초 창을 지킨다. 개인 기본 경로는 SSH negative를 생략하며 독립 담당자 시험은 선택이다. reserved unassign/delete를 먼저 확인한 뒤 전용 VM owner에게 반환·종료한다.
 
 실제 OCI 작업은 아직 수행하지 않았다. 기대값은 실행 시 대조할 조건이며 무료 사용이나 과금 강제 차단을 보장하지 않는다. 승인 expiry가 끝나면 새 시험을 중단하고 위 소유권 순서로 원복·반환한다.
 
@@ -116,8 +116,20 @@ ip-lab-reserved의 Create/Get/assign/unassign/Delete와 대상 disposable privat
 
 Console 복구세션을 유지하고 폐기대상만 지정한다. reservedIP는 먼저 unassign/delete한 뒤 임시VM/boot를 정리한다. UpdatePublicIp는 official resource verb/dependency본문 근거이며 단일operation최소권한은 미확정으로 남긴다.
 
-1. public-admin의 **폐기 가능한 vm-b**가 필요하다. Fault Domains에서 즉시 이어진 승인 session이면 그 VM을 재사용한다. 없으면 같은 small launch recipe로 temporary `ip-lab-vm` 1개를 새로 생성하고 예산/expiry를 승인한다. shared vm-a 관리 IP를 바꾸지 않는다. Networking/primary VNIC → IPv4 Addresses에서 primary private IP의 **private IP OCID**와 ephemeral public IP를 기록한다.
+1. public-admin의 **폐기 가능한 vm-b**가 필요하다. Fault Domains에서 즉시 이어진 승인 session이면 그 VM을 재사용한다. 없으면 [Compute 공동 launch](00_Compute.md#shared-launch)의 small launch recipe와 [user-data 준비](07_Cloud_init_User_Data.md#user-data-preparation)를 사용해 temporary `ip-lab-vm` 1개를 새로 생성하고 예산/expiry를 승인한다. 새 instance OCID에 대해 [guest trust bootstrap](00_Compute.md#guest-trust-bootstrap)을 완료하여 ED25519 fingerprint를 먼저 보존한다. 기존 vm-a fingerprint를 재사용하지 않는다. shared vm-a 관리 IP를 바꾸지 않는다. Networking/primary VNIC → IPv4 Addresses에서 primary private IP의 **private IP OCID**와 ephemeral public IP를 기록한다.
 2. Networking → IP Management → Reserved Public IPs(또는 Public IPs) → Reserve/Create public IP. Name `ip-lab-reserved`, Compartment lab-root, **Region-scoped reserved**로 생성한다. 아직 private IP에 연결하지 않은 상태를 조회한다. public IPv4 비용/limit를 별도 승인한다. [Create reserved public IP — name/compartment/default Oracle pool](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/reserved-public-ip-create.htm).
+### 개인 기본 경로 — Console에서 바로 전환
+
+1인 학습자는 아래 고급 negative 시험 대신 이 경로를 사용한다. vm-a가 아닌 disposable 대상의 instance/VNIC/private IP OCID와 새 reserved OCID/address를 기록하고 열린 Console의 IP administration 화면에서 두 OCID를 다시 대조한다. 같은 Region의 reserved object가 unassigned인지 확인한다. 기존 접속이 끊길 수 있으므로 SSH 안에서 변경하지 않는다.
+
+3. primary private IP 행 → Edit → **No public IP** → Update. 같은 행을 다시 열어 public IP가 없음을 확인한다. 이전 주소로 negative 접속을 시도하지 않고 즉시 아래 4단계로 진행한다. 전환은 120초 안에 끝내며 할당 실패면 Console을 유지하고 이 문서 문제해결의 Region/private IP/기존 assignment부터 확인한다. 예산 기한이 끝나면 reserved 정리 후 VM creator에게 반환한다.
+4. 같은 행 → Edit → **Reserved public IP** → **Select Existing Reserved IP Address** → `ip-lab-reserved` → Update. [공식 assign 절차](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/reserved-public-ip-assign.htm).
+5. 아래 고급 절차의 5–6단계와 결과검증을 완료한다. negative는 `NOT_SELECTED`로 두며 기본 완료에 필요하지 않다.
+
+### 선택 고급 경로 — transport negative와 독립 복구
+
+아래 3–4단계는 위 개인 경로와 **택일**한다. 고급 시험을 선택할 때만 독립 Console 담당자와 기한을 합의한다. 개인 기본 경로를 마친 뒤 다시 해제하지 않는다.
+
 ### 전환 전 positive control / 복구 gate
 
 로컬 Linux/WSL 전용 세션에서 `command -v timeout; command -v ssh-add`를 먼저 확인한다. 기존 본인 ssh-agent가 없으면 이 전용 세션에서 `eval "$(ssh-agent -s)"`를 실행한다. `ssh-add -t 15m "$KEY"`의 interactive prompt로만 unlock하고 `ssh-add -l`의 public fingerprint가 owner15 공개키와 일치하는지 확인한다. key/passphrase contents는 기록하지 않는다. agent lifetime/승인 expiry 안에서 같은 KEY/agent/사용자/endpoint/host trust/네트워크/OS 권한을 고정한다; agent 만료면 No public IP 변경 금지 또는 Console로 복구부터 한다. positive/negative/recovery 모두 BatchMode=yes와 동일한 새 세션 옵션을 사용한다. 검사 종료 후 본인 추가 key만 `ssh-add -d "$KEY"`; 이 실습에서 시작한 agent만 종료한다.
@@ -161,9 +173,9 @@ oci network vnic get --vnic-id '<대상_VNIC_OCID>' --region "$REGION" > ip-vnic
 ```
 
 ```bash
-# 본인 local only:5의 same guest trust 등록 뒤
+# 본인 local only:5의 same guest trust 등록 뒤; 개인 경로는 passphrase를 prompt에 입력한다.
 export RESERVED_IP='<actual_reserved_IP_address>'
-timeout --foreground -k 5s 30s ssh -i "$KEY" -o IdentitiesOnly=yes -o BatchMode=yes -o HostKeyAlgorithms=ssh-ed25519 -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -o ConnectionAttempts=1 -o ControlMaster=no -o ControlPath=none opc@"$RESERVED_IP" 'id -un; hostname' || exit 1
+timeout --foreground -k 5s 30s ssh -i "$KEY" -o IdentitiesOnly=yes -o HostKeyAlgorithms=ssh-ed25519 -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -o ConnectionAttempts=1 -o ControlMaster=no -o ControlPath=none opc@"$RESERVED_IP" 'id -un; hostname' || exit 1
 ```
 기대 패턴 public-ip lifetime=RESERVED/scope=REGION/private-ip-id=대상 private IP OCID/ip-address=VNIC public-ip, 신규 SSH exit 0. unassign 후 주소/OCID 동일/private-ip-id=null. ephemeral 주소가 같은 값으로 되살아난다고 보장하지 않는다.
 
@@ -196,7 +208,7 @@ Reserved IP assign 실패면 private IP에 기존 public IP가 아직 붙어 있
 
 ## 리소스정리
 
-예약 IP를 대상 private IP에서 먼저 Unassign한 뒤 Networking → Reserved Public IPs → 해당 OCID → Actions → **Terminate**(동등 Delete label인 경우 삭제)를 제출하고 get으로 없는지 확인한다. 그 후 disposable VM/boot를 terminate한다. shared vm-a public IP/NSG는 유지한다. [Reserved unassign 공식 task](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/reserved-public-ip-unassign.htm) 및 [Delete/Terminate task](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/reserved-public-ip-delete.htm)의 메뉴를 따른다. reserved IP는 VM terminate 후에도 남을 수 있으므로 별도 조회/삭제가 필수다. 생성된 ephemeral IP는 VM/VNIC 수명과 연결되며 reserved처럼 별도 보존될 것이라 가정하지 않는다.
+예약 IP를 대상 private IP에서 먼저 Unassign한 뒤 Networking → Reserved Public IPs → 해당 OCID → Actions → **Terminate**(동등 Delete label인 경우 삭제)를 제출하고 get으로 없는지 확인한다. 그 후 VM branch에 따라 반환한다. **owner07 vm-b 재사용:** owner16은 VM/boot를 terminate하지 않는다. reserved 제거와 새 public-IP 상태를 owner07에게 반환하고 확인을 받은 뒤 [Fault Domains 정리](../01_Introduction_to_OCI/03_Fault_Domains.md#리소스정리)를 creator가 수행한다. **owner16 신규 ip-lab-vm:** 이번 Create의 exact instance/boot OCID만 Compute → Terminate에서 boot 영구삭제를 선택해 종료하고 TERMINATED/boot 잔존을 재조회한다. shared vm-a public IP/NSG는 유지한다. [Reserved unassign 공식 task](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/reserved-public-ip-unassign.htm) 및 [Delete/Terminate task](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/reserved-public-ip-delete.htm)의 메뉴를 따른다. reserved IP는 VM terminate 후에도 남을 수 있으므로 별도 조회/삭제가 필수다. 생성된 ephemeral IP는 VM/VNIC 수명과 연결되며 reserved처럼 별도 보존될 것이라 가정하지 않는다.
 
 
 ## 공식문서

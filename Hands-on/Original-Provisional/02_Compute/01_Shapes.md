@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 — OCI 실행 미검증**: 이 Shapes 절차의 image/shape 선택, 동일 vm-a 생성 연계, 검증·반환 범위를 검토했습니다. 실제 OCI 실행이나 전체 교육과정의 승인을 뜻하지 않습니다.
 
 # Shapes
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 수용 범위: **Shapes의 한정된 실행 절차 검토 완료**. 실제 실행 전 권한·지원·capacity·예산·복구 및 소유권 조건은 아래 절차대로 확인해야 합니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 게시·렌더링 검증 및 전체 교육과정 상태와는 별개입니다. [통합 상태](../../../Docs/README.md).
 
 > 실행 절차 작성본 / OCI 미실행. Oracle 공식 본문 근거와 교육용 선택을 구분한다. secrets·실제 고객값·diagram 없음.
 
@@ -55,7 +55,8 @@ oci --version
 | 입력/출력 | 값 또는 실제 획득 경로 | 사용할 시점 | 실행 위치 | 선택 이유 |
 |---|---|---|---|---|
 | Console/설정 필드 | OL9 image architecture; compatible A1 1OCPU/6GB 또는 승인 E4 1OCPU/2GB; same vm-a Create; resize 없음 | 생성 전 선택 → 생성 뒤 readback | 본문 Console/로컬 지정 | 이 topic의 최소 생성 범위 |
-| `AD` | owner06의 실제 tenancy AD 목록에서 선택한 이름 | ListShapes/launch 전 | Cloud Shell/Console | 생성 후 값을 선행으로 요구하지 않음 |
+| `AD` | owner06의 실제 tenancy AD 목록에서 선택한 이름; 선택 Region과 동일 | ListShapes/launch 전 | Cloud Shell/Console | 생성 후 값을 선행으로 요구하지 않음 |
+| `IMAGE_ID` | 아래 shape-selection 1의 Oracle image release notes에서 선택 OL9 build/architecture와 같은 Region의 OCID | ListShapes/launch 전 | Cloud Shell/Console | 조회와 실제 launch에 같은 image 사용 |
 | `A_PUBLIC_IP` | owner10 vm-a VNIC public-ip | 선행 완료/생성 후 | 로컬 SSH | 관리 jump 주소 |
 | `INSTANCE_A_ID` | owner10 실제 vm-a 생성 id | 선행 완료/생성 후 | Cloud Shell | 공유 A 조회; 이름은 OCID가 아님 |
 | `INSTANCE_ID` | owner10 vm-a Create/readback id | 생성 후/선행 완료 | Cloud Shell | 현재 문서 대상 OCID에 명시 대입 |
@@ -121,10 +122,16 @@ shape-selection 준비에서는 compatibility/OCPU/memory만 고른다. baseline
 
 
 1. Compute의 생성 전 Image and shape station에 참여한다. Oracle Linux 9 image의 CPU architecture를 먼저 선택한 뒤 같은 architecture를 지원하는 shape를 선택한다. Flexible shape의 OCPU와 memory slider가 서로 제약되므로 최대값이나 default memory를 그대로 쓰지 않는다. [Flexible Shapes and memory ratios](https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm).
+Platform image OCID는 [Oracle image release notes](https://docs.oracle.com/en-us/iaas/images/)에서 선택한 Oracle Linux 9 build/architecture의 상세를 열고 같은 Region 행의 OCID를 복사한다. Create → Change image에서 같은 OS/build를 선택하고 이름·Oracle Linux 버전·architecture를 대조한다. 선택한 build/Region 행을 확인할 수 없으면 Create 전에 중단한다. display name을 OCID로 대체하지 않는다. 아래 `--image-id`와 선택 AD는 같은 Region 값이다.
+
 2. 최소 VM primary option은 eligibility/limit/capacity가 확인된 A1 1 OCPU/6 GB, 불가능하면 승인 E4 1 OCPU/2 GB다. ARM 앱 image를 x86 shape로, x86 binary를 ARM shape로 혼용하지 않는다. A1과 E4를 비교하려고 두 VM을 동시에 만들지 않는다.
 ```bash
 # Cloud Shell: Create 이전 compatibility 선택만
-oci compute shape list --compartment-id "$LAB_COMPARTMENT_ID" --availability-domain '<선택_AD>' --image-id '<선택_image_OCID>' --all --region "$REGION" > compatible-shapes.json || exit 1
+export IMAGE_ID='<선택_build와_Region의_image_OCID>'
+# AD는 입력표의 선택 Region에 속한 실제 AD 이름으로 이미 지정한다.
+oci compute shape list --compartment-id "$LAB_COMPARTMENT_ID" --availability-domain "$AD" --image-id "$IMAGE_ID" --all --region "$REGION" > compatible-shapes.json || exit 1
+cat compatible-shapes.json
+# data[].shape에 선택 shape가 있는지 확인한다. 없거나 조회 실패이면 Create로 진행하지 않는다.
 ```
 
 3. 선택된 shape/OCPU/memory를 기록한 후 Compute의 나머지 필드와 함께 **vm-a Create를 한 번 제출**한다. RUNNING readback에서 shape-config를 읽고 실제 guest CPU/memory를 확인한다. CPU thread 수와 OCPU 수가 항상 같다고 가정하지 않는다.
@@ -134,7 +141,7 @@ oci compute shape list --compartment-id "$LAB_COMPARTMENT_ID" --availability-dom
 ```bash
 export KEY='<owner15_local_private_key_absolute_path>'
 export PUBLIC_IP='<owner10_actual_VNIC_public_ip>'
-ssh -i "$KEY" -o ConnectTimeout=10 opc@"$PUBLIC_IP" 'lscpu; free -m; uname -m' || exit 1
+ssh -i "$KEY" -o ConnectTimeout=10 opc@"$PUBLIC_IP" 'lscpu && free -m && uname -m' || exit 1
 ```
 4. guest에는 OS reserved memory와 단위 차이 때문에 free의 total이 Console GB와 정확히 같지 않을 수 있다. shape 설정값과 architecture 일치를 primary validation으로 쓴다. 실행 후 shape resize 비교는 비용 승인/재부팅 조건이 별도로 필요하며 본 최소 lab에서는 하지 않는다.
 

@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 — OCI 실행 미검증**: 이 Compute 시나리오의 생성·접속·검증·정리 절차는 한정된 문서 검토 범위에서 승인되었습니다. 실제 OCI 생성·SSH·cloud-init·권한 검증을 수행했다는 뜻은 아닙니다.
 
 # Compute
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 검토 범위: **DOCUMENTATION_REVIEWED (이 파일의 실행 절차)**. 전체 커리큘럼·게시·렌더링 승인을 뜻하지 않습니다. 실제 OCI 실행은 `NOT_EXECUTED`이며 모든 예상 출력은 패턴이지 실측값이 아닙니다. 본문의 권한·신뢰·안전·예산·지원·복구·소비자 반환 gate는 실행 전과 실행 중 그대로 적용됩니다. 전체 통합 상태는 [통합 상태](../../../Docs/README.md)를 확인하세요.
 
 > 실행 절차 작성본 / OCI 미실행. Oracle 공식 본문 근거와 교육용 선택을 구분한다. secrets·실제 고객값·diagram 없음.
 
@@ -28,16 +28,16 @@
 
 - [15 SSH Keys — 단계 링크](05_SSH_Keys.md#key-preparation): **Part A 전용 공개키/키경로/fingerprint**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
 - [23 Public Subnets — 단계 링크](../../Networking/Original-Provisional/03_Virtual_Cloud_Network_VCN/04_Public_Subnets.md#public-network-preparation): **단계 A AVAILABLE subnet/IGW/route/SL/NSG**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
-- [06 Availability Domains — 단계 링크](../01_Introduction_to_OCI/02_Availability_Domains.md#ad-selection): **실제 AD 조회/선택만**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
-- [11 Shapes — 단계 링크](01_Shapes.md#shape-selection): **architecture-compatible shape 선택만**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
-- [13 Boot Volume — 단계 링크](03_Boot_Volume.md#boot-selection): **boot 선택만**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
-- [17 Cloud-init / User Data — 단계 링크](07_Cloud_init_User_Data.md#user-data-preparation): **YAML 작성/크기/hash만**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
+- [06 Availability Domains — 단계 링크](../01_Introduction_to_OCI/02_Availability_Domains.md#ad-selection): **공유 launch 선택 설명(개인 경로는 본문에서 선택), 별도 VM 불필요**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
+- [11 Shapes — 단계 링크](01_Shapes.md#shape-selection): **공유 launch 선택 설명(개인 경로는 본문에서 선택), 별도 생성 불필요**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
+- [13 Boot Volume — 단계 링크](03_Boot_Volume.md#boot-selection): **공유 launch 선택 설명(개인 경로는 본문에서 선택), 별도 생성 불필요**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
+- [17 Cloud-init / User Data — 단계 링크](07_Cloud_init_User_Data.md#user-data-preparation): **공유 launch 선택 설명(개인 경로는 본문에서 선택), 별도 생성 불필요**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
 
 생성 전 조직 승인(identity/권한/예산/expiry/서비스 지원/limit/capacity)을 확인한다. 실제 OCID/IP는 아직 생성하지 않았으면 비워 두고 해당 Create/readback 뒤 채운다. 동일 creation-event-id/OCID는 한 번의 제출만 뜻한다. `INSTANCE_A_ID`는 owner10 vm-a의 OCID, `INSTANCE_B_ID`는 owner22 private-vm의 OCID이며 owner07 vm-b와 다르다. 실습에 없는 자원을 추가하지 않는다. 실제 checkpoint는 사용자 실행 전 비워 둔다.
 
 ### 입력값과 실행 위치
 
-Console에서 선택한 값만 사용한다. `<...>`는 예시 OCID나 비밀값이 아니라 **사용자가 대체할 입력 자리**다. 대체하지 않은 채 명령을 실행하지 않는다. Console → 우측 상단 Cloud Shell/Code Editor → Cloud Shell을 열면 OCI CLI가 사전 인증된다. Region 변경 뒤에는 Shell을 다시 열거나 명령의 `--region`을 바꾼다. SSH는 Cloud Shell이 아니라 본인 Linux/WSL/macOS 터미널에서 수행한다. 공인 IP/32도 그 터미널의 출구 주소여야 한다.
+Console에서 선택한 값만 사용한다. `<...>`는 예시 OCID나 비밀값이 아니라 **사용자가 대체할 입력 자리**다. 대체하지 않은 채 명령을 실행하지 않는다. Console → 우측 상단 Cloud Shell/Code Editor → Cloud Shell을 열면 OCI CLI가 사전 인증된다. Region 변경 뒤에는 Shell을 다시 열거나 명령의 `--region`을 바꾼다. 이 문서의 bounded 명령은 GNU timeout이 있는 Linux/WSL Bash를 기준으로 한다. macOS 기본 OpenSSH 접속은 아래 개인 접속 명령을 사용할 수 있지만 GNU timeout이 필요한 비대화형 검증은 Linux/WSL에서 수행한다. SSH는 Cloud Shell이 아니라 본인 로컬 터미널에서 수행한다. 공인 IP/32도 그 터미널의 출구 주소여야 한다.
 
 ```bash
 # 아래는 입력/출력의 대입 형식이다. 표의 단계 전에 생성 후 ID/IP export 행을 실행하지 않는다.
@@ -85,7 +85,7 @@ vm-a 단일 launch와 동일 instance/VNIC 조회·소비자 반환 후 terminat
 
 **Boot attachment 조회 범위:** 이 문서는 미확인 `ListBootVolumeAttachments` 최소권한을 요구하는 CLI를 실행하지 않는다. 생성 owner가 승인된 Compute Console → 정확한 instance OCID → Storage → Boot volume에서 연결된 boot OCID/AD와 instance를 읽어 전달한다. boot를 검증하는 owner13만 GetBootVolume 권한을 승인받아 그 OCID를 조회한다. Console attachment를 볼 권한이 없으면 creator가 exact instance/boot 관계를 제공하기 전 중단한다. 권한 표에 없는 operation을 최소권한 검증 완료로 표시하지 않는다.
 
-최초 SSH에 필요한 exact-instance Console connection/history는 관리자에게 해당 Create/Get/Delete/Capture 작업을 별도 승인받는다. [Compute의 독립 guest 신뢰 경로](00_Compute.md#guest-trust-bootstrap)의 BLOCKED_TRUST/BLOCKED_IAM gate를 보존한다. 승인 없이 public host fingerprint를 추정하거나 guest password를 만들지 않는다.
+공유 환경 고급 신뢰 경로를 선택한 경우에만 필요한 exact-instance Console connection/history는 관리자에게 해당 Create/Get/Delete/Capture 작업을 별도 승인받는다. [Compute의 독립 guest 신뢰 경로](00_Compute.md#guest-trust-bootstrap)의 BLOCKED_TRUST/BLOCKED_IAM gate를 보존한다. 승인 없이 public host fingerprint를 추정하거나 guest password를 만들지 않는다.
 
 ## 비용및주의사항
 
@@ -100,7 +100,7 @@ vm-a 단일 launch와 동일 instance/VNIC 조회·소비자 반환 후 terminat
 
 공유 vm-a 한 세트에 AD/shape/boot/SSH key/cloud-init 선택을 묶는다. 웹 application 설치 없이 sshd와 marker만 검증한다.
 
-1. **진입/선택:** 15 key/23 network A/06 AD/11 shape/13 boot/17 YAML 준비. 사전준비 링크의 지정 단계/실제 출력이 없으면 제출하지 않는다.
+1. **진입/선택:** 15 key의 전용 키 준비와 23 network A의 기존 public-admin/NSG 준비를 완료한다. 개인 격리 경로의 AD/shape/boot/YAML은 아래 launch 1–5에서 한 번 선택한다. 공유 cohort는 각 선택 설명 링크의 준비 출력도 남긴다. 어느 경로든 키와 네트워크가 없으면 제출하지 않는다.
 2. **실제 작업:** Console Create 한 번 → RUNNING/VNIC/boot readback. 아래 Console 필드/명령을 해당 host에서 순서대로 실행한다. 같은 자원은 이름이 아니라 OCID/event로 재사용한다.
 3. **완료/복구/반환:** 새 SSH/cloud-init/marker. 결과검증 실패는 문제해결로 이동하고 동일 Create를 무작정 재제출하지 않는다.
 
@@ -153,7 +153,17 @@ runcmd:
 ```
 
 6. Free-form tags `purpose=oci-roadmap`, `owner=<비민감_담당자_alias>`, `expiry=<승인_종료시각>`를 입력한다. Review에서 1 VM, 작은 shape, 기존 subnet, ephemeral IP, 공개키, boot size, initialization script를 다시 확인하고 **Create**를 누른다. OCID를 저장한다. 화면만 보는 것은 생성 완료가 아니다. Work request와 instance가 `RUNNING`인지 확인한다.
-### 최초 SSH fingerprint의 신뢰 경로
+### 개인 격리 실습의 첫 SSH
+
+혼자 만든 전용 vm-a는 위 launch 필드에서 key·AD·shape·기본 boot·inline YAML을 한 번 선택한다. 각 준비 링크는 선택값의 설명이며 다른 VM 생성을 뜻하지 않는다. 기존 public-admin의 /32 TCP22 제한을 유지한다. 로컬 Linux/WSL/macOS에서 같은 instance의 Console public IP와 대응 private key 절대경로를 KEY/PUBLIC_IP에 지정하고 `chmod 400 "$KEY"` 후 다음 명령으로 접속한다. WSL에서는 먼저 키를 Linux 홈의 전용 private 디렉터리로 복사한다.
+
+```bash
+ssh -i "$KEY" -o IdentitiesOnly=yes -o HostKeyAlgorithms=ssh-ed25519 -o StrictHostKeyChecking=ask -o ConnectTimeout=10 -o ConnectionAttempts=1 -o ControlMaster=no -o ControlPath=none opc@"$PUBLIC_IP" || exit 1
+```
+
+최초 host fingerprint 질문은 처음 연결한 서버 키를 로컬 known_hosts에 저장하는 단계다. Console에서 방금 만든 instance OCID와 public IP를 다시 확인하고 yes를 입력한다. 기존 키 변경 경고는 수락하지 말고 대상 재생성 여부를 확인한다. 이후에는 StrictHostKeyChecking=yes를 사용한다. guest에서 아래 health를 확인하고 `sudo timeout -k 5s 40s cloud-init status --wait && sudo cat /var/tmp/oci-roadmap-marker.txt`로 완료와 `roadmap-lab-created` 한 줄을 확인한 뒤 exit로 종료한다. 개인 경로는 다음 고급 경로와 그 안의 7번을 건너뛰고 “Create 이후 값 전달”로 이동한다. [Oracle Linux/macOS SSH 절차](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/connect-to-linux-instance.htm#connect-to-linux-instance__linux). 공유 환경에서 독립 fingerprint 검증을 요구하면 다음 고급 경로를 먼저 완료한다. 다른 consumer가 요구하는 별도 신뢰 handoff는 이 개인 경로로 대체하지 않는다.
+
+### 최초 SSH fingerprint의 신뢰 경로 — 공유 환경 고급 선택
 
 
 ### guest-trust-bootstrap
@@ -177,7 +187,7 @@ export PUBLIC_IP='<same_guest_actual_public_IP>'
 
 GNU timeout/OpenSSH가 없으면 설치를 임의 진행하지 않고 로컬 preflight에서 BLOCKED다. 이 public-host-key 출력은 작성한 Linux/cloud-init recipe이며 OCI에서 실측한 결과가 아니다.
 
-7. Instance access의 공인 IP를 얻고 위 trust bootstrap의 bounded local 세션으로 최초 fingerprint를 비교한다. 신뢰 확인 뒤 후속 접속은 `timeout --foreground 60s ssh -i "$KEY" -o IdentitiesOnly=yes -o HostKeyAlgorithms=ssh-ed25519 -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -o ConnectionAttempts=1 -o ControlMaster=no -o ControlPath=none opc@"$PUBLIC_IP"`로 새 세션을 연다. guest에서 `uname -m; id; sudo timeout -k 5s 40s cloud-init status --wait && sudo cat /var/tmp/oci-roadmap-marker.txt`를 실행한다. 기대 패턴: image에 맞는 `aarch64` 또는 `x86_64`, 사용자 `opc`, cloud-init 완료, marker 한 줄. cloud-init warning/error면 로그를 먼저 읽는다. [Linux SSH 연결](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/connect-to-linux-instance.htm).
+7. Instance access의 공인 IP를 얻고 위 trust bootstrap의 bounded local 세션으로 최초 fingerprint를 비교한다. 신뢰 확인 뒤 후속 대화형 접속은 `ssh -i "$KEY" -o IdentitiesOnly=yes -o HostKeyAlgorithms=ssh-ed25519 -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -o ConnectionAttempts=1 -o ControlMaster=no -o ControlPath=none opc@"$PUBLIC_IP"`로 새 세션을 연다. guest에서 `uname -m; id; sudo timeout -k 5s 40s cloud-init status --wait && sudo cat /var/tmp/oci-roadmap-marker.txt`를 실행한다. 기대 패턴: image에 맞는 `aarch64` 또는 `x86_64`, 사용자 `opc`, cloud-init 완료, marker 한 줄. cloud-init warning/error면 로그를 먼저 읽는다. [Linux SSH 연결](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/connect-to-linux-instance.htm).
 
 ### Create 이후 값 전달 — 이름으로 추정하지 않는다
 
@@ -257,11 +267,13 @@ RUNNING인데 marker가 없으면 초기 user-data 제출 파일/지원 image/cl
 
 ## 리소스정리
 
-1. 다른 lab의 소비자와 보존 종료시각을 먼저 확인한다. 생성 작업에 참여한 AD/Shapes/Boot/cloud-init 주제는 같은 `vm-a` OCID를 공유하므로 별도 VM을 삭제하지 않는다.
-2. guest의 실습 파일을 제거하고 mount를 사용했다면 먼저 unmount한다. Console → Compute → Instances → 대상 → Terminate에서 OCID/name을 재확인하고 **Permanently delete attached boot volume**을 선택한다. 이 체크를 생략하면 보존된 boot 비용이 남는다. 인스턴스 상세 상태 `TERMINATED`와 Storage → Boot Volumes의 잔여 volume을 다시 읽는다.
-3. data volume은 instance terminate만으로 지워졌다고 가정하지 않는다. attachment를 제거한 뒤 Storage → Block Volumes에서 이번 lab의 OCID만 삭제한다. backup·예약 public IP·Functions application·NSG는 별도 정리한다.
-4. 기본 `vm-a`는 같은 승인 session의 후속 SSH/Block/Private Subnet 검증까지 보존한다. 예약된 소비자나 승인 expiry가 없으면 즉시 정리한다. Stop만으로 storage/public IP 등 모든 비용이 끝났다고 주장하지 않는다.
+1. owner10만 정리한다. 다른 lab의 실제 소비자 반환과 보존 종료시각을 먼저 확인한다. 반환되지 않은 소비자가 있으면 아래 Terminate를 실행하지 않고 보존/비용 연장 또는 소비 중단·반환을 합의한다. expiry 도달만으로 사용 중인 자원을 삭제하지 않는다. 생성 작업에 참여한 AD/Shapes/Boot/cloud-init 주제는 같은 `vm-a` OCID를 공유하므로 별도 VM을 삭제하지 않는다.
+2. 모든 소비자 반환 뒤 필요한 결과만 보존하고, 이 실습에서 만든 marker 두 파일은 instance와 함께 삭제한다. 소비자가 추가한 mount가 있으면 해당 소유자가 먼저 안전하게 unmount·반환해야 한다. Console → Compute → Instances → 대상 → Terminate에서 OCID/name을 재확인하고 **Permanently delete attached boot volume**을 선택한다. 이 체크를 생략하면 보존된 boot 비용이 남는다. 인스턴스 상세 상태 `TERMINATED`와 Storage → Boot Volumes의 잔여 volume을 다시 읽는다.
+3. 이 기본 launch는 data volume·backup·예약 public IP·Functions application을 만들지 않는다. 소비자가 추가한 자원은 해당 creator에게 반환하고 그 정리 절차를 따른다. 기존 subnet/NSG/키는 여기서 삭제하지 않고 각각 network/key creator에게 반환한다. boot 잔여가 있으면 기록한 정확한 boot OCID로 owner13과 확인하며, 목록에서 안 보이는 것만으로 삭제 성공을 판정하지 않는다.
+4. 후속 SSH/Block/Private Subnet 소비가 예정되어 있으면 1번의 반환 gate에서 보존하고 아직 Terminate를 하지 않는다. 소비자가 없으면 2번을 진행한다. Stop만으로 storage/public IP 등 모든 비용이 끝났다고 주장하지 않는다.
 
+
+정리 근거: [Terminating an Instance](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/terminatinginstance.htm) — boot 기본 보존과 명시적 삭제 선택, VNIC/volume detach 및 IP 반환을 확인한다.
 
 ## 공식문서
 

@@ -1,10 +1,10 @@
-> **Legacy 보존 초안 — 기본 실행 경로 아님.** 새 개인 실습은 [주제별 기본 튜토리얼](../../NATGateway.md)을 사용하세요. 아래 원래 절차는 기존 참조 보존용이며 새 baseline과 혼용하지 않습니다.
+> **Legacy 보존 절차 — 기본 실행 경로 아님.** 새 개인 실습은 [주제별 기본 튜토리얼](../../NATGateway.md)을 사용하세요. 아래 원래 절차는 기존 참조 보존용이며 새 baseline과 혼용하지 않습니다.
 
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **범위 한정 문서 검토 완료 · 실제 OCI 실행 미검증**: 보존 절차의 잔여 통합 결함은 문서 검토 범위에서 해소되었습니다. 새 기본 튜토리얼이나 전체 curriculum의 품질 승인, OCI 실행 성공을 뜻하지 않습니다.
 
 # NAT Gateway
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../../Docs/README.md)를 확인하세요.
+> 통합 상태: 잔여 통합 수정 범위의 실행 절차·복구·정리 문서 검토를 완료했습니다. OCI 실행과 learner publication/rendering 검증은 아직 수행하지 않았습니다. 실제 선행 출력·비용·권한 gate를 통과한 경우에만 실행하세요.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -25,6 +25,8 @@
 ## 사전준비
 
 ### 기준 계약과 실제 단계 선행조건
+
+**분기 gate:** 아래24/29 기능완료 조건은 B full-test에만 적용한다. 설치 준비 A 및 아래 `nat-api-network-preparation`은19/21/22/23의 실제 생성·접속 출력과 승인만 사용하며 NAT-tested를 산출하지 않는다.
 
 [공통 baseline-contract.json](../../../../baseline-contract.json)의 OS/CIDR/소유권을 따른다. Oracle Linux 9 / `opc` / `dnf` 외의 숨은 Ubuntu 또는 probe VM은 만들지 않는다. OCID/IP의 null은 실행 전 반드시 실제 출력으로 채우는 **실행 차단 입력**이다. approval/capacity/quota/identity 미확인은 완료가 아니다.
 
@@ -118,6 +120,16 @@ NAT 준비 A는 설치만 위한 branch이며 RT-ready 이전에도 실행한다
 1. **Networking → Virtual cloud networks → shared-vcn → Gateways → NAT Gateways → Create NAT Gateway**(legacy Resources → NAT Gateways). Name `nat-lab`, Compartment lab-root, Public IP **Ephemeral IP Address**(Oracle pool), **Route Table Association 비워 둠**, free-form purpose/owner/expiry. [Creating a NAT Gateway](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/nat-create.htm)의 Create NAT Gateway를 제출한다. 생성 기본은 Allow traffic이며 create에 Block checkbox가 있다고 가정하지 않는다. OCID/NAT public IP와 block-traffic=false를 get으로 읽는다. 이미 설치 branch에서 만든 동일 OCID가 있으면 중복 생성하지 않는다.
 2. **Route Tables → rt-private → Add Route Rules**: target type **NAT Gateway**, destination CIDR `0.0.0.0/0`, target `nat-lab`. private Subnet의 실제 연결 table OCID를 재확인한다.
 3. **shared-vcn → nsg-private-admin → Add Rules**: Direction Egress, Stateless off(stateful), Destination Type CIDR, Destination `0.0.0.0/0`, IP Protocol TCP, source All, destination443. 추가 rule ID를 저장한다. B ingress SSH22/SL 빈 배열은 유지한다. DHCP 기본 resolver에서 이름을 조회하고 실제 resolver 경로를 확인한다. 별도 조직 DNS를 쓰는 환경이면 실제 DNS IP/port를 승인받은 경우만 추가하고 해당 ID를 기록한다. 인터넷 ingress나 public IP는 만들지 않는다. 설치 중 repository가80/다른 endpoint를 요구하면 미리 승인받기 전 dnf를 중단한다.
+
+### nat-api-network-preparation
+
+**owner36 전용 API 준비/복원 subset — full-test와 별개.** owner19 VCN, owner21의 실제 private Subnet/RT/빈 SL, owner22의 B primary VNIC·NSG 및 owner10/23의 A public 경로를 인수한다. A/B host-key 신뢰와 새 SSH `hostname; id -un`을 먼저 확인한다. owner23의 IGW enabled/default route/SSH 및 승인 HTTPS 실제 readback이면 충분하며29의 disable/recovery 시험이나24의 HTTP8080/route 장애시험은 필요하지 않다. SGW-only 시험 중이거나 다른 route/security 소비자와 창이 겹치면 중단한다. REGION/VCN/RT/NSG/VM OCID, 현재 전체 route·SL·모든 VNIC NSG 배열, guest firewall/proxy/IPv6/route override, 비용·종료 UTC와 독립 Console 복구 담당자를 기록한다. 입력·권한·원복값이 없으면 BLOCKED_NETWORK다.
+
+1. A.1의 생성/readback으로 nat-lab 한 개만 만들거나 owner30 ledger의 동일 NAT_GATEWAY_ID를 재사용한다. 기존 NAT가 없어졌으면 재승인 전 재생성하지 않는다. exact get의 VCN/nat-ip/block-traffic=false를 대조하고 필요시 Console Allow Traffic 뒤 재조회한다. NAT Block 시험은 이 subset에서 하지 않는다.
+2. Console → exact RT_PRIVATE_ID → Route Rules에서 현재 전체 배열을 보존한다. `(0.0.0.0/0, CIDR_BLOCK, NAT_GATEWAY_ID)` tuple을 없을 때만 추가한다. 같은 destination의 다른 target은 덮어쓰지 않고 중단한다. 이미 있는 tuple은 기존 owner의 승인 lease로 재사용하며 자기 추가로 표시하지 않는다. Subnet 및 B primary VNIC/private IP의 routing association/override를 재조회하여 이 경로가 실제 유효한지 확인한다.
+3. Console → exact B nsg-private-admin → Add Rules에서 stateful Egress/CIDR0.0.0.0/0/TCP/source All/destination443을 없을 때만 추가한다. 추가 여부와 새 exact ID/필드를 ledger에 저장한다. 기존 rule은 소유권을 인수하지 않는다. CLI 설치 repository가80/별도 DNS를 요구하면 사용 전에 실제 endpoint/port를 별도 승인하고 자기 추가 ID를 기록한다. SSH22·기존 HTTP가 있으면 그대로 보존한다. 모든 NSG/SL 합집합, DHCP resolver 및 실제 DNS 경로를 확인하며 임의 broad ingress는 추가하지 않는다.
+4. Console에서 exact NAT/RT/Subnet/VNIC/NSG를 다시 읽어 NAT allow, 단일 tuple, 다른 배열 불변, exact 추가 rule 및 public IP 없는 B를 확인한다. B guest에서 `getent ahostsv4 www.oracle.com` 뒤 `curl --noproxy '*' -4 -I --connect-timeout 3 --max-time 8 https://www.oracle.com/`의 RC0/HTTP2xx 또는3xx를 확인한다. 실패하면 API/deny 시험을 시작하지 않는다. owner36은 별도로 same-Region Object Storage 관리자 fixture positive 및 A/B 실제 signed 호출로 서비스 도달성을 확인한다. 일반 TLS 성공만으로 API 권한 성공을 주장하지 않는다.
+5. output은 owner30의 exact tuple/추가 rule ID/추가 여부, 이전 배열, readback 시각, consumer36 및 종료 UTC다. 설치 직후 제거하는 A-only 반환 대신 **owner36 단계5/6 및 승인된 정리의 서비스 호출까지** lease를 유지한다. expiry에는 새 호출 중단/반환한다. 성공·실패·중단 모두 owner30가 자기 추가 tuple/rule만 제거하고 전체 배열·SSH 및 기존 내부 HTTP(있을 때)를 재조회한다. 기존 타 owner tuple/rule은 삭제하지 않고 반환한다. 다른 승인 consumer가 있으면 명시적 lease 갱신 전에는 삭제도 무기한 유지도 하지 않는다.31 SGW-only는 반환/제거 readback 후에만 시작한다. gateway는 consumer registry에 따라 보존하거나 본문 cleanup으로 참조 제거 후 삭제한다. 이 subset은 NAT-tested/RT-ready/IGW-tested를 완료로 바꾸지 않는다.
 
 ### B 시작 전 full-test re-entry / network 복원 station
 

@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · OCI 실행 미검증**: 이 Policy Scope / Inheritance 실습의 시나리오·절차·복구·정리를 한정 검토한 자료입니다. 실제 OCI 실행 성공이나 전체 교육과정 승인을 뜻하지 않습니다.
 
 # Policy Scope / Inheritance
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 수용 범위: **이 실습의 실행 가능한 문서 절차 검토 완료**. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 실행 전 권한·실제 선행 산출물·비용/보존기간 승인과 복구 준비를 확인하고, 아래 실행 차단·중단 조건을 지키세요. 전체 교육과정·게시 상태는 [통합 상태](../../../Docs/README.md)와 구분합니다.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -24,7 +24,7 @@
 
 ## 사전준비
 
-38의 child/sibling OCID·bucket name·proof bytes/hash,33의 parent/A fixture와34 outsider 인증을 받는다.37/40의 test policy/membership 정리·그룹 없는 baseline 반환이 먼저다. 세 영역은 동일 REGION/NS에서 bucket만 바꾸며 새 fixture는 만들지 않는다. child/parent creator lease를 각각 확인한다.
+38의 child/sibling OCID·bucket name·proof bytes/hash,33의 parent/A fixture와34 outsider 인증을 받는다.37/40을 선택했으면 test policy/membership 정리·그룹 없는 baseline 반환이 먼저다. 미선택이어도 모든 임시 grant 부재는 확인한다. 세 영역은 동일 REGION/NS에서 bucket만 바꾸며 새 fixture는 만들지 않는다. child/parent creator lease를 각각 확인한다.
 
 ### 기준 계약과 실제 단계 선행조건
 
@@ -32,11 +32,11 @@
 
 - [38.ready Compartments — FUNCTIONAL_COMPLETION](05_Compartments.md#baseline-38-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
 - [34.ready Users — FUNCTIONAL_COMPLETION](01_Users.md#baseline-34-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
-- [37.ready Policies — FUNCTIONAL_COMPLETION](04_Policies.md#baseline-37-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
-- [40.ready Policy Conditions — FUNCTIONAL_COMPLETION](07_Policy_Conditions.md#baseline-40-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
+- [Policies 권장 선행학습](04_Policies.md): 전체 실험은 실행 필수가 아니다. 선택해서 실행했다면 test grant/membership를 정리하고 group-free baseline 반환을 먼저 확인한다.
+- [Policy Conditions 권장 선행학습](07_Policy_Conditions.md): 전체 실험은 실행 필수가 아니다. 선택해서 실행했다면 test grant/membership를 정리하고 group-free baseline 반환을 먼저 확인한다.
 
 - [Compartments](../../../Docs/04_Identity_and_Access_Management_IAM/05_Compartments.md) **COMPARTMENT-fixture-ready** 완료: `iam-lab`/`iam-child`/`iam-sibling` OCID와 각 `proof.txt`가 실제 존재.
-- [Users](../../../Docs/04_Identity_and_Access_Management_IAM/01_Users.md) outsider deny control와 [Policies](../../../Docs/04_Identity_and_Access_Management_IAM/04_Policies.md)/[Policy Conditions](../../../Docs/04_Identity_and_Access_Management_IAM/07_Policy_Conditions.md) test 정책 정리 완료. 관리자는 기존 상위 tenancy allow policy가 test User를 포함하지 않는지 확인한다. resource fixture를42까지 필요한 경우 보존한다.
+- [Users](01_Users.md#baseline-34-ready)의 outsider deny control와 group-free 인증을 사용한다. Policies/Policy Conditions는 권장 학습이며 미실행이면 완료할 필요가 없다. 실행했던 test 정책·membership만 정리되었는지 확인하고, 관리자는 기존 상위 tenancy allow policy가 test User를 포함하지 않는지 확인한다. 42 continuation을 실제 선택했을 때만 해당 creator에게 fixture 보존을 요청한다.
 
 ## 권한
 
@@ -82,9 +82,15 @@
 
 ## 실습절차
 
+### 실행 순서와 요청 recipe
+
+아래 shell block은 준비용 recipe다. 지금 GET/snapshot을 먼저 실행하지 않는다. 먼저 독립 복구 station을 준비하고 A.1에서 Group/membership/parent policy 생성 → parent snapshot → parent-allow matrix/validator → B.4 삭제/list readback → no-parent-grant matrix/validator → B.5 child 생성/snapshot → child-only matrix/validator 순서로 진행한다. 각 matrix 전후 관리자 same-target 성공/hash를 확인한다. 실패하면 다음 mutation으로 넘어가지 않고 리소스정리로 이동한다.
+
+실행 환경은 outsider/관리자 각자의 Linux/WSL Bash PC이며 OCI CLI, GNU timeout, Python3, sha256sum을 준비한다. LAB_OUTSIDER/LAB_ADMIN은 해당 본인 인증만 사용한다. 새 터미널에서는 creator 기록에서 Region/namespace/세 compartment OCID/실제 A bucket과 해당 User·Group·Policy OCID/소유 출력 경로·deadline을 복원한다. child/sibling bucket은38에서 고정한 이름과 bytes를 확인하고 다르면 실행을 중단한다.
+
 ### 개별 완주 보정 — 생성·검증·소유권
 
-세 영역 GetObject는 owner33의 signed get recipe에서 bucket-name을 각각 iam-proof-a/iam-child-proof/iam-sibling-proof로 바꾸고 LAB_OUTSIDER를 사용한다. 상태별 새 output 이름을 사용하고 부모 정책 삭제 후 전파와 다른 grant를 확인한 뒤 child policy를 추가한다.
+세 영역 GetObject는 owner33의 signed get recipe에서 bucket-name을 각각 실제 BUCKET_A/iam-child-proof/iam-sibling-proof로 바꾸고 LAB_OUTSIDER를 사용한다. 상태별 새 output 이름을 사용하고 부모 정책 삭제 후 전파와 다른 grant를 확인한 뒤 child policy를 추가한다.
 
 ### Same-target 세 영역 요청 — outsider PC
 
@@ -92,9 +98,17 @@
 ```bash
 export REGION='<owner33-actual-region>'
 export NS='<owner33-actual-namespace>'
+export BUCKET_A='<owner33_actual_A_bucket_name>'
 export STATE='<parent-allow-or-no-parent-grant-or-child-only>'
-mkdir "scope41-$STATE" || exit 1
-for bucket in iam-proof-a iam-child-proof iam-sibling-proof; do
+case "$STATE" in
+  parent-allow|no-parent-grant|child-only) ;;
+  *) [[ "$STATE" =~ ^(parent-allow|no-parent-grant|child-only)-try([1-9]|10)$ ]] || exit 1 ;;
+esac
+[ -n "$REGION" ] && [ -n "$NS" ] && [ -n "$BUCKET_A" ] || exit 1
+[[ "$REGION$NS$BUCKET_A" != *'<'* ]] || exit 1
+umask 077
+mkdir -m 700 "scope41-$STATE" || exit 1
+for bucket in "$BUCKET_A" iam-child-proof iam-sibling-proof; do
   if timeout -k 5s 15s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name "$bucket" --name proof.txt --file "scope41-$STATE/$bucket.txt" --max-retries 0 2> "scope41-$STATE/$bucket-error.txt"; then
     rc=0
     printf '%s\n' "$rc" > "scope41-$STATE/$bucket-rc.txt" || exit 1
@@ -116,9 +130,19 @@ LAB_ADMIN API config를 준비한 **관리자 본인 PC의 전용 shell**에서 
 관리자 snapshot shell은 다음 parent/child/list 출력 경로 모두 기존 file/symlink가 아닌지 확인하고 `set -C`를 켠 뒤 최초 생성한다. snapshot 재진입은 새 승인 경로를 사용한다; 기존 snapshot을 overwrite하지 않는다.
 
 ```bash
+umask 077
+set -C
+for snapshot in scope41-parent-policy.json scope41-child-policy.json scope41-parent-after-delete.json; do
+  [ ! -e "$snapshot" ] && [ ! -L "$snapshot" ] || exit 1
+done
 export P_PARENT_ID='<actual_p-parent-read_OCID>'
 oci iam policy get --profile LAB_ADMIN --policy-id "$P_PARENT_ID" > scope41-parent-policy.json || exit 1
-# child policy 생성 뒤에만 다음 두 행 실행
+```
+
+B.5 child policy 생성 뒤 같은 snapshot shell에서 아래 두 행만 실행한다. 앞의 최초 경로 guard/parent snapshot block은 다시 실행하지 않는다.
+
+```bash
+# child policy 생성 뒤에만 실행
 export P_CHILD_ID='<actual_p-child-read_OCID>'
 oci iam policy get --profile LAB_ADMIN --policy-id "$P_CHILD_ID" > scope41-child-policy.json || exit 1
 ```
@@ -127,13 +151,13 @@ parent 삭제 뒤 관리자 `oci iam policy list --profile LAB_ADMIN --compartme
 
 각 변경 뒤 **최대10분,60초 간격,최대10회** 같은 credentials의 세 GET을 새 `scope41-parent-allow-try1`/`no-parent-grant-try1`/`child-only-try1` 등 디렉터리로 실행한다.10분 또는 승인 expiry 중 먼저 도달하면 BLOCKED_PROPAGATION으로 중단한다. 원래 statements와 관리자가 준비한 rollback에 따라 교육 grant/membership만 복구/반환하고 새 상위 권한은 추가하지 않는다. 이 상한은 저술용 budget이며 OCI SLA가 아니다.
 
-**첫 변경 전 독립 복구 station:**교육 grant/membership의 원래 배열과 정책 attachment/statements를 관리자가 보관하고 최대10분 UTC deadline에 이번 scope grant 제거/outsider 그룹 없는 baseline readback을 실행한다. matrix 한 회는 GET15초×3/kill 유예로 최대60초를 예약하며 종료60초 이전에만 시작한다. STATE는 parent-allow/no-parent-grant/child-only 뒤 `-try1`~`-try10`만 허용한다. parent-allow는3 성공, no-parent-grant는3 authorization deny, child-only는child 성공/나머지 deny여야 한다. 아래 validator를 각 matrix 직후 실행한다.
+**첫 변경 전 독립 복구 station:**교육 grant/membership의 원래 배열(outsider group-free), attachment OCID, 생성할 전용 이름과 fixture lease expiry를 관리자가 보관한다. 첫 mutation 전에 전체 실습의 승인 UTC 종료시각과 복구 담당자를 정하고, 각 transition 관찰은 최대10분/전체 종료시각/creator lease 중 먼저 도달하는 시각까지다. 종료시각에는 이번 scope grant 제거/outsider 그룹 없는 baseline readback을 실행한다. matrix 한 회는 GET15초×3/kill 유예로 최대60초를 예약하며 종료60초 이전에만 시작한다. STATE는 parent-allow/no-parent-grant/child-only 뒤 `-try1`~`-try10`만 허용한다. parent-allow는3 성공, no-parent-grant는3 authorization deny, child-only는child 성공/나머지 deny여야 한다. 아래 validator를 각 matrix 직후 실행한다.
 ```bash
 python3 - "$STATE" "scope41-$STATE" <<'PY'
-import json,pathlib,re,sys
+import json,pathlib,re,sys,os
 m=re.fullmatch(r'(parent-allow|no-parent-grant|child-only)(?:-try([1-9]|10))?',sys.argv[1]); assert m
 p=pathlib.Path(sys.argv[2])
-for bucket,expected in [('iam-proof-a',b'iam-proof-a\n'),('iam-child-proof',b'child\n'),('iam-sibling-proof',b'sibling\n')]:
+for bucket,expected in [(os.environ['BUCKET_A'],b'iam-proof-a\n'),('iam-child-proof',b'child\n'),('iam-sibling-proof',b'sibling\n')]:
  allow=m[1]=='parent-allow' or (m[1]=='child-only' and bucket=='iam-child-proof')
  f=p/(bucket+'.txt'); err=p/(bucket+'-error.txt')
  rc=int((p/(bucket+'-rc.txt')).read_text().strip())
@@ -148,13 +172,13 @@ if [ "$?" -ne 0 ]; then exit 1; fi
 관리자 same-target 세 positive/hash를 유지한다. 실패/만료는 자동 deny/PASS가 아니라 BLOCKED와 관리자 복구다.
 
 ### A. 부모 scope 상속
-1. Group `lab-scope-test` 생성, outsider 추가. **Policies → iam-lab → Create** `p-parent-read`, attachment는 `iam-lab`.
+1. 관리자 Console **Identity & Security → Domains → 승인된 Domain → Groups → Create group**에서 Name `lab-scope-test`, Description `Temporary scope inheritance test`를 입력한다. Domain 화면에 따라 User management 탭의 Groups 또는 왼쪽 Groups를 사용한다. 기존 같은 이름 Group은 재사용/수정하지 말고 중단한다. 생성 화면에서34의 exact outsider 사용자 checkbox만 선택하고 Create한다. 실제 Group OCID와 해당 membership를 readback한다. 관리자에게 Domain 작업 권한이 없으면 여기서 중단한다. **Policies → iam-lab → Create** `p-parent-read`, attachment는 `iam-lab`.
 
 ```text
 Allow group id <SCOPE_GROUP_OCID> to read objects in compartment id <IAM_LAB_OCID>
 ```
 
-2. outsider direct GetObject로 parent `iam-proof-a`, child `iam-child-proof`, sibling `iam-sibling-proof` 모두 읽는다. Region/namespace는 동일, bucket 이름만 다르게 한다. 각 hash와 owner compartment OCID를 기록한다.
+2. outsider direct GetObject로 parent `$BUCKET_A`, child `iam-child-proof`, sibling `iam-sibling-proof` 모두 읽는다. Region/namespace는 동일, bucket 이름만 다르게 한다. 각 hash와 owner compartment OCID를 기록한다.
 3. child에 narrower allow policy를 추가한다고 parent allow가 사라지지 않는다는 것을 공식 **Policies and Compartment Hierarchies/Policy Inheritance**와 연결한다. 운영 정책을 삭제하지 않는다.
 
 ### B. child scope만 남긴 테스트
@@ -184,11 +208,11 @@ parent grant 제거 후 성공하면 tenancy/ancestor policy 또는 other group 
 
 ## 리소스정리
 
-`p-child-read` 제거 → test membership 제거 → scope Group 삭제. Child/sibling resource를 더 쓰지 않으면38의 dependency 순서로 object/bucket→child compartment 정리한다. parent fixture는42까지 보존한다. 운영 tenancy policy는 변경하지 않는다.
+`p-child-read`와 실패 중 남은 `p-parent-read` 중 이번에 생성한 exact OCID만 관리자 Console에서 삭제한다. 각 attachment의 policy list를 다시 읽어 exact ID 부재를 확인한다(404 단독은 증거가 아니다). 이어 test membership 제거 → 원래 group-free readback → 이번 scope Group 삭제/Domain 목록 부재를 확인한다. 중간 실패/만료도 같은 순서로 수행하며 기존/운영 정책이나 다른 membership은 변경하지 않는다. child/sibling과 parent fixture는41이 삭제하지 않고38/33 creator에게 각각 반환한다. 42를 실제 선택하고 creator 보존 승인을 받은 경우만 그 lease까지 남긴다.
 
-**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: scope41-parent-policy.json、scope41-child-policy.json、scope41-parent-after-delete.json 및 각 scope41-state/승인 retry directory의 iam-proof-a.txt/iam-child-proof.txt/iam-sibling-proof.txt와 각각 bucket-error.txt. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
+**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: scope41-parent-policy.json、scope41-child-policy.json、scope41-parent-after-delete.json 및 각 scope41-state/승인 retry directory의 `<실제 BUCKET_A>.txt`/iam-child-proof.txt/iam-sibling-proof.txt와 각각 bucket-error.txt 및 bucket-rc.txt. 실제 bucket마다 `<bucket>-rc.txt` 세 파일도 생성 소유 목록에 등록한다. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`하고 exit0을 확인한다. rc 파일을 남긴 directory는 정리 완료가 아니다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
 
-**owner38 반환:**교육 policy/membership 정리와 원래 child/sibling fixture hash를38 담당자에게 전달하고 consumer41을 RETURNED 또는 승인 ABORTED로 기록한다. 원래 lease의 EXPIRY_UTC 이후 새 요청 금지; 38이 object/bucket/child 삭제 owner이며41은 parent/child fixture를 직접 삭제하지 않는다.
+**owner38 반환:**교육 policy/membership 정리와 원래 child/sibling fixture hash를38 담당자에게 전달하고 consumer41을 RETURNED 또는 승인 ABORTED로 기록한다. parent A의 원래 hash와 consumer41 반환도33 담당자에게 전달한다. 원래 lease의 EXPIRY_UTC 이후 새 요청 금지; 38이 object/bucket/child 삭제 owner이며41은 parent/child fixture를 직접 삭제하지 않는다.
 
 ## 공식문서
 
@@ -199,6 +223,7 @@ parent grant 제거 후 성공하면 tenancy/ancestor policy 또는 other group 
 
 ### 실습 작업을 지원하는 추가 공식 본문
 
+- [Creating a Group](https://docs.oracle.com/en-us/iaas/Content/Identity/groups/create-groups.htm) — Domain Groups 진입, Name/Description 및 생성 시 사용자 선택.
 - [실습근거 1] [How Policies Work (without Identity Domains)](https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/policies.htm) — 생성/수정·접근 제어·검증 관련 본문. 공식 본문을 수집해 저술 근거로 사용했으며 Console 메뉴·현재 CLI/이미지 호환성은 실행 시 재확인한다.
 - [실습근거 2] [Policy Syntax](https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/policysyntax.htm) — 생성/수정·접근 제어·검증 관련 본문. 공식 본문을 수집해 저술 근거로 사용했으며 Console 메뉴·현재 CLI/이미지 호환성은 실행 시 재확인한다.
 - [실습근거 3] [Managing Policies](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingpolicies.htm) — 생성/수정·접근 제어·검증 관련 본문. 공식 본문을 수집해 저술 근거로 사용했으며 Console 메뉴·현재 CLI/이미지 호환성은 실행 시 재확인한다.

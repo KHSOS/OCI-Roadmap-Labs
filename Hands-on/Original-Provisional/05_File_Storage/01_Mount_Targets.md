@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · 실제 OCI 실행 미검증**: 이 Mount Targets 실습의 한정된 절차·복구·정리 문서 검토를 완료했습니다. 전체 교육과정의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
 
 # Mount Targets
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 검토 범위: 기존 Mount Target 조회, 전용 NFS ingress의 단일 중단 시험과 복원, proof 확인 및 소유자 반환 절차. 실제 OCI 실행은 수행하지 않았으며 모든 예상 출력은 패턴이고 실측값이 아닙니다. 권한·비용·중단 승인, 실제 선행 산출물과 복구 조건은 실행 전에 충족해야 합니다. 게시·렌더링 검증과 전체 통합 상태는 별도이며 [통합 상태](../../../Docs/README.md)를 확인하세요.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -24,7 +24,7 @@
 
 ## 사전준비
 
-43 FSS-mounted의 실제 FS/MT/Export Set OCID·MT_PRIVATE_IP/FQDN/AD/NSG rule ID·B_PRIVATE_IP와 literal MT_IP:/lab+nfs proof hash를 받는다. 기존 mount/client만 쓰고 신규 VM/FS/MT는 없다. network outage 전에43와 선택 consumer의 interruption/복구 승인을 받는다.
+43 FSS-mounted의 실제 FS/MT/Export Set OCID·MT_PRIVATE_IP/AD/NSG rule ID(FQDN은 선택 branch에서만)·B_PRIVATE_IP와 literal MT_IP:/lab+nfs proof hash를 받는다. 기존 mount/client만 쓰고 신규 VM/FS/MT는 없다. network outage 전에43와 선택 consumer의 interruption/복구 승인을 받는다.
 
 ### 기준 계약과 실제 단계 선행조건
 
@@ -34,7 +34,7 @@
 
 공유 A/B consumer는 INSTANCE_A_ID에 owner10 vm-a의 실제 OCID, INSTANCE_B_ID에 owner22 private-vm의 실제 OCID, `A_PUBLIC_IP`, `A_PRIVATE_IP`, `B_PRIVATE_IP`를 실제 생성 응답에서 전달받는다. 해당 주제에 필요하지 않은 VM/변수는 생성·요구하지 않는다.
 
-- [File Storage](../../../Docs/05_File_Storage/00_File_Storage.md) **FSS-mounted** 완료: 실제 write/remount read 성공, File System/MT/Export OCID·AD·MT IP를 보존한다.
+- [File Storage](00_File_Storage.md#baseline-43-ready) **FSS-mounted** 완료: 실제 write/remount read 성공, File System/MT/Export OCID·AD·MT IP를 보존한다.
 - File System/MT를 추가 생성하지 않는다.43의 `nsg-fss-mt`/client egress와 mounts가 전용 자원인지 확인하고45/46까지 유지한다.
 
 ## 권한
@@ -85,7 +85,7 @@ rpcinfo/mount deny 시험은 Console 복구자가 바로 exact TCP/UDP rules를 
 
 ### A. endpoint와 소유관계 조회
 1. **Storage → File Storage → Mount Targets → mt-lab** details에서 AD, Compartment OCID, Subnet OCID, private IP, hostname/FQDN, NSG, Export Set OCID를 기록한다. File System AD와 같아야 한다.
-2. B에서 `getent ahostsv4 <MT_FQDN>`, `ip route get <MT_PRIVATE_IP>`, `findmnt -rn -M /mnt/oci-lab -o SOURCE,FSTYPE`를 확인한다. DNS 이름은 실제 Console FQDN을 사용하며 `mtlab`만으로 모든 VCN에서 resolve된다고 가정하지 않는다.
+2. B에서 `ip route get <MT_PRIVATE_IP>`, `findmnt -rn -M /mnt/oci-lab -o SOURCE,FSTYPE`를 확인한다. 기본 경로는 IP만 사용한다. 선택 DNS branch에서만 `getent ahostsv4 <MT_FQDN>`의 주소가 actual MT_PRIVATE_IP와 같은지 확인하고 Console FQDN을 사용한다.
 ```bash
 # B guest: owner43 actual endpoint contract; no enclosing-filesystem inference.
 export MT_PRIVATE_IP='<owner43_actual_MT_private_IP>'
@@ -96,41 +96,73 @@ assert_mt44_mount() {
 }
 assert_mt44_mount "$MT_PRIVATE_IP" || exit 1
 ```
-3. 위 exact IP:/lab+nfs assertion 성공 후에만 `sudo cat /mnt/oci-lab/proof.txt`와 hash를 기록한다. **모든 unmount 직전** `assert_mt44_mount "$MT_PRIVATE_IP" || exit 1`를 다시 실행한 뒤 clean unmount한다; wrong/enclosing mount는 읽거나 unmount하지 않는다.
+3. 위 exact IP:/lab+nfs assertion 성공 후에만 `sudo cat /mnt/oci-lab/proof.txt`와 `sudo sha256sum /mnt/oci-lab/proof.txt`의 hash를 기록한다. 원래 proof가 `oci-fss-proof` 한 줄인지 확인하고 다르면 owner43에 확인한 뒤 중단한다. **IP mount의 모든 unmount 직전** `assert_mt44_mount "$MT_PRIVATE_IP" || exit 1`를 다시 실행한 뒤 clean unmount한다; wrong/enclosing mount는 읽거나 unmount하지 않는다.
 
 ### B. MT network deny/restore
-**step4 mutation 전 deadline:** owner43와 모든44~47 선택 consumer에게 최대60초 interrupt 승인/UTC 종료를 받고 복구 Console 담당자가 원래 MT NSG의 exact TCP/UDP source B/32 규칙/ID를 저장한다. capture B terminal에서 `sudo timeout 25s tcpdump -ni any 'host <MT_PRIVATE_IP> and (port 111 or port 2048 or port 2049 or port 2050)'`를 먼저 시작한다. 요청은 별도 B terminal에서 아래 finite rpcinfo를 한 번만 수행한다. deadline에 결과와 무관하게 ingress 복원; hard NFS request가 kill되지 않아도 Console 복구가 우선이다.
+4. **변경 전 준비 — B의 같은 Bash terminal을 끝까지 사용한다.** owner43와 선택44~47 consumer의 중단 승인을 받고 다른 NFS 작업을 멈춘다. Console 복구자는 MT NSG의 기존 ingress rule ID와 direction/source CIDR/source port/destination port/protocol/stateful 여부 전체를 별도 저장한다. 기존 rule의 source가 B/32인지 확인하고 다른 SL/NSG의 중복 허용이 있으면 실험을 중단한다(다른 소유자의 규칙은 삭제하지 않는다). 원복은 원래 필드 그대로 Add하며 새 rule ID를 owner43에 반환한다. FS/Export/POSIX/NSG attachment는 변경하지 않는다.
+
+아래에서 로컬 directory 예약, 명령 존재, 같은 endpoint의 RPC positive, 정상 unmount와 빈 mountpoint를 먼저 확인한다. 어느 단계라도 실패하면 **ingress를 제거하지 않는다**. B의 작업 디렉터리는 NFS 바깥의 개인 home을 사용한다. 예약된 mt44-work가 있으면 덮어쓰거나 자동 삭제하지 말고 이전 실험의 복구 여부부터 확인한다.
 
 ```bash
-# B request terminal, ingress 제거 전 생성; 충돌/기존 symlink면 mutation 금지
+cd "$HOME" || exit 1
 mkdir -m 700 mt44-work || exit 1
-# 실제 ingress 제거 직후 이 directory의 새 output만 사용
-if timeout -k 5s 15s rpcinfo -p "$MT_PRIVATE_IP" > mt44-work/deny-rpc.out 2>mt44-work/deny-rpc.err; then
-  printf '%s\n' 'INCONCLUSIVE: RPC still succeeds, restore rules and inspect overlapping allows'
-else RC=$?; printf 'RPC RC=%s; classify network transport not credentials\n' "$RC"; fi
+for cmd in timeout rpcinfo findmnt mount umount sha256sum; do
+  command -v "$cmd" >/dev/null || exit 1
+done
+sudo -v || exit 1
+if timeout -k 5s 15s rpcinfo -p "$MT_PRIVATE_IP" > mt44-work/positive-rpc.out 2>mt44-work/positive-rpc.err; then
+  printf '%s\n' 'RPC positive ready'
+else
+  printf '%s\n' 'STOP: no same-endpoint positive; do not remove ingress'
+  exit 1
+fi
+assert_mt44_mount "$MT_PRIVATE_IP" || exit 1
+sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1
+if findmnt -rn -M /mnt/oci-lab; then exit 1; else RC=$?; [ "$RC" = 1 ] || exit 1; fi
+test -d /mnt/oci-lab && test ! -L /mnt/oci-lab || exit 1
+EMPTY_CHECK=$(sudo find /mnt/oci-lab -mindepth 1 -maxdepth 1 -print -quit) || exit 1
+test -z "$EMPTY_CHECK" || exit 1
 ```
 
-새 mount 시험은 기존 `/mnt/oci-lab` clean unmount/source 검증 후 `sudo timeout -k 5s 20s mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,retry=0 "$MT_PRIVATE_IP:/lab" /mnt/oci-lab`를 if/else로 호출해 RC를 기록한다. 실패/timeout은 쓰기 허가가 아니며 담당자가60초 안에 복원한다. 종료 뒤 findmnt의 exact mount 존재 여부를 확인하고 mounted면 정상 unmount 후6의 IP mount를 수행한다. D-state/잔존 요청이 있으면 새 mount/디렉터리 삭제를 하지 않고 복구담당자와 정상 종료까지 기다린다.
+unmount 실패, D-state, 잔존 mount 요청이 있으면 여기서 중단하고 ingress를 유지한 채 owner43의 residual 복구 절차로 반환한다. mountpoint 안에 파일이 있으면 로컬 파일을 지우지 않는다. fresh terminal에서는 A의 함수와 실제 MT_PRIVATE_IP를 다시 설정하고 `$HOME/mt44-work`의 기존 기록을 복구 입력으로 사용한다. directory 예약 fence는 다시 실행하지 않는다.
 
-4. **ingress 제거 이전 B guest:** `assert_mt44_mount "$MT_PRIVATE_IP" || exit 1` → `sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1` → exact `findmnt -rn -M /mnt/oci-lab`의 exit1/잔존 요청 없음과 실제 directory empty를 확인한다. 실패면 ingress를 제거하지 않고43 residual station에 반환한다. 그 다음 MT의 전용 NSG에서 **NFS TCP/UDP ingress**만 임시 제거한다. 다른 SL/NSG가 NFS를 허용하지 않는지 확인한다. File System/Export option과 B POSIX 권한은 바꾸지 않는다.
-5. B에서 **step4 직전 deadline station의15초 rpcinfo/20초 mount guarded 요청만** 수행한다. bare rpcinfo/mount를 추가 실행하지 않는다. mount가 대기하면 복구담당자가60초 이내 MT rule을 복원한다. 실패/대기 RC·request 시각·packet을 기록하고 잔존 요청/정확한 mount 상태를 확인한다. 억지 lazy unmount로 data correctness를 주장하지 않는다.
-6. 원래 TCP111/2048-2050·UDP111/2048 source B/32 stateful ingress를 복원한다. B에서 아래 **remount-only**를 수행한다(43의 신규 proof 생성 fence는 다시 실행하지 않는다).
+5. **제거 → 요청 한 번 → 즉시 복원.** 복구 Console 담당자가 Add 화면을 준비하고 제거 직전 UTC 시각/최대60초 종료 시각을 정한다. 선택 capture는 tcpdump가 있는 별도 B terminal에서 `sudo timeout -k 5s 90s tcpdump -ni any 'host <MT_PRIVATE_IP> and (port 111 or port 2048 or port 2049 or port 2050)'`를 실행하고 listening을 알린다. capture는 선택이며 90초 종료를 복구 deadline으로 쓰지 않는다. Console에서 **Networking → Virtual cloud networks → 해당 VCN → Network Security Groups → 기존 MT NSG → Security Rules**로 이동해 저장한 전용 ingress만 제거한다. 복구자가 제거 시각을 알리면 B request terminal에서 아래 요청을 한 번 실행한다.
+
+```bash
+if timeout -k 5s 15s rpcinfo -p "$MT_PRIVATE_IP" > mt44-work/deny-rpc.out 2>mt44-work/deny-rpc.err; then
+  printf '%s\n' 'INCONCLUSIVE: RPC still succeeds; restore rules'
+else
+  RC=$?
+  printf 'RPC RC=%s; inspect stderr, timeout alone is not proof of deny\n' "$RC"
+fi
+```
+
+요청 종료 즉시 또는 제거 시각부터60초 이내 중 먼저 도달한 때에 **결과와 무관하게 원래 ingress를 복원**한다. terminal 종료/통신 단절이어도 Console 복구자는 독립적으로 복원하고 rule fields/readback을 확인한다. 복원 실패면 다른 시험을 멈추고 network owner에게 즉시 복구 요청한다. 실제 복구가60초 이내 완료된다고 보장하는 timeout은 아니다.
+
+선택 negative mount 시험은 위 rpcinfo **대신 하나만** 수행한다: step4의 unmounted/empty 조건에서 `sudo timeout -k 5s 20s mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,retry=0 "$MT_PRIVATE_IP:/lab" /mnt/oci-lab`를 if/else로 실행하고 RC를 기록한다. hard NFS 작업은 timeout으로 반드시 사라지지 않는다. Console 복원 후 잔존 요청이 실제 종료될 때까지 새 mount/파일 삭제를 하지 않는다. mount가 남으면 A의 exact IP assertion 후 정상 unmount하고 아래6으로 간다. lazy/force unmount는 사용하지 않는다.
+
+6. 저장한 원래 TCP111/2048-2050·UDP111/2048 source B/32 stateful ingress의 필드와 새 rule ID를 readback한다. 기존 source port 제한도 그대로 유지한다. B의 같은 terminal에서 `timeout -k 5s 15s rpcinfo -p "$MT_PRIVATE_IP" > "$HOME/mt44-work/restored-rpc.out" 2> "$HOME/mt44-work/restored-rpc.err"`의 exit0을 확인한다. 실패면 remount를 반복하지 말고 owner에게 복구 요청한다. B에서 아래 **remount-only**를 수행한다(43의 신규 proof 생성 fence는 다시 실행하지 않는다).
 ```bash
 if findmnt -rn -M /mnt/oci-lab; then printf 'STOP: residual mount\n'; exit 1; else RC=$?; [ "$RC" = 1 ] || exit 1; fi
 test -d /mnt/oci-lab && test ! -L /mnt/oci-lab || exit 1
+EMPTY_CHECK=$(sudo find /mnt/oci-lab -mindepth 1 -maxdepth 1 -print -quit) || exit 1
+test -z "$EMPTY_CHECK" || exit 1
 sudo timeout -k 5s 20s mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,retry=0 "$MT_PRIVATE_IP:/lab" /mnt/oci-lab || exit 1
 test "$(findmnt -rn -M /mnt/oci-lab -o SOURCE)" = "$MT_PRIVATE_IP:/lab" || exit 1
 test "$(findmnt -rn -M /mnt/oci-lab -o FSTYPE)" = nfs || exit 1
 printf 'oci-fss-proof\n' | sudo cmp - /mnt/oci-lab/proof.txt || exit 1
 sudo sha256sum /mnt/oci-lab/proof.txt || exit 1
 ```
-7. FQDN 기반 mount는 선택 branch다. `assert_mt44_mount "$MT_PRIVATE_IP" || exit 1` 후 기존 mount clean unmount 뒤 `<MT_FQDN>:/lab`으로 같은 옵션을 쓰고 proof hash를 비교한다. 끝에는 아래 **literal IP:/lab 재마운트 반환**을 반드시 수행해45/46의 입력과 맞춘다. DNS 실패면 IP mount를 positive로 복구하고 DNS branch를 BLOCKED로 남긴다.
+7. FQDN 기반 mount는 선택 branch다. 먼저 실제 MT_FQDN을 설정하고 `getent ahostsv4 "$MT_FQDN"`가 동일 MT IP인지 확인한다. 이 branch에서도 AUTH_SYS 설정은 바꾸지 않는다. `assert_mt44_mount "$MT_PRIVATE_IP" || exit 1` 후 `sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1`로 기존 mount clean unmount 뒤 `sudo timeout -k 5s 20s mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,retry=0 "$MT_FQDN:/lab" /mnt/oci-lab`을 실행한다. mount 실패면 residual 여부부터 확인하고6의 IP remount로 복구한다. 성공하면 아래 source assertion 후 proof를 읽고 hash를 A의 원래 hash와 비교한 뒤 IP로 반환한다. 끝에는 아래 **literal IP:/lab 재마운트 반환**을 반드시 수행해45/46의 입력과 맞춘다. DNS 실패면 IP mount를 positive로 복구하고 DNS branch를 BLOCKED로 남긴다.
 
 ```bash
-# B guest; fresh terminal은 A의 함수를 다시 정의한다. actual FQDN을 설정한다.
-export MT_FQDN='<owner43_actual_MT_FQDN>'
+# B guest: step7에서 실제 값으로 설정한 MT_FQDN을 유지한다.
+# fresh terminal은 A의 함수/실제 MT_PRIVATE_IP와 동일 MT_FQDN을 복구한다.
+: "${MT_FQDN:?step7 actual FQDN required}"
 assert_mt44_mount "$MT_FQDN" || exit 1
-sudo umount /mnt/oci-lab || exit 1
+sudo sha256sum /mnt/oci-lab/proof.txt || exit 1
+# A의 원래 proof hash와 같을 때만 계속한다.
+sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1
 if findmnt -rn -M /mnt/oci-lab; then exit 1; else RC=$?; [ "$RC" = 1 ] || exit 1; fi
 sudo timeout -k 5s 20s mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,retry=0 "$MT_PRIVATE_IP:/lab" /mnt/oci-lab || exit 1
 test "$(findmnt -rn -M /mnt/oci-lab -o SOURCE)" = "$MT_PRIVATE_IP:/lab" || exit 1
@@ -147,7 +179,7 @@ sudo sha256sum /mnt/oci-lab/proof.txt || exit 1
 ### baseline-44-ready
 
 
-완료 단계 **MT-tested**: endpoint AD/Subnet/IP/FQDN/ExportSet/NSG 대응, ingress 제거의 신규 RPC/mount 실패·원복 성공, proof hash 보존. guest `ip route`는 OCI route table/gateway를 직접 보여주는 것이 아니며 network association도 함께 기록한다. mount target를 File System 데이터 저장 VM처럼 SSH 대상으로 설명하지 않는다.
+완료 단계 **MT-tested**: endpoint AD/Subnet/IP/ExportSet/NSG 대응(FQDN은 선택), ingress 제거의 신규 RPC/mount 실패·원복 성공, proof hash 보존. guest `ip route`는 OCI route table/gateway를 직접 보여주는 것이 아니며 network association도 함께 기록한다. mount target를 File System 데이터 저장 VM처럼 SSH 대상으로 설명하지 않는다.
 
 **실행 기록(아직 미작성):** 실행자/Region/시각, exact resource OCID, 설정 전·후, 성공 출력, deny 오류·exit code/request-id, positive control, 정리 결과. 문서 검증은 실제 OCI 실행 성공을 뜻하지 않는다.
 
@@ -159,7 +191,7 @@ RPC111만 성공하고 mount 실패하면 TCP2049/2048/2050 또는 UDP2048, priv
 
 MT rule을 반드시 복원하고 mounted `/lab`과 proof hash를 owner43에 반환한다. 45/46 및 선택47까지 endpoint를 owner43의 승인 consumer registry/EXPIRY_UTC에 따라 유지한다. owner44는 공유 File System/Export/MT의 삭제 owner가 아니다. 예약 consumer가 없거나 expiry에 도달한 최종 종료는 [owner43의 정리](00_File_Storage.md#리소스정리)로 인계한다: 실제 NFS mount/source 확인 → mounted 상태에서 전용 test 파일 삭제 → 모든 client 정상 unmount → associated Export 소유관계 확인/삭제 → File System 삭제 → 다른 File System의 Export가 없는 MT 삭제. shared MT면 다른 File System을 건드리지 않는다. owner43은 `mt-lab` 삭제 뒤 private IP/NSG membership 잔존을 확인한다.
 
-**network negative 분류/로컬 정리:**rpc timeout/connection refused/transport unreachable과 packet 관찰은 same MT의 전후 rpc/mount positive와 한 세트로 기록한다. command missing/permission/local 오류는 network deny가 아니며 INCONCLUSIVE로 복원한다. MT ingress 제거 전 mt44-work를 예약하고 재시도는 새 승인 directory만 사용한다. 복원/readback/잔존 요청 종료 뒤 본인이 만든 deny-rpc.out/deny-rpc.err 및 own capture/rule snapshot만 exact 경로로 삭제하고 빈 mt44-work를 rmdir한다.
+**network negative 분류/로컬 정리:**rpc timeout/connection refused/transport unreachable과 packet 관찰은 same MT의 전후 rpc/mount positive와 한 세트로 기록한다. command missing/permission/local 오류는 network deny가 아니며 INCONCLUSIVE로 복원한다. MT ingress 제거 전 mt44-work를 예약하고 재시도는 새 승인 directory만 사용한다. 복원/readback/잔존 요청 종료 뒤 본인이 만든 positive-rpc.out/positive-rpc.err/deny-rpc.out/deny-rpc.err/restored-rpc.out/restored-rpc.err 및 own capture/rule snapshot만 exact 경로로 삭제하고 빈 mt44-work를 rmdir한다.
 
 ## 공식문서
 

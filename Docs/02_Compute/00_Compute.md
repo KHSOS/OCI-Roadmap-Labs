@@ -14,7 +14,7 @@ OCI Compute는 instance라고 부르는 실행 host를 제공하고 관리하는
 
 ## IAM과 guest 인증의 경계
 
-OCI IAM은 누가 instance 같은 OCI 자원에 어떤 API 작업을 할 수 있는지 제어한다. Linux SSH key pair는 guest 사용자 인증을 위한 것이다. SSH의 사용자 key와 접속 대상 서버를 식별하는 host key도 역할이 다르다. 사용자 private key를 가졌다는 사실만으로 접속한 서버가 기대한 instance라는 의미는 아니다. 기존 대상 식별 자료는 [보존된 SSH 신뢰 경로](../../Hands-on/Original-Provisional/02_Compute/00_Compute.md#최초-ssh-fingerprint의-신뢰-경로)에 있다. [SSH Keys](05_SSH_Keys.md)에서 공개키·개인키 관계를 읽을 수 있다.
+OCI IAM은 누가 instance 같은 OCI 자원에 어떤 API 작업을 할 수 있는지 제어한다. Linux SSH key pair는 guest 사용자 인증을 위한 것이다. SSH의 사용자 key와 접속 대상 서버를 식별하는 host key도 역할이 다르다. 사용자 private key를 가졌다는 사실만으로 접속한 서버가 기대한 instance라는 의미는 아니다. 기존 대상 식별 자료는 [보존된 SSH 신뢰 경로](../../Hands-on/Original-Provisional/02_Compute/00_Compute.md#최초-ssh-fingerprint의-신뢰-경로--공유-환경-고급-선택)에 있다. [SSH Keys](05_SSH_Keys.md)에서 공개키·개인키 관계를 읽을 수 있다.
 
 ## 자원 선택과 수명주기
 

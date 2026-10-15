@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 절차 검토 완료 / OCI 실행 미검증**: 이 Block Volume 시나리오의 한정된 문서 결함은 해소되었습니다. 실제 실행에는 아래 권한·비용·장치 식별·복구 안전조건을 충족해야 하며, 전체 교육과정 승인이나 OCI 실행 검증을 뜻하지 않습니다.
 
 # Block Volume
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 검토 범위: **한정된 실행 절차의 문서 검토 완료**. 신규 data volume 생성·안전한 format·동일 OCID 재연결 검증·소유 범위 정리 절차를 대상으로 합니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 실행 시 권한·예산·지원 여부와 아래 중단·복구 조건을 별도로 확인해야 합니다.
 
 > 실행 절차 작성본 / OCI 미실행. Oracle 공식 본문 근거와 교육용 선택을 구분한다. secrets·실제 고객값·diagram 없음.
 
@@ -131,7 +131,7 @@ for phase in before after; do
   out="$HOME/roadmap-data.$phase.sha256"
   test ! -e "$out" && test ! -L "$out" || { printf '%s\n' 'STOP: previous hash evidence exists; reconcile owner/run before allocation'; exit 1; }
 done
-for tool in python3 mkfs.ext4 lsblk findmnt wipefs blkid mount umount sha256sum cmp readlink; do
+for tool in python3 mkfs.ext4 lsblk findmnt wipefs blkid mount umount sha256sum cmp readlink udevadm sed; do
   command -v "$tool" >/dev/null || { printf 'BLOCKED_TOOLING: %s\n' "$tool"; exit 1; }
 done
 sudo -v || exit 1
@@ -142,9 +142,12 @@ sudo -v || exit 1
 
 1. vm-a에서 기존 disk inventory/root device를 먼저 읽어 보관한다. `findmnt /; lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS; sudo blkid`를 실행한다. 이 lab는 빈 **신규** volume만 format하며 운영/기존 volume을 대상으로 하지 않는다.
 2. Console → Storage → Block Storage → Block Volumes → Create block volume. Name `data-a`, Compartment lab-root, **vm-a와 같은 AD**, Custom size **50 GB**, Target performance **Balanced**. 화면 default 1024 GB를 그대로 제출하지 않는다. Backup policy None, replication Off, reservations Off, Oracle-managed encryption. Create 제출 후 AVAILABLE를 기다린다. [Creating a Block Volume — size/AD/performance](https://docs.oracle.com/en-us/iaas/Content/Block/Tasks/creatingavolume.htm).
-3. Compute → vm-a → Storage/Attached Block Volumes → Attach block volume: data-a OCID, Attachment type **Paravirtualized**, access **Read/Write (single instance)**, consistent Device path 중 미사용 `/dev/oracleoci/oraclevdb`를 선택한다(지원되지 않으면 실제 attachment path/serial로 식별한 뒤 경로를 입력). in-transit encryption은 지원 시 On. Attach 후 ATTACHED를 확인한다. iSCSI를 선택하지 않는다. [Paravirtualized attachment and device path](https://docs.oracle.com/en-us/iaas/Content/Block/Tasks/attachingavolume.htm).
+3. Compute → vm-a → Storage/Attached Block Volumes → Attach block volume: data-a OCID, Attachment type **Paravirtualized**, access **Read/Write (single instance)**, consistent Device path 중 미사용 `/dev/oracleoci/oraclevdb`를 선택한다(지원되지 않으면 이 lab는 format 이전 중단한다). in-transit encryption은 지원 시 On. Attach 후 ATTACHED를 확인한다. iSCSI를 선택하지 않는다. [Paravirtualized attachment and device path](https://docs.oracle.com/en-us/iaas/Content/Block/Tasks/attachingavolume.htm).
 
 ### 2. 새 장치를 입증한 뒤에만 format
+
+Cloud Shell에서 `oci compute volume-attachment list --compartment-id "$LAB_COMPARTMENT_ID" --instance-id "$INSTANCE_A_ID" --region "$REGION"`를 읽고 **volume-id가 DATA_VOLUME_ID인 ATTACHED 행 한 개**의 id/instance-id/device를 기록한다. 예를 들어 그 행의 device가 `/dev/oracleoci/oraclevdb`이면 guest에서도 그 exact 경로의 `readlink -f`와 아래 SERIAL/WWN을 attach 전 inventory와 비교한다. SERIAL을 OCID 문자열과 같다고 가정하지 않는다. 지원되는 consistent path가 없거나 serial/WWN도 비어 장치 대응을 입증할 수 없으면 **format 이전 중단**한다. 이 실습에서는 consistent path가 표시되는 attachment로만 진행하며 `/dev/sdb` 추측으로 대체하지 않는다. [공식 consistent device paths](https://docs.oracle.com/en-us/iaas/Content/Block/References/consistentdevicepaths.htm).
+
 
 4. guest에서 attachment의 device path와 `lsblk` 크기/새 장치/serial을 대조한다. 아래 DEVICE는 **새 50 GB disk임을 사람이 OCID/attachment와 대조한 뒤** 입력한다. 자동 `/dev/sdb` 추정은 금지한다. root나 partition/이미 formatted disk면 중단한다.
 
@@ -152,7 +155,8 @@ sudo -v || exit 1
 export DEVICE='<Console_attachment의_신규_data_disk_경로>'
 readlink -f "$DEVICE"
 findmnt /
-lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS "$DEVICE"
+lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS,SERIAL,WWN "$DEVICE"
+sudo udevadm info --query=property --name="$DEVICE" | sed -n '/ID_SERIAL/p; /ID_WWN/p'
 sudo wipefs --no-act "$DEVICE"
 sudo blkid "$DEVICE" || true
 # 위 출력에서 root 아님 / partition 없음 / filesystem signature 없음 / OCID 장치 일치 확인 후만 진행
@@ -185,16 +189,28 @@ if test -d "$MOUNTPOINT"; then
   entries=$(sudo find "$MOUNTPOINT" -mindepth 1 -maxdepth 1 -print -quit) || { printf 'STOP: directory inspection failed\n'; exit 1; }
   test -z "$entries" || { printf 'STOP: nonempty local directory\n'; exit 1; }
 fi
-sudo mkfs.ext4 "$REAL_DEVICE" || exit 1
-# Before mkdir, persist directory ownership with data-volume OCID/DEVICE in registry.
+# guest 전용 파일: 다른 terminal에서는 이 exact 경로를 다시 export한다.
+export DATA_LEDGER="$HOME/roadmap-data-owner14.json"
+test ! -e "$DATA_LEDGER" && test ! -L "$DATA_LEDGER" || exit 1
+export DATA_VOLUME_ID='<이번_data-a의_OCID>'
+export REAL_DEVICE MOUNTPOINT
+
 MOUNT_DIR_CREATED_BY14=false
-if ! test -d "$MOUNTPOINT"; then
-  sudo mkdir -- "$MOUNTPOINT" || exit 1
-  MOUNT_DIR_CREATED_BY14=true
-fi
-printf 'MOUNT_DIR_CREATED_BY14=%s MOUNTPOINT=%s DEVICE=%s\n' "$MOUNT_DIR_CREATED_BY14" "$MOUNTPOINT" "$REAL_DEVICE"
-# Save this exact flag/path/device in owner14 durable registry before mount;
-# fresh-terminal cleanup re-loads the approved registry, never guesses true.
+if ! test -d "$MOUNTPOINT"; then MOUNT_DIR_CREATED_BY14=true; fi
+export MOUNT_DIR_CREATED_BY14
+python3 - <<'LEDGER'
+import os,json
+p=os.environ['DATA_LEDGER']
+# exclusive creation refuses regular files and dangling symlinks
+fd=os.open(p,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
+with os.fdopen(fd,'w') as f:
+    json.dump({k:os.environ[k] for k in ('DATA_VOLUME_ID','REAL_DEVICE','MOUNTPOINT','MOUNT_DIR_CREATED_BY14')},f)
+    f.flush(); os.fsync(f.fileno())
+LEDGER
+# 저장 실패면 mkfs/mkdir/mount하지 않는다. 정확한 새 disk 확인은 위에서 완료했다.
+sudo mkfs.ext4 "$REAL_DEVICE" || exit 1
+if test "$MOUNT_DIR_CREATED_BY14" = true; then sudo mkdir -- "$MOUNTPOINT" || exit 1; fi
+# mkdir 전 중단되면 ledger의 true는 만들 예정이었다는 뜻이다. 실제 경로 부재면 rmdir하지 않는다.
 sudo mount "$REAL_DEVICE" "$MOUNTPOINT" || exit 1
 ACTUAL_SOURCE="$(findmnt -rn -M "$MOUNTPOINT" -o SOURCE)" || exit 1
 test "$(readlink -f "$ACTUAL_SOURCE")" = "$REAL_DEVICE" || exit 1
@@ -301,6 +317,8 @@ oci compute volume-attachment list --compartment-id "$LAB_COMPARTMENT_ID" --inst
 장치가 보이지 않음: attachment state/type/같은 AD/consistent path 지원을 확인하고 `lsblk`와 `dmesg`를 비파괴 조회한다. 기존 root disk를 대신 format하지 않는다. mount 실패: `blkid`, filesystem type, 이전 unmount 여부를 확인한다. `wrong fs type`에 mkfs 재실행으로 대응하면 원본 데이터를 잃으므로 중단한다. detach 실패는 먼저 모든 프로세스가 mount를 사용하지 않는지 `sudo fuser -vm /mnt/roadmap-data`로 조사한다. 강제 detach는 데이터 손상 위험 때문에 기본 절차에 없다.
 
 ## 리소스정리
+
+새 guest terminal에서는 `export DATA_LEDGER="$HOME/roadmap-data-owner14.json"` 후 `python3 -m json.tool "$DATA_LEDGER"`로 저장한 data OCID/device/mountpoint/created flag를 읽고 위 변수에 그대로 재입력한다. JSON을 shell source/eval하지 않는다. 파일이 없거나 현재 attachment와 다르면 정리를 중단하고 Console에서 대상부터 확인한다. reattach에서 실제 device가 바뀌었다면 같은 volume OCID의 새 attachment path를 다시 대조하여 사용하며 과거 kernel device를 추측하지 않는다.
 
 guest에서 registry의 exact data OCID/REAL_DEVICE와 `findmnt -rn -M /mnt/roadmap-data -o SOURCE,FSTYPE`의 동일 device/ext4를 확인한 뒤에만 `sudo umount /mnt/roadmap-data`를 수행한다. `findmnt -rn -M /mnt/roadmap-data` rc1(부재)만 허용하고 오류/잔존 mount는 중단한다. registry의 `MOUNT_DIR_CREATED_BY14=true`인 경우에만 regular non-symlink empty directory를 `sudo rmdir /mnt/roadmap-data`로 제거한다; false/미확인이면 기존 directory를 보존한다. Console attachment를 Detach한다. volume AVAILABLE/attachment 해제 확인 후 Storage → Block Volumes → data-a OCID → Terminate/Delete를 제출한다. `oci bv volume get --volume-id '<data-a_OCID>' --region "$REGION"`의 TERMINATED 또는 권한과 구분한 not-found를 기록한다. backup policy를 켜지 않았지만 잘못 생긴 backup/replica도 조회한다. vm-a와 boot는 다른 소비자가 끝날 때까지 생성 owner가 보존한다. 로컬 guest hash 파일 두 개만 삭제한다.
 

@@ -1,15 +1,15 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · OCI 실행 미검증**: 이 IAM 실습의 생성·접근 검증·복구·정리 절차를 한정하여 검토한 문서입니다. 실제 OCI 실행 성공이나 전체 교육과정 승인을 뜻하지 않습니다.
 
 # Identity and Access Management (IAM)
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 승인 범위: **이 IAM 실습의 bounded documentation review 완료**. 실제 실행 시 권한·인증·비용 승인·선행 산출물·소비자 반환·복구 및 소유권 확인 조건은 그대로 적용됩니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 전체 교육과정 상태는 [통합 상태](../../../Docs/README.md)를 확인하세요.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
 ## 학습목표
 
 - 격리 iam-lab과 private Standard Bucket A/B의 proof.txt를 만들고 관리자 다운로드로 두 원본을 확인한다.
-- lab-reader/그룹/조건부 policy를 연결하여 Reader A 허용·B 거부와 관리자 same-target B 성공을 기록하고 34–42에 fixture를 인계한다.
+- lab-reader/그룹/조건부 policy를 연결하여 Reader A 허용·B 거부와 관리자 same-target B 성공을 기록한다. 후속 실습을 선택하면 해당 소비자에 fixture를 인계하고, 단독 완주면 정리한다.
 
 완료 기준은 아래 실제 생성·설정·요청 결과로 판정한다. 이 목표는 수행할 작업이며 OCI에서 관찰한 결과가 아니다.
 
@@ -31,11 +31,11 @@
 실제 tenancy/Region/Domain·주체·소유권은 [공통 baseline-contract.json](../../../baseline-contract.json)과 위 fixture 계약에 맞춘다. 빈 OCID/placeholder·미승인 권한은 실행 차단 입력이다. 이 API/Console 실습 때문에 VM을 생성하지 않는다.
 
 - [00.ready Introduction — FUNCTIONAL_COMPLETION](../00_Introduction/00_Introduction.md#baseline-00-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
-- [04.ready Introduction to OCI — FUNCTIONAL_COMPLETION](../01_Introduction_to_OCI/00_Introduction_to_OCI.md#baseline-04-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
+- **Tenancy/Region/Domain 준비:** Console 프로필 메뉴에서 Tenancy details의 Tenancy OCID, 상단 Region 선택기의 실습 Region, Identity & Security → Domains에서 기존 Domain 이름/OCID를 기록한다. 이 값과 관리자 로그인만 필요하다. [Introduction to OCI](../01_Introduction_to_OCI/00_Introduction_to_OCI.md)의 bucket 기능완료는 선택 선행학습이다.
 
-- [Introduction to OCI](../../../Docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md): **Tenancy/Home Region/실습 Region 확인** 완료. 관리자가 제공한 실습 Compartment가 있으면 그 OCID를 재사용한다. 없다면 아래 A에서 `iam-lab`를 생성한다. [Compartments](../../../Docs/04_Identity_and_Access_Management_IAM/05_Compartments.md) 전체 실습을 미리 완료할 필요는 없다.
-- 관리자와 신규 테스트 사용자용 브라우저 프로필/시크릿 창을 분리한다. 이메일 수신 가능한 테스트 주소 두 개를 준비한다. 기존 업무 사용자 또는 관리자 그룹을 변경하지 않는다.
-- [Introduction to OCI bucket 생성](../01_Introduction_to_OCI/00_Introduction_to_OCI.md#baseline-04-ready)의 private Standard/PUT/GET 절차를 참고한다. 이 IAM fixture는 아래 B에서 독립 owner33으로 두 bucket을 생성·검증하며48/49 완료를 선행 요구하지 않는다. 여기서 만든 fixture는34~42까지 보존한다.
+- [Introduction to OCI](../../../Docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md): **Tenancy/Home Region/실습 Region 확인** 완료. 상위 lab-root만 재사용하고, 아래 A에서 전용 `iam-lab`를 생성한다. 이미 이 문서에서 만든 iam-lab을 재개하는 경우에만 생성 기록과 OCID/parent를 확인하여 재사용한다. [Compartments](../../../Docs/04_Identity_and_Access_Management_IAM/05_Compartments.md) 전체 실습을 미리 완료할 필요는 없다.
+- 관리자와 신규 테스트 사용자용 브라우저 프로필/시크릿 창을 분리한다. Reader 활성화 메일을 받을 테스트 주소 한 개를 준비한다. 두 번째 outsider 주소는 후속 Users 실습을 선택할 때만 필요하다. 기존 업무 사용자 또는 관리자 그룹을 변경하지 않는다.
+- [Introduction to OCI bucket 생성](../01_Introduction_to_OCI/00_Introduction_to_OCI.md#baseline-04-ready)의 private Standard/PUT/GET 절차를 참고한다. 이 IAM fixture는 아래 B에서 독립 owner33으로 두 bucket을 생성·검증하며48/49 완료를 선행 요구하지 않는다. 후속 실습을 선택한 경우에만 여기서 만든 fixture를 해당 소비자가 반환할 때까지 보존한다.
 
 ## 권한
 
@@ -57,7 +57,7 @@
 
 ## 비용및주의사항
 
-신규 유료 데이터 범위는 private Standard Bucket A/B와 각 `proof.txt`뿐이다. 두 bucket의 저장 bytes·PUT/GET/LIST 요청·실제 다운로드 경로의 전송 비용을 승인한다. User/Group/Policy 학습을 위해 VM·VCN·앱·LB를 만들지 않는다. fixture는 34–42 및 등록된 31 consumer의 동일 승인 lease까지 보존하며, 연장 없이 만료하면 소비자 복구/반환을 받은 뒤 owner33이 정리한다. Versioning/Retention/Replication/PAR/고객관리 키는 선택하지 않는다. 관리자 성공을 Reader 권한 증거로 사용하지 않는다.
+신규 유료 데이터 범위는 private Standard Bucket A/B와 각 `proof.txt`뿐이다. 두 bucket의 저장 bytes·PUT/GET/LIST 요청·실제 다운로드 경로의 전송 비용을 승인한다. User/Group/Policy 학습을 위해 VM·VCN·앱·LB를 만들지 않는다. 후속 선택 시 fixture는 선택한 34–42 및 등록된 31 consumer의 동일 승인 lease까지 보존하며, 연장 없이 만료하면 소비자 복구/반환을 받은 뒤 owner33이 정리한다. Versioning/Retention/Replication/PAR/고객관리 키는 선택하지 않는다. 관리자 성공을 Reader 권한 증거로 사용하지 않는다.
 
 ## 실습구성
 
@@ -79,7 +79,7 @@
 
 **생성·변경 범위:** iam-lab:Compartment,lab-readers:IdentityGroup,lab-reader:IdentityUser,iam-proof-a:Bucket,iam-proof-b:Bucket,p-lab-read-a:IamPolicy. **완료 비교:** Reader A success/B deny; admin same B success. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
-`iam-lab` Compartment, `lab-readers` Group, `lab-reader` User, private Standard Bucket `iam-proof-a`/`iam-proof-b`, 각 `proof.txt`를 만든다. 읽기 주체·허용 대상·허용 작업을 고정해 IAM deny를 네트워크 실패와 구별한다. Bucket 이름이 이미 사용되면 서로 대소문자 외에도 구별되는 고유 이름으로 바꾸고 후속 문서에서 일괄 반영한다.
+`iam-lab` Compartment, `lab-readers` Group, `lab-reader` User, private Standard Bucket `iam-proof-a`/`iam-proof-b`, 각 `proof.txt`를 만든다. 읽기 주체·허용 대상·허용 작업을 고정해 IAM deny를 네트워크 실패와 구별한다. Bucket 이름이 이미 사용되면 서로 대소문자 외에도 구별되는 고유 이름을 선택한다. 생성 직후 아래 BUCKET_A/BUCKET_B에 실제 이름을 기록하고 각 사용자 shell 및 후속 소비자에 전달한다. fixture bytes는 이름과 별개로 고정하며 SHA256도 함께 인계한다.
 
 ## 실습절차
 
@@ -87,7 +87,9 @@
 
 아래 CLI 인증 준비를 B-2의 첫 관리자 CLI get보다 먼저 완료한다. 별도 사용자 config의 fingerprint/User OCID를 각자 확인한 뒤 새 전용 다운로드 디렉터리에 a.txt/b.txt를 생성한다. 관리자는 B를 같은 namespace/Region/name으로 읽는다.
 
-**owner33 fixture lease (새 자원 없음):** 첫 fixture 생성/대여 전 아래 표를 실제 값으로 채운다. 미선택은 NOT_SELECTED, 선택은 소비자 owner/실제 필요 object·계정/EXPIRY_UTC/RETURNED 또는 ABORTED 복구증거를 기록한다. 값 미기록이면 보존/삭제 모두 새 승인 전 중단한다.
+**개인 단독 경로:** 이 문서만 실행하면 후속 소비자를 모두 NOT_SELECTED로 두고 A/B 검증 뒤 이 문서의 정리를 수행한다. 아래 표는 후속 실습을 선택하여 fixture를 대여할 때만 사용한다.
+
+**선택 후속 fixture lease (새 자원 없음):** 선택한 소비자만 owner/실제 필요 object·계정/EXPIRY_UTC/RETURNED 또는 ABORTED 복구증거를 기록한다. 대여한 자원은 해당 반환 전 삭제하지 않는다.
 
 |consumer|사용 범위|owner/expiry/반환|
 |---|---|---|
@@ -105,7 +107,7 @@ expiry에 신규 요청을 중단하고 각 consumer의 정책/membership 복구
 
 
 ### A. Identity와 격리 범위 생성
-1. 관리자로 **Identity & Security → Compartments → Create compartment**: 이름 `iam-lab`, Description `OCI IAM learning only`, 상위는 owner00의 ACTIVE `lab-root`(LAB_COMPARTMENT_ID). 기존 교육 compartment면 재사용한다. OCID/parent를 기록한다.
+1. 관리자로 **Identity & Security → Compartments → Create compartment**: 이름 `iam-lab`, Description `OCI IAM learning only`, 상위는 owner00의 ACTIVE `lab-root`(LAB_COMPARTMENT_ID). 같은 이름의 타인/기존 교육 compartment는 재사용하지 않는다. 충돌하면 전용 고유 이름을 정하고 그 실제 OCID를 모든 정책에 사용한다. 이번 문서에서 생성한 자원만 소유 기록에 표시하고 OCID/parent를 기록한다.
 2. **Identity & Security → Domains → 사용할 Domain → Groups → Create group**: `lab-readers`, Description `Read one lab bucket`, **User can request access 해제**. Administrators에 연결하지 않는다.
 3. 같은 Domain **Users → Create**: First name `Lab`, Last name `Reader`, 이메일 실제 테스트 주소, Use email address as username 여부를 선택/기록한다. `lab-readers`만 선택한다. 활성화 메일로 사용자 본인이 password/MFA를 설정한다. password/API private key를 이 문서에 기록하지 않는다.
 
@@ -134,9 +136,19 @@ CLI setup의 현재 command reference에는 `--profile-name` 옵션이 없으므
 4. **Storage → Object Storage & Archive Storage → Buckets → iam-lab → Create bucket**: `iam-proof-a`, Default Storage Tier **Standard**, Access **Private**, Encryption **Oracle-managed**, Versioning off, auto-tiering off. 같은 값으로 `iam-proof-b` 생성. retention/replication/PAR는 만들지 않는다.
 5. 먼저 아래 B-2의 로컬 fixture 준비를 수행한 뒤 각각 **Objects → Upload**에서 비민감 `proof.txt`를 올린다. 내용은 A `iam-proof-a`, B `iam-proof-b` 한 줄로 달리한다. 관리자 get/download와 hash를 저장해 fixture 존재를 먼저 확인한다. Namespace/Region/Bucket명/object명은 다음 테스트의 고정 입력이다.
 
+```bash
+# Console 생성 직후, API를 사용할 각 사용자 전용 shell에 같은 실제 이름을 입력
+export REGION='<actual_practice_region_identifier>'
+export NS='<actual_object_storage_namespace>'
+export BUCKET_A='<actual_A_bucket_name>'
+export BUCKET_B='<actual_B_bucket_name>'
+```
+
+정책 editor의 `target.bucket.name` 문자열에는 `$BUCKET_A`라는 글자가 아니라 위 실제 A 이름을 넣는다. 후속 문서의 예시 `iam-proof-a`/`iam-proof-b` 인수와 조건도 이 실제 이름으로 바꾼다. proof bytes와 SHA256는 이름 변경으로 바꾸지 않는다.
+
 ### B-2. 정확한 fixture bytes 준비·관리자 positive
 
-본인 PC에서 아래 전용 directory를 만들고 두 proof.txt를 각각 해당 bucket의 **Objects → Upload → Object name proof.txt**로 올린다. 기존 object면 owner33가 내용 확인 후 재사용하며 임의 덮어쓰지 않는다. 관리자 LAB_ADMIN 인증을 아래 CLI 준비 station에서 먼저 완료하고 REGION/NS는 Console의 동일 Region/namespace를 지정한다.
+본인 PC에서 아래 전용 directory를 만들고 두 proof.txt를 각각 해당 bucket의 **Objects → Upload → Object name proof.txt**로 올린다. 기존 object면 owner33가 내용 확인 후 재사용하며 임의 덮어쓰지 않는다. 관리자 LAB_ADMIN 인증을 앞의 CLI 인증 준비에서 먼저 완료한다. 각 API 사용자 shell에서 아래 값을 보존한다. NS는 Console Profile → Tenancy: <tenancy_name> → Tenancy details의 Object Storage namespace 문자열이다. Tenancy 표시 이름을 추측해서 넣지 않는다([공식 namespace 조회](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/understandingnamespaces.htm)). 새 터미널에서는 실제 기록값과 해당 사용자 config 경로를 다시 입력한다.
 
 ```bash
 # 로컬 비민감 synthetic bytes 준비; OCI 호출 아님
@@ -151,7 +163,7 @@ Upload와 각 사용자 인증 준비 뒤 **관리자 별도 PC shell**에서:
 
 ```bash
 mkdir -m 700 "iam33-admin-a" || exit 1
-if timeout 45s oci os object get --profile LAB_ADMIN --region "$REGION" --namespace-name "$NS" --bucket-name iam-proof-a --name proof.txt --file "iam33-admin-a/proof.txt" --max-retries 0 2>"iam33-admin-a/error.txt"; then
+if timeout 45s oci os object get --profile LAB_ADMIN --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name proof.txt --file "iam33-admin-a/proof.txt" --max-retries 0 2>"iam33-admin-a/error.txt"; then
   RC=0
   python3 -c 'import pathlib,sys; assert pathlib.Path(sys.argv[1]).read_bytes()==b'"'"'iam-proof-a\n'"'"'' "iam33-admin-a/proof.txt" || exit 1
   sha256sum "iam33-admin-a/proof.txt" || exit 1
@@ -161,7 +173,7 @@ else
 fi
 printf 'GetObject RC=%s\n' "$RC"
 mkdir -m 700 "iam33-admin-b" || exit 1
-if timeout 45s oci os object get --profile LAB_ADMIN --region "$REGION" --namespace-name "$NS" --bucket-name iam-proof-b --name proof.txt --file "iam33-admin-b/proof.txt" --max-retries 0 2>"iam33-admin-b/error.txt"; then
+if timeout 45s oci os object get --profile LAB_ADMIN --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_B" --name proof.txt --file "iam33-admin-b/proof.txt" --max-retries 0 2>"iam33-admin-b/error.txt"; then
   RC=0
   python3 -c 'import pathlib,sys; assert pathlib.Path(sys.argv[1]).read_bytes()==b'"'"'iam-proof-b\n'"'"'' "iam33-admin-b/proof.txt" || exit 1
   sha256sum "iam33-admin-b/proof.txt" || exit 1
@@ -179,7 +191,7 @@ printf 'GetObject RC=%s\n' "$RC"
 
 ```text
 Allow group id <LAB_READERS_GROUP_OCID> to inspect buckets in compartment id <IAM_LAB_OCID>
-Allow group id <LAB_READERS_GROUP_OCID> to read objects in compartment id <IAM_LAB_OCID> where target.bucket.name = 'iam-proof-a'
+Allow group id <LAB_READERS_GROUP_OCID> to read objects in compartment id <IAM_LAB_OCID> where target.bucket.name = '<actual_BUCKET_A_name>'
 ```
 
 
@@ -188,13 +200,15 @@ Allow group id <LAB_READERS_GROUP_OCID> to read objects in compartment id <IAM_L
 
 ```bash
 set -euo pipefail
+: "${REGION:?실제 Region 필요}" "${NS:?실제 namespace 필요}" "${BUCKET_A:?실제 A 이름 필요}" "${BUCKET_B:?실제 B 이름 필요}"
+[ "$BUCKET_A" != "$BUCKET_B" ] || exit 1
 IAM_GET_WORK=$(mktemp -d "$HOME/oci-iam33.XXXXXXXX") || exit 1
-timeout -k 5s 45s oci os object get --profile LAB_READER --region '<REGION>' --namespace-name '<NS>' --bucket-name iam-proof-a --name proof.txt --file "$IAM_GET_WORK/a.txt" --max-retries 0 || exit 1
+timeout -k 5s 45s oci os object get --profile LAB_READER --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_A" --name proof.txt --file "$IAM_GET_WORK/a.txt" --max-retries 0 || exit 1
 python3 -c 'import pathlib,sys; assert pathlib.Path(sys.argv[1]).read_bytes()==b"iam-proof-a\n"' "$IAM_GET_WORK/a.txt" || exit 1
 sha256sum "$IAM_GET_WORK/a.txt" || exit 1
 # 실제 owner33 admin A SHA256와 동일해야 한다.
 ERR="$IAM_GET_WORK/b-error.json"
-if timeout -k 5s 45s oci os object get --profile LAB_READER --region '<REGION>' --namespace-name '<NS>' --bucket-name iam-proof-b --name proof.txt --file "$IAM_GET_WORK/b.txt" --max-retries 0 2>"$ERR"; then
+if timeout -k 5s 45s oci os object get --profile LAB_READER --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_B" --name proof.txt --file "$IAM_GET_WORK/b.txt" --max-retries 0 2>"$ERR"; then
   printf 'STOP: unexpected B allow\n'; exit 1
 else rc=$?; fi
 python3 - "$rc" "$ERR" <<'PY'
@@ -208,7 +222,16 @@ PY
 ```
 
 
-8. 관리자 세션에서 Bucket B의 같은 object를 즉시 읽어 positive control을 남긴다. 허용 정책/Group/멤버십·오류 request-id·시간을 기록한다. 다른 상위 정책이 학습자에 권한을 주는지 관리자가 확인한다.
+8. Reader B 거부 직후 관리자 전용 shell에서 아래 same-target positive control을 수행한다. 앞서 생성한 admin-b 경로를 재사용/덮어쓰지 않는다. 두 세션의 REGION/NS/BUCKET_B/object가 동일한지 대조하고, 허용 정책/Group/멤버십·오류 request-id·시간을 기록한다.
+
+```bash
+IAM_ADMIN_CONTROL=$(mktemp -d "$HOME/oci-iam33-control.XXXXXXXX") || exit 1
+timeout -k 5s 45s oci os object get --profile LAB_ADMIN --region "$REGION" --namespace-name "$NS" --bucket-name "$BUCKET_B" --name proof.txt --file "$IAM_ADMIN_CONTROL/proof.txt" --max-retries 0 2>"$IAM_ADMIN_CONTROL/error.txt" || exit 1
+python3 -c 'import pathlib,sys; assert pathlib.Path(sys.argv[1]).read_bytes()==b"iam-proof-b\n"' "$IAM_ADMIN_CONTROL/proof.txt" || exit 1
+sha256sum "$IAM_ADMIN_CONTROL/proof.txt" || exit 1
+```
+
+B가 뜻밖에 허용되거나 인증/통신 오류가 나면 완료 처리하지 않고 후속 소비자를 시작하지 않는다. 관리자 세션은 유지하고 user/profile/실제 bucket 이름과 기존 상위 grant를 확인한다. 타인의 정책은 수정하지 않는다. 이번에 만든 policy의 조건/그룹 오류만 바로잡고 A 성공→B 거부→관리자 B 성공을 새 다운로드 경로에서 다시 수행한다. 전파 확인은 최대 5분까지만 기다리고 미해결이면 중단하여 이번 소유 자원 정리로 이동한다. 기존 권한을 임의 제거해 거부를 만들지 않는다.
 
 ## 결과검증
 
@@ -228,9 +251,9 @@ PY
 
 registry에 기록한 신규 IAM_GET_WORK의 이번 다운로드만 제거하고 empty directory rmdir한다. 다른 사용자 config/key/fixture는 삭제하지 않는다.
 
-34~42가 남으면 fixture와 Reader 계정을 보존한다. 종료 시 모든 테스트 정책 제거 → API key/auth token revoke → Group membership 제거 → test User 삭제 → Group 삭제 → object(모든 version 여부 확인) 삭제 → Bucket 삭제 → 남은 VM/Function/FSS resource 확인 → 빈 compartment 삭제. 업무 Domain 전체를 삭제하지 않는다.
+선택하여 등록한 소비자가 남으면 fixture와 Reader 계정을 보존한다. 모두 NOT_SELECTED인 단독 경로는 지금 정리한다. 종료 시 모든 테스트 정책 제거 → API key/auth token revoke → Group membership 제거 → test User 삭제 → Group 삭제 → object(모든 version 여부 확인) 삭제 → Bucket 삭제 → 남은 VM/Function/FSS resource 확인 → 빈 compartment 삭제. 재개 시 기존에 보존한 자원/계정/API key는 소유 기록과 소비자 반환을 먼저 대조하고, 이번 소유가 아닌 것은 삭제하지 않는다. 이번에 만든 전용 config/private key도 API key revoke를 확인한 뒤 해당 사용자 PC의 기록된 exact path만 제거한다. 업무 Domain 전체를 삭제하지 않는다.
 
-**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: iam33-fixtures/a/proof.txt、iam33-fixtures/b/proof.txt、iam33-admin-a/proof.txt/error.txt、iam33-admin-b/proof.txt/error.txt 및 IAM_GET_WORK의 a.txt/b.txt/b-error.json. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
+**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: iam33-fixtures/a/proof.txt、iam33-fixtures/b/proof.txt、iam33-admin-a/proof.txt/error.txt、iam33-admin-b/proof.txt/error.txt 및 IAM_GET_WORK의 a.txt/b.txt/b-error.json, IAM_ADMIN_CONTROL의 proof.txt/error.txt. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
 
 ## 공식문서
 

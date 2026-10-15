@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 절차 검토 완료 · OCI 실행 미검증**: 이 VNIC 실습의 잔여 통합 결함 수정과 실행·복구·정리 절차를 문서 수준에서 검토했습니다. 실제 OCI 실행 성공이나 전체 curriculum 승인, publication/rendering 검증을 뜻하지 않습니다.
 
 # VNICs
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../../Docs/README.md)를 확인하세요.
+> 통합 상태: 이번 잔여 통합 수정 범위의 문서 검토 대상입니다. OCI 실행과 learner publication/rendering 검증은 아직 수행하지 않았으며, 전체 curriculum 승인을 뜻하지 않습니다. 실제 선행 출력·비용·권한 gate를 통과한 경우에만 실행하세요.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -27,12 +27,12 @@
 [공통 baseline-contract.json](../../../../baseline-contract.json)의 OS/CIDR/소유권을 따른다. Oracle Linux 9 / `opc` / `dnf` 외의 숨은 Ubuntu 또는 probe VM은 만들지 않는다. OCID/IP의 null은 실행 전 반드시 실제 출력으로 채우는 **실행 차단 입력**이다. approval/capacity/quota/identity 미확인은 완료가 아니다.
 
 - [24 Route Tables](05_Route_Tables.md#baseline-24-ready): **A/B 관리 SSH, owner24 packet-lab/index.html=oci-packet-lab·health.txt=packet-health-ok 및8080 허용/guest ledger**를 실제 출력으로 인수한다. 이 문서의 변경/반환까지 creator 승인 expiry 안에서 보존한다.
-- [25 Network Security Groups](06_Network_Security_Groups.md#baseline-25-ready): **source-NSG 시험과 owner24 CIDR baseline 원복 readback; nsg-client/nsg-web는 재사용하지 않음**를 실제 출력으로 인수한다. 이 문서의 변경/반환까지 creator 승인 expiry 안에서 보존한다.
+- [25 Network Security Groups 반환 — 선택 수행 시에만](06_Network_Security_Groups.md#리소스정리): 25 실험을 수행했다면 owner24 CIDR baseline 복원·신규 HTTP positive·원래 VNIC NSG 배열 복원·nsg-client/nsg-web 삭제 readback을 인수한다. 25.ready의 source-NSG 기능시험 완료는 필수가 아니며 두 NSG는 재사용하지 않는다. 25를 선택하지 않았다면 owner24 baseline에서 바로 진행한다. 어느 경로든 첫 변경 전 Console에서 대상 VNIC의 모든 NSG 배열과 Security Rules, 대상 Subnet의 모든 SL 배열/규칙을 읽어 저장하고 TCP8084 또는 all-protocol의 중복 ingress 허용이 없음을 확인한다. 미확인/충돌이면 중단하고 해당 owner와 조정하며 타 owner 규칙을 임의 제거하지 않는다.
 
 공유 A/B consumer는 INSTANCE_A_ID에 owner10 vm-a의 실제 OCID, INSTANCE_B_ID에 owner22 private-vm의 실제 OCID, `A_PUBLIC_IP`, `A_PRIVATE_IP`, `B_PRIVATE_IP`를 실제 생성 응답에서 전달받는다. 해당 주제에 필요하지 않은 VM/변수는 생성·요구하지 않는다.
 
 - [Route Tables](../../../../Docs/03_Virtual_Cloud_Network_VCN/05_Route_Tables.md) **RT-ready** 완료. A/B VM·Subnets·private IP 목록과 SSH 관리 경로를 보존한다.
-- [Network Security Groups](../../../../Docs/03_Virtual_Cloud_Network_VCN/06_Network_Security_Groups.md)의 NSG 생성/가입을 완료했으면 멤버십을 기록한다. B의 Shape가 추가 VNIC를 지원하는지 Console Shape 문서/제한을 확인한다. 지원하지 않으면 승인된 Shape로 변경하거나 미실행으로 남기며 존재하지 않는 VNIC 성공을 적지 않는다.
+- 25 실험을 수행했다면 위 반환 readback을 확인하고, 미선택이면 NSG 생성/가입을 요구하지 않는다. 본문 A에서 owner32의 nsg-vnic-test를 직접 생성·연결하며 TCP8084 규칙은 secondary VNIC 생성 후 그 실제 NSG/SL union을 다시 조회한다. B의 Shape가 추가 VNIC를 지원하는지 Console Shape 문서/제한을 확인한다. 지원하지 않으면 승인된 Shape로 변경하거나 미실행으로 남기며 존재하지 않는 VNIC 성공을 적지 않는다.
 
 ## 권한
 

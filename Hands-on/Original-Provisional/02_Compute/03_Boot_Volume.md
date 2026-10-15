@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 / OCI 실행 미검증**: 이 Boot Volume 실습의 한정된 절차·검증·정리 범위를 문서 기준으로 검토했습니다. 실제 OCI 실행이나 전체 교육과정의 품질 승인을 뜻하지 않습니다.
 
 # Boot Volume
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 수용 범위: **한정된 실행 절차의 문서 검토 완료**. 같은 vm-a launch의 boot 선택·비파괴 조회와 별도 승인 backup 1개의 생성·정리 절차를 대상으로 합니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 아래 권한·예산·지원·복구·소유권 gate는 실행 전에 충족해야 하며 전체 통합·게시 상태는 [통합 상태](../../../Docs/README.md)와 별개입니다.
 
 > 실행 절차 작성본 / OCI 미실행. Oracle 공식 본문 근거와 교육용 선택을 구분한다. secrets·실제 고객값·diagram 없음.
 
@@ -27,6 +27,7 @@
 [공통 baseline-contract.json](../../../baseline-contract.json)의 Oracle Linux 9 / opc / CIDR / 비용 상한을 따른다. 문서 번호는 실행 순서가 아니다. **준비 station과 생성 이후 ready를 분리**한다. 아래 단계 외의 기능완료를 소급하여 요구하지 않는다.
 
 - [10 Compute — 단계 링크](00_Compute.md#shared-launch): **공동 launch boot 선택 station; 완료 VM 불필요**. 실제 출력/소비자/expiry를 전달하고 해당 owner가 이 lab 종료까지 보존한다.
+- 생성 후 조회 단계로 돌아올 때는 같은 Compute 절차에서 vm-a 생성과 SSH 신뢰/접속 검증까지 완료한다. 필요한 것은 같은 instance/boot OCID, AD, Region, Compartment, 로컬 private key 경로와 현재 public IP뿐이다. 이 문서를 위해 새 VM이나 키를 만들지 않는다. 생성 전 boot 선택에 SSH 완료를 요구하지 않는다.
 
 생성 전 조직 승인(identity/권한/예산/expiry/서비스 지원/limit/capacity)을 확인한다. 실제 OCID/IP는 아직 생성하지 않았으면 비워 두고 해당 Create/readback 뒤 채운다. 동일 creation-event-id/OCID는 한 번의 제출만 뜻한다.  실습에 없는 자원을 추가하지 않는다. 실제 checkpoint는 사용자 실행 전 비워 둔다.
 
@@ -140,13 +141,19 @@ export KEY='<owner15_actual_local_private_key_absolute_path>'
 export PUBLIC_IP='<owner10_actual_vm-a_public_IP>'
 test -f "$KEY" && test ! -L "$KEY" && test -r "$KEY" || exit 1
 case "$PUBLIC_IP" in ''|*'<'*|*'>'*) exit 1;; esac
-timeout --foreground -k 5s 60s ssh -i "$KEY" -o IdentitiesOnly=yes -o HostKeyAlgorithms=ssh-ed25519 -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -o ConnectionAttempts=1 -o ControlMaster=no -o ControlPath=none opc@"$PUBLIC_IP" 'findmnt /; lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS; df -h /' || exit 1
+timeout --foreground -k 5s 60s ssh -i "$KEY" -o IdentitiesOnly=yes -o HostKeyAlgorithms=ssh-ed25519 -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -o ConnectionAttempts=1 -o ControlMaster=no -o ControlPath=none opc@"$PUBLIC_IP" 'findmnt / && lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS && df -h /' || exit 1
 ```
+guest에서 findmnt의 SOURCE가 예를 들어 /dev/mapper/...이면 lsblk의 해당 mapper → partition → disk 부모 체인을 위로 따라간다. root가 LVM이면 mapper 한 행을 전체 boot disk로 오인하지 않는다. 어떤 조회든 실패하면 뒤 결과로 성공을 대체하지 않는다.
+
 4. 같은 AD, 실제 boot size, encryption(KMS field null이면 Oracle-managed), attachment와 instance를 대조한다. Stop/terminate에서 보존 옵션의 의미는 비용과 데이터 생존을 결정한다. primary cleanup은 boot 삭제이며 데이터 복구/backup 실제 생성은 별도 승인 확장이다.
 
 ### 선택 확장 — boot backup 1개 (승인한 경우만)
 
-Storage → Block Storage → Boot Volumes → boot-a → Backups → Create Boot Volume Backup. Name `boot-a-lab-backup`, Type **Incremental**, Retention **No retention period (keep until deleted)**, Retention lock Off, Prevent deletion Off, Indefinite hold Off. Create 제출 후 AVAILABLE를 확인한다. 이 설정은 영구 보존 약속이 아니라 lab 직후 수동 삭제를 허용하기 위한 선택이다. 현재 retention feature 권한을 승인하지 못하면 실행하지 않는다. [Create Backup — retention/lock/hold fields](https://docs.oracle.com/en-us/iaas/Content/Block/Tasks/create-bv-boot-volume-backup.htm).
+Storage → Block Storage → Boot Volumes → **기록한 boot-a OCID** → Backups → Create Boot Volume Backup. 제출 전에 같은 Region/Compartment의 Boot Volume Backups 목록이 정상적으로 열리는지 확인하고 기존 목록을 기록한다. 생성·조회·삭제와 목록 조회 권한, backup 1개의 저장비 및 정리 기한을 승인받지 못하면 이 확장을 건너뛴다.
+
+Name `boot-a-lab-backup`, Type **Incremental**, Retention **No retention period (keep until deleted)**, Retention lock Off, Prevent deletion Off, Indefinite hold Off. Create는 한 번만 제출하고 즉시 신규 backup OCID, source boot OCID, Region, backup Compartment, 생성 시각과 정리 기한을 별도로 저장한다. 이름만으로 대상을 추정하지 않는다. AVAILABLE를 확인한다. 30초 간격으로 최대 5분 또는 승인 기한 중 먼저 도달한 시점까지만 확인한다(교육용 대기 한도이며 서비스 완료시간 보장이 아니다). CREATING 지속·오류·응답 유실이면 재생성하지 말고 기존 목록/상세와 비교하여 신규 대상 식별 및 정리를 먼저 해결한다. OCID를 식별하지 못하면 확장은 BLOCKED이고 owner13가 관리자와 잔존을 확인한다.
+
+이 설정은 영구 보존 약속이 아니라 lab 직후 수동 삭제를 허용하기 위한 선택이다. 현재 retention feature 권한을 승인하지 못하면 실행하지 않는다. [Create Backup — retention/lock/hold fields](https://docs.oracle.com/en-us/iaas/Content/Block/Tasks/create-bv-boot-volume-backup.htm).
 
 ### Create 이후 값 전달 — 이름으로 추정하지 않는다
 
@@ -206,7 +213,13 @@ boot 연결을 못 찾으면 creator Console의 AD/compartment/instance OCID와 
 
 boot-a owner10; 선택 backup owner13가 별도 삭제; restore VM 없음. 공유 기반 리소스는 이 consumer가 직접 삭제하지 않는다. 실제 소비자/expiry를 creator에게 반환하고 creator의 리소스정리 절차를 사용한다. VM을 Stop했다고 boot/IP/backup 비용이 끝난 것으로 처리하지 않는다. 로컬/guest 파일은 자신이 만든 정확한 경로만 제거하며 기록된 증거를 보존한다.
 
-선택 backup을 만든 경우에만 owner13가 Boot Volume Backups → 신규 OCID → Delete를 제출한다. 잠금/hold가 있으면 관리자 승인 전 임의 해제하지 않는다. get/list에서 신규 backup만 제거되었는지 읽고 boot-a 삭제와 혼동하지 않는다.
+선택 backup을 만든 경우에만 owner13가 아래 순서로 정리한다. boot-a나 VM은 삭제하지 않는다.
+
+1. 생성 때 보존한 backup OCID/source boot OCID/Region/backup Compartment를 준비한다. 같은 Region에서 Storage → Block Storage → Block Volumes → sidebar **Boot Volume Backups**를 열고 해당 Compartment를 선택한다. 이름·state·tag 등 추가 필터를 지우고 목록을 정상 로드한다. [공식 목록 task](https://docs.oracle.com/en-us/iaas/Content/Block/Tasks/list-bv-boot-volume-backup.htm).
+2. 신규 backup의 상세에서 정확한 OCID/source boot OCID와 잠금/hold 상태를 대조한다. 잠금/hold가 있으면 관리자 승인 전 임의 해제하지 않는다. 대상이 불명확하거나 목록/상세 조회가 실패하면 삭제하지 않고 owner13가 미완료로 보유한다.
+3. 그 신규 backup 행 **Actions → Terminate**를 선택하고 확인한다. [공식 삭제 task](https://docs.oracle.com/en-us/iaas/Content/Block/Tasks/delete-boot-volume-backup.htm)의 Console 동작 이름을 따른다. 삭제는 이 backup 복사본을 제거하므로 복구용으로 계속 보존해야 하는 backup에는 실행하지 않는다.
+4. 같은 identity/Region/Compartment와 필터 없는 목록에서 refresh한다. 30초 간격 최대 5분 또는 승인 기한까지 확인하고 페이지가 여러 개면 모든 페이지를 확인한다. 정상 로드된 전체 목록에서 기록한 정확한 OCID가 없어야 정리 완료다. DELETING만 보이거나 목록 권한 오류·timeout이면 미완료이며, `NotAuthorizedOrNotFound` 단독을 삭제 증거로 사용하지 않는다. 대기 한도가 끝나도 재생성하지 않고 owner13가 미완료 OCID를 보존하여 관리자와 후속 정리를 진행한다.
+5. backup 정리 결과와 이 문서의 boot 조회 종료를 owner10에게 반환한다. backup 미선택이면 NOT_SELECTED로 반환하며, boot-a/VM 정리는 owner10의 원래 절차로 돌아간다.
 
 
 ## 공식문서

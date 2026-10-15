@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · OCI 실행 미검증**: 이 Export Options 실습의 제한된 문서 검토 범위에서 절차·복구·정리 흐름을 확인했습니다. 실제 OCI 실행 성공이나 전체 교육과정의 승인을 뜻하지 않습니다.
 
 # Export Options
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 상태: **제한 범위 문서 검토 완료 / OCI 실행 미검증**. 예상 출력은 패턴이며 실측값이 아닙니다. 아래 UpdateExport 권한 확인, 실제 선행 산출물, 비용·독립 복구 담당자·deadline 및 owner 반환 조건을 충족한 경우에만 실행합니다. 이 문서의 검토 완료는 [통합 상태](../../../Docs/README.md)의 전체 승인이나 게시 완료를 뜻하지 않습니다.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -36,7 +36,7 @@
 
 공유 A/B consumer는 INSTANCE_A_ID에 owner10 vm-a의 실제 OCID, INSTANCE_B_ID에 owner22 private-vm의 실제 OCID, `A_PUBLIC_IP`, `A_PRIVATE_IP`, `B_PRIVATE_IP`를 실제 생성 응답에서 전달받는다. 해당 주제에 필요하지 않은 VM/변수는 생성·요구하지 않는다.
 
-- [File Storage](../../../Docs/05_File_Storage/00_File_Storage.md) **FSS-mounted**, [Mount Targets](../../../Docs/05_File_Storage/01_Mount_Targets.md) **MT-tested**, [Exports](../../../Docs/05_File_Storage/02_Exports.md) **EXPORT-tested** 완료. `/lab-alt`는 삭제됐고 File System으로 통하는 모든 Export 목록을 관리자 확인한다.
+- [File Storage](00_File_Storage.md#baseline-43-ready) **FSS-mounted**, [Mount Targets](01_Mount_Targets.md#baseline-44-ready) **MT-tested**, [Exports](02_Exports.md#baseline-45-ready) **EXPORT-tested** 완료. `/lab-alt`는 삭제됐고 File System으로 통하는 모든 Export 목록을 관리자 확인한다.
 - B의 실제 source IP와 NFS mount options/POSIX UID/GID를 고정한다.43의 RW에서 동일 root write가 이미 성공해야 한다. 비용 승인 시간 안에서 네트워크/NSG를 변경하지 않고 Export만 바꾼다.
 
 ## 권한
@@ -95,7 +95,7 @@ Export 편집 전에 exact EXPORT_ID/전체 original options를 저장하고 다
 
 ### A. RW baseline와 설정 payload
 1. **File Systems → fs-lab → Exports → /lab → NFS Export Options → Edit**에서 entry 한 개: source `<B_PRIVATE_IP>/32`, Ports **Privileged**, Access **Read/Write**, Squash **None**, Allowed authentication **SYS**, Anonymous Not Allowed. broad CIDR entry나 다른 Export 우회가 없는지 확인한다.
-2. B에서 `findmnt -T /mnt/oci-lab`로 client mount가 **rw**인지 확인한다. 아래 baseline write/read를 수행한다.
+2. 아래 Bash는 모두 B guest에서 실행한다. 새 shell에서는 owner43이 반환한 실제 주소로 `MT_PRIVATE_IP`를 다시 설정한다(`export MT_PRIVATE_IP='<actual mount target private IPv4>'`; placeholder 그대로 실행 금지). 오류로 block이 종료되면 다음 block으로 진행하지 말고 독립 복구담당자에게 원래 options 복원을 요청한다. 전용 작업 directory에서 실행하며 이번 run이 만든 파일 목록과 전체 original options는 shell 밖에도 보존한다. B에서 `findmnt -T /mnt/oci-lab`로 client mount가 **rw**인지 확인한다. 아래 baseline write/read를 수행한다.
 
 ```bash
 mountpoint -q /mnt/oci-lab || { printf '%s\n' 'STOP: no NFS mount'; exit 1; }
@@ -105,10 +105,10 @@ test "$(findmnt -rn -M /mnt/oci-lab -o SOURCE)" = "$MT_PRIVATE_IP:/lab" || exit 
 test "$(findmnt -rn -M /mnt/oci-lab -o FSTYPE)" = nfs || exit 1
 findmnt -rn -M /mnt/oci-lab -o OPTIONS | tr \, '\n' | grep -Fx rw || exit 1
 sudo test ! -e /mnt/oci-lab/export-proof.txt && sudo test ! -L /mnt/oci-lab/export-proof.txt || exit 1
-sudo sh -c "printf 'rw-baseline\n' > /mnt/oci-lab/export-proof.txt"
-sudo cat /mnt/oci-lab/export-proof.txt
-sudo stat -c '%u:%g %a' /mnt/oci-lab/export-proof.txt
-sudo umount /mnt/oci-lab
+sudo timeout -k 5s 10s sh -c "printf 'rw-baseline\n' > /mnt/oci-lab/export-proof.txt" || exit 1
+printf 'rw-baseline\n' | sudo timeout -k 5s 10s cmp - /mnt/oci-lab/export-proof.txt || exit 1
+sudo timeout -k 5s 10s stat -c '%u:%g %a' /mnt/oci-lab/export-proof.txt || exit 1
+sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1
 ```
 
 3. Console 선택값의 API payload 의미를 기록한다. 아래 JSON은 **API model camelCase**이며 docs의 CLI examples에 섞인 hyphen/문자열 boolean 표기를 그대로 복사하지 않는다. CLI로 실행하려면 설치된 버전의 `--generate-param-json-input export-options`와 schema를 먼저 비교한다. 이 실습의 실제 수정은 Console로 한다.
@@ -138,6 +138,10 @@ sudo umount /mnt/oci-lab
 4. Console에서 같은 entry의 **Access만 Read Only**로 바꾼다. B를 client **rw** options로 remount한다. client `-o ro`를 사용해 서버 RO와 혼동하지 않는다.
 
 ```bash
+if findmnt -rn -M /mnt/oci-lab; then exit 1; else RC=$?; test "$RC" = 1 || exit 1; fi
+test -d /mnt/oci-lab && test ! -L /mnt/oci-lab || exit 1
+ENTRIES=$(sudo find /mnt/oci-lab -mindepth 1 -maxdepth 1 -print -quit) || exit 1
+test -z "$ENTRIES" || exit 1
 sudo timeout -k 5s 20s mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,rw,retry=0 "$MT_PRIVATE_IP:/lab" /mnt/oci-lab || exit 1
 findmnt -T /mnt/oci-lab
 sudo timeout -k 5s 10s cat /mnt/oci-lab/export-proof.txt || exit 1
@@ -148,22 +152,41 @@ test ! -e export-ro-error.txt && test ! -L export-ro-error.txt || exit 1
 sudo test ! -e /mnt/oci-lab/ro-should-fail.txt && sudo test ! -L /mnt/oci-lab/ro-should-fail.txt || exit 1
 if sudo timeout -k 5s 10s env LC_ALL=C touch /mnt/oci-lab/ro-should-fail.txt 2> export-ro-error.txt; then
   printf '%s\n' 'UNEXPECTED WRITE: restore RW/source and investigate before proceeding'
-  sudo umount /mnt/oci-lab
+  sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1
   exit 1
 else
   RC=$?
   printf 'denied write exit status=%s\n' "$RC"
+  case "$RC" in 124|137) printf 'INCONCLUSIVE timeout: restore now\n'; exit 1;; esac
 fi
 grep -F 'Read-only file system' export-ro-error.txt || { printf 'INCONCLUSIVE: restore Export RW; not proven server RO\n'; exit 1; }
 # 복구 담당자는 중단/예외에도 Console에서 원래 B/32 RW를 즉시 복원한다.
-sudo umount /mnt/oci-lab
+sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1
 ```
 
 read는 성공, 동일 root write는 실패해야 한다. client RO/permissions/root squash를 바꾸지 않은 상태여야 서버 Export RO 효과를 분리할 수 있다.
 
+**4b. RO 종료 후 RW 기준 복원 (source 변경 전 필수):** Console에서 **source는 원래 B/32 그대로**, Access만 **Read/Write**로 복원하고 나머지 original options와 새로고침 readback한다. 위 B 요청이 정상 종료되고 D-state/잔존 요청이 없는지 확인한 뒤 아래를 수행한다. 오류면 [43 residual 복구](00_File_Storage.md#c-실제-linux-mount와-공유-데이터)로 반환하고 source를 편집하지 않는다.
+
+```bash
+if findmnt -rn -M /mnt/oci-lab; then exit 1; else RC=$?; test "$RC" = 1 || exit 1; fi
+test -d /mnt/oci-lab && test ! -L /mnt/oci-lab || exit 1
+ENTRIES=$(sudo find /mnt/oci-lab -mindepth 1 -maxdepth 1 -print -quit) || exit 1
+test -z "$ENTRIES" || exit 1
+sudo timeout -k 5s 20s mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,rw,retry=0 "$MT_PRIVATE_IP:/lab" /mnt/oci-lab || exit 1
+test "$(findmnt -rn -M /mnt/oci-lab -o SOURCE)" = "$MT_PRIVATE_IP:/lab" || exit 1
+test "$(findmnt -rn -M /mnt/oci-lab -o FSTYPE)" = nfs || exit 1
+findmnt -rn -M /mnt/oci-lab -o OPTIONS | tr , '\n' | grep -Fx rw || exit 1
+sudo test ! -e /mnt/oci-lab/export46-between.txt && sudo test ! -L /mnt/oci-lab/export46-between.txt || exit 1
+sudo timeout -k 5s 10s sh -c "printf 'rw-between\n' > /mnt/oci-lab/export46-between.txt" || exit 1
+printf 'rw-between\n' | sudo timeout -k 5s 10s cmp - /mnt/oci-lab/export46-between.txt || exit 1
+sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1
+if findmnt -rn -M /mnt/oci-lab; then exit 1; else RC=$?; test "$RC" = 1 || exit 1; fi
+```
+
 ### C. source no-match deny와 복구
-5. Console source를 B가 아닌 전용 미사용 host `/32`(예: subnet에서 실제 비사용을 확인한 `10.77.20.250/32`)로 바꾼다. 기존0.0.0.0/0/넓은 CIDR entry는 없어야 한다. B 신규 mount는 access denied 등 실패해야 한다. 같은 MT의 rpcinfo/network는 정상인 상태를 확인해 network drop과 구별한다.
-**step5 변경 직후 B request terminal (복구담당자120초 deadline 유지):** step4에서 정상 unmount한 뒤 actual mount absence/local empty/!symlink를 먼저 확인한다. network/RPC positive와 no-match export readback이 준비되지 않으면 수행하지 않는다.
+5. 4b의 B/32 RW 복원·write positive·정상 unmount 후 **Access RW와 다른 options는 그대로 두고** Console source만 B가 아닌 전용 미사용 host `/32`(예: subnet에서 실제 비사용을 확인한 `10.77.20.250/32`)로 바꾼다. 기존0.0.0.0/0/넓은 CIDR entry는 없어야 한다. B 신규 mount는 access denied 등 실패해야 한다. 같은 MT의 rpcinfo/network는 정상인 상태를 확인해 network drop과 구별한다.
+**step5 변경 직후 B request terminal (복구담당자120초 deadline 유지):** 4b에서 정상 unmount한 뒤 actual mount absence/local empty/!symlink를 먼저 확인한다. network/RPC positive와 no-match export readback이 준비되지 않으면 수행하지 않는다.
 
 ```bash
 # B guest, caller source는 기존 B_PRIVATE_IP로 고정
@@ -175,9 +198,10 @@ test ! -e export46-source-error.txt && test ! -L export46-source-error.txt || ex
 timeout -k 5s 15s rpcinfo -p "$MT_PRIVATE_IP" || exit 1
 if sudo timeout -k 5s 20s env LC_ALL=C mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,rw,retry=0 "$MT_PRIVATE_IP:/lab" /mnt/oci-lab 2>export46-source-error.txt; then
   printf '%s\n' 'UNEXPECTED source allow: no writes; Console restore original B/32 RW now'
-  sudo umount /mnt/oci-lab || exit 1
+  sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1
   exit 1
 else RC=$?; printf 'source no-match mount RC=%s\n' "$RC"; fi
+case "$RC" in 124|137) printf 'INCONCLUSIVE timeout: restore now\n'; exit 1;; esac
 # Console restoration is mandatory even if the next diagnostic fails.
 grep -Ei 'access denied|permission denied' export46-source-error.txt || { printf '%s\n' 'INCONCLUSIVE transport/local error; restore before proceeding'; exit 1; }
 if findmnt -rn -M /mnt/oci-lab; then printf '%s\n' 'STOP: mounted after failed request'; exit 1; else RC=$?; [ "$RC" = 1 ] || exit 1; fi
@@ -199,7 +223,7 @@ test "$(findmnt -rn -M /mnt/oci-lab -o FSTYPE)" = nfs || exit 1
 findmnt -rn -M /mnt/oci-lab -o OPTIONS | tr \, '\n' | grep -Fx rw || exit 1
 printf 'rw-baseline\n' | sudo cmp - /mnt/oci-lab/export-proof.txt || exit 1
 sudo test ! -e /mnt/oci-lab/export46-recovered.txt && sudo test ! -L /mnt/oci-lab/export46-recovered.txt || exit 1
-sudo sh -c "printf 'rw-recovered\n' > /mnt/oci-lab/export46-recovered.txt" || exit 1
+sudo timeout -k 5s 10s sh -c "printf 'rw-recovered\n' > /mnt/oci-lab/export46-recovered.txt" || exit 1
 printf 'rw-recovered\n' | sudo cmp - /mnt/oci-lab/export46-recovered.txt || exit 1
 sudo sha256sum /mnt/oci-lab/export46-recovered.txt || exit 1
 ```
@@ -289,7 +313,7 @@ RO인데 write 성공: 첫 matching entry의 access, 다른 Export path/old moun
 
 ## 리소스정리
 
-마지막 RW/source B/32를 복원하고 remount/RW read-write positive control을 기록한다. **owner46은 공유 FSS 삭제 owner가 아니다.** [47 Snapshots](../../../Docs/05_File_Storage/04_Snapshots.md)가 승인 session에 선택되면 mounted `/lab`, fs/mt/export OCID·source·RW 증거를 47과 owner43에 반환하며 `proof.txt`와 공유 자원을 보존한다. 46 소유 `export-proof.txt`/`ro-should-fail.txt`(실제로 생성된 경우만)/`export46-recovered.txt`만 확인 후 삭제한다. registry에 47의 SELECTED/NOT_SELECTED, 담당자, 종료시각, 비용 상한, 반환 완료를 명시한다. 예약 consumer가 없거나 expiry에 도달하면 idle 보존하지 않고 owner43의 [최종 정리](00_File_Storage.md#리소스정리)로 인계한다. 47 snapshot 삭제 완료 후 owner43만 전체 client unmount → 교육 Export → File System → 다른 export 없는 MT → 전용 NSG/Subnet/table 순으로 삭제한다. creator22 private-vm / creator10 vm-a / creator21 private subnet / creator23 public subnet+IGW / creator19 VCN은 각 owner가 모든 승인 consumer 종료를 확인해 정리한다. FileSystem의 Snapshot/Replication이 우연히 추가됐다면 비용/의존관계를 관리자 확인 후 정리한다. exact OCID별 잔존 조회와 Volume/공인 IP/OCIR 등 다른 트랙 비용까지 확인한다.
+마지막 RW/source B/32를 복원하고 remount/RW read-write positive control을 기록한다. **owner46은 공유 FSS 삭제 owner가 아니다.** [47 Snapshots](04_Snapshots.md)가 승인 session에 선택되면 mounted `/lab`, fs/mt/export OCID·source·RW 증거를 47과 owner43에 반환하며 `proof.txt`와 공유 자원을 보존한다. 46 소유 `export-proof.txt`/`ro-should-fail.txt`(실제로 생성된 경우만)/`export46-recovered.txt`/`export46-between.txt`만 확인 후 삭제한다. registry에 47의 SELECTED/NOT_SELECTED, 담당자, 종료시각, 비용 상한, 반환 완료를 명시한다. 예약 consumer가 없거나 expiry에 도달하면 idle 보존하지 않고 owner43의 [최종 정리](00_File_Storage.md#리소스정리)로 인계한다. 47 snapshot 삭제 완료 후 owner43만 전체 client unmount → 교육 Export → File System → 다른 export 없는 MT → 전용 NSG/Subnet/table 순으로 삭제한다.
 
 **로컬 owned 오류 파일 종료:**복원/options readback·IP-source RW positive와 잔존 요청 없음이 확인된 뒤 이번 B shell이 collision guard 후 만든 `export-ro-error.txt`/`export46-source-error.txt`만 삭제한다. 실패 중에는 복구 evidence를 보존한다. 사용자/기존 파일/symlink를 glob으로 제거하지 않는다.
 

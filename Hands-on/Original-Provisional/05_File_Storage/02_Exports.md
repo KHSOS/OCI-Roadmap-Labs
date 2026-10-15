@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · OCI 실행 미검증**: 이 Exports 실습의 절차·검증·복구·정리와 소유권 인계를 한정해 문서 검토했습니다. 전체 교육과정 승인이나 실제 OCI 실행 성공을 뜻하지 않습니다.
 
 # Exports
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 검토 범위: **이 파일의 실행 가능한 절차에 대한 문서상 수용**. 실제 OCI 실행은 미검증이며 모든 예상 출력은 패턴이고 실측값이 아닙니다. 실행 전 실제 선행 산출물·권한 승인(아래 UpdateExport 조건 포함)·비용/유지 기한·복구 담당자와 복구 창을 확인해야 합니다. [통합 상태](../../../Docs/README.md)는 별도 교육과정 범위이며 이 파일의 검토로 전체 승인·게시를 뜻하지 않습니다.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -24,18 +24,18 @@
 
 ## 사전준비
 
-43 FSS-mounted와44 MT-tested의 원래 literal MT_IP:/lab mount·proof hash·FS_ID/MT_ID/EXPORT_SET_ID/B_PRIVATE_IP를 받는다.44가 제거한 ingress는 복원/readback돼 있어야 한다. 이 문서는 새 alt Export만 소유하며46 진입 전 alt unmount/Export 삭제 상태를 반환한다.
+43 FSS-mounted의 원래 literal MT_IP:/lab mount·proof hash·FS_ID/MT_ID/EXPORT_SET_ID/B_PRIVATE_IP를 받는다.44를 선택 수행했다면 제거한 ingress와 IP mount가 복원/readback돼 있어야 한다. 44 장애 실험 완료 자체는 필수가 아니다. 이 문서는 새 alt Export만 소유하며46 진입 전 alt unmount/Export 삭제 상태를 반환한다.
 
 ### 기준 계약과 실제 단계 선행조건
 
 [공통 baseline-contract.json](../../../baseline-contract.json)의 OS/CIDR/소유권을 따른다. Oracle Linux 9 / `opc` / `dnf` 외의 숨은 Ubuntu 또는 probe VM은 만들지 않는다. OCID/IP의 null은 실행 전 반드시 실제 출력으로 채우는 **실행 차단 입력**이다. approval/capacity/quota/identity 미확인은 완료가 아니다.
 
 - [43.ready File Storage — FUNCTIONAL_COMPLETION](00_File_Storage.md#baseline-43-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
-- [44.ready Mount Targets — FUNCTIONAL_COMPLETION](01_Mount_Targets.md#baseline-44-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
+- [44 반환 확인](01_Mount_Targets.md#baseline-44-ready): 44를 수행한 경우에만 원래 ingress와 IP mount/proof 복구를 확인한다.
 
 공유 A/B consumer는 INSTANCE_A_ID에 owner10 vm-a의 실제 OCID, INSTANCE_B_ID에 owner22 private-vm의 실제 OCID, `A_PUBLIC_IP`, `A_PRIVATE_IP`, `B_PRIVATE_IP`를 실제 생성 응답에서 전달받는다. 해당 주제에 필요하지 않은 VM/변수는 생성·요구하지 않는다.
 
-- [File Storage](../../../Docs/05_File_Storage/00_File_Storage.md) **FSS-mounted**, [Mount Targets](../../../Docs/05_File_Storage/01_Mount_Targets.md) **MT-tested** 완료 후 NFS security 복원. File System/MT/proof hash 유지.
+- [File Storage](00_File_Storage.md#baseline-43-ready) **FSS-mounted** 완료. [Mount Targets](01_Mount_Targets.md#baseline-44-ready)를 수행했다면 NFS security 복원. File System/MT/proof hash 유지.
 - 추가 Export는 같은 File System과 같은 MT에 만들고46 전 두 Export의 source/access를 모두 확인한다. 두 번째 MT/File System을 만들지 않는다.
 
 ## 권한
@@ -91,7 +91,7 @@ missing path 검증은 아래 step6의 checked guard/mount/unmount/rmdir block�
 ### A. 동일 File System 새 Export
 1. **File Systems → fs-lab → Exports → Create export**에서 path `/lab-alt`, **Use secure export options on**, LDAP off, Resource lock **No lock**, **Select existing mount target** `mt-lab`를 선택한다. AD/Compartment/MT OCID를 재확인한다.
 2. 새 Export options를 즉시43와 같은 B/32, Privileged, RW, Squash None, SYS, Anonymous Not Allowed로 제한한다. default0.0.0.0/0를 남기지 않는다.
-3. 두 Export OCID·path·FileSystem id·ExportSet id를 기록한다. path edit가 불가능하다는 공식 제한을 읽고 필요한 새 path를 **새 Export**로 생성했다는 사실을 남긴다.
+3. 두 Export OCID·path·FileSystem id·ExportSet id를 기록하고 새 Export OCID를 `ALT_EXPORT_ID`로 구분한다. path edit가 불가능하다는 공식 제한을 읽고 필요한 새 path를 **새 Export**로 생성했다는 사실을 남긴다. B guest Bash에서 `MT_PRIVATE_IP`를 owner43에게 받은 literal IPv4로 설정한다. mount 전 이번 실행의 개인 작업 기록에 원래 proof SHA256, MT_PRIVATE_IP, ALT_EXPORT_ID, FS_ID/MT_ID/EXPORT_SET_ID와 두 mount path를 보존한다. 아래 `ALT_DIR_CREATED`/`MISSING_DIR_CREATED`는 mkdir 직후 같은 기록에 저장하고 오류 파일의 절대 경로도 기록한다. 새 터미널에서는 그 기록으로만 복원하며 소유 기록이 없으면 directory/error 삭제를 추측하지 않는다. 이 변수는 서로 다른 터미널에 자동 전달되지 않는다.
 
 ### B. 두 path가 같은 데이터라는 검증
 4. B에서 기존 `/mnt/oci-lab` mount를 유지하고 별도 mount point를 만든다.
@@ -126,8 +126,13 @@ test "$(findmnt -rn -M /mnt/oci-lab-alt -o FSTYPE)" = nfs || exit 1
 sudo test ! -L /mnt/oci-lab-alt/alt-proof.txt && sudo test ! -e /mnt/oci-lab-alt/alt-proof.txt || exit 1
 sudo cmp /mnt/oci-lab/proof.txt /mnt/oci-lab-alt/proof.txt
 sudo sha256sum /mnt/oci-lab/proof.txt /mnt/oci-lab-alt/proof.txt
-sudo sh -c "printf 'same-filesystem\n' > /mnt/oci-lab-alt/alt-proof.txt"
-sudo cat /mnt/oci-lab/alt-proof.txt
+# owner45의 exclusive 작업 창: 다른 consumer의 생성/교체/수정을 금지한다.
+# noclobber 실패/timeout이면 생성 소유권을 추측하지 않고 BLOCKED_RECOVERY.
+sudo timeout -k 5s 10s sh -C -c "printf 'same-filesystem\n' > /mnt/oci-lab-alt/alt-proof.txt" || exit 1
+sudo timeout -k 5s 10s cat /mnt/oci-lab/alt-proof.txt || exit 1
+sudo timeout -k 5s 10s stat -c 'device=%d inode=%i size=%s' /mnt/oci-lab/alt-proof.txt || exit 1
+sudo timeout -k 5s 10s sha256sum /mnt/oci-lab/alt-proof.txt || exit 1
+# 이 성공 생성 사실과 actual device/inode/hash를 즉시 owner45 기록에 저장한다.
 ```
 
 5. 두 hash가 같은지, 새 file이 원래 path에도 보이는지 확인한다. 같은 ExportSet path 두 개가 파일 복제본 두 개를 만든 것이 아니다.
@@ -154,18 +159,28 @@ if ! test -d "$MOUNTPOINT"; then sudo mkdir "$MOUNTPOINT" || exit 1; MISSING_DIR
 test ! -e export45-missing.error && test ! -L export45-missing.error || exit 1
 if sudo timeout -k 5s 20s mount -t nfs -o vers=3,proto=tcp,nosuid,resvport,sec=sys,retry=0 "$MT_PRIVATE_IP:/lab-missing" "$MOUNTPOINT" 2>export45-missing.error; then
   printf 'INCONCLUSIVE: unexpected mount; no writes\n'
-  findmnt -rn -M "$MOUNTPOINT" -o SOURCE,FSTYPE || exit 1
-  sudo umount "$MOUNTPOINT" || exit 1
+  test "$(findmnt -rn -M "$MOUNTPOINT" -o SOURCE)" = "$MT_PRIVATE_IP:/lab-missing" || exit 1
+  test "$(findmnt -rn -M "$MOUNTPOINT" -o FSTYPE)" = nfs || exit 1
+  sudo timeout -k 5s 20s umount "$MOUNTPOINT" || exit 1
 else
   rc=$?; printf 'actual missing-path mount rc=%s; inspect RPC/error, timeout is inconclusive\n' "$rc"
 fi
 # timeout/강제종료는 kernel mount 종료를 보장하지 않음. exact mount가 남으면 쓰기/rmdir 금지.
 if findmnt -rn -M "$MOUNTPOINT"; then printf '%s\n' 'STOP: mount remains; owner recover and clean unmount'; exit 1; else RC=$?; [ "$RC" = 1 ] || exit 1; fi
-if [ "$MISSING_DIR_CREATED" = 1 ]; then sudo rmdir "$MOUNTPOINT" || exit 1; fi
+# directory 정리는 아래 residual 확인 후에만 수행한다. 여기서는 rmdir하지 않는다.
 ```
  timeout15/20초 또는 오류 시 Console 복구담당자는60초 안에 원래 /lab·MT ingress를 확인/복원한다. B가 D-state/잔존 mount면 완료/cleanup이 아니라 BLOCKED_RECOVERY로 기록하고 정상 종료 전 새 명령을 시작하지 않는다. `export45-missing.error`의 access denied/no such file 같은 실제 diagnostic과 정상 /lab-alt positive를 함께 기록하며 transport timeout은 INCONCLUSIVE다.
- Console에서 그 path가 실제 없고 `/lab-alt` mount는 정상인 상태를 기록한다. 실패가 network timeout이면 wrong export path deny라고 단정하지 않는다. 해당 mountpoint는 별도로 사용한다.
-7. `sudo umount /mnt/oci-lab-alt` 후 새 Export `/lab-alt`를 **Delete export**한다. 원래 `/lab`에서 proof가 유지되는지 확인한다. Export 삭제는 File System 삭제가 아니다. 기존 mounted client를 남겨 삭제 효과를 단정하지 않는다.
+ Console에서 그 path가 실제 없음을 확인한다. negative 직후 `/lab-alt`의 exact SOURCE/FSTYPE을 단계4처럼 다시 확인하고 `sudo timeout -k 5s 10s sha256sum /mnt/oci-lab-alt/proof.txt`가 보존한 원래 proof hash와 같은지 확인한다. 이 same-target positive 재확인이 실패하면 negative 판정은 INCONCLUSIVE이며 단계7의 삭제로 진행하지 않는다. 관리 terminal에서 `ps -eo pid,ppid,stat,args`로 missing-path mount/helper의 잔존 요청·D-state가 없음을 확인하고, exact missing mount 조회가 rc=1이며 `MISSING_DIR_CREATED=1` 소유 기록이 있을 때에만 `sudo rmdir /mnt/oci-lab-missing`한다. query error·잔존 여부 불명은 BLOCKED_RECOVERY다. 실패가 network timeout이면 wrong export path deny라고 단정하지 않는다.
+7. B에서 아래 exact alt mount 확인과 정상 unmount를 마친다. 실패/timeout이면 [43 residual station](00_File_Storage.md#c-실제-linux-mount와-공유-데이터)으로 복구하고 Export를 삭제하지 않는다.
+
+```bash
+test "$(findmnt -rn -M /mnt/oci-lab-alt -o SOURCE)" = "$MT_PRIVATE_IP:/lab-alt" || exit 1
+test "$(findmnt -rn -M /mnt/oci-lab-alt -o FSTYPE)" = nfs || exit 1
+sudo timeout -k 5s 20s umount /mnt/oci-lab-alt || exit 1
+if findmnt -rn -M /mnt/oci-lab-alt; then exit 1; else RC=$?; test "$RC" = 1 || exit 1; fi
+ps -eo pid,ppid,stat,args || exit 1
+```
+관리 terminal에서 이 alt path를 사용하는 mount/helper/NFS 요청의 D-state/잔존 없음까지 확인한다. 미확인이면 Export 삭제를 중단한다. Console → fs-lab → Exports에서 기록한 **ALT_EXPORT_ID**의 path=/lab-alt, FileSystem/ExportSet이 원래 FS/MT인지 재확인하고 **Delete export**한다. 같은 목록을 새로고침해 exact OCID 부재를 확인한다. `/lab` SOURCE/FSTYPE을 다시 확인하고 bounded `sudo timeout -k 5s 10s cat /mnt/oci-lab/proof.txt`로 원래 proof를 읽는다. Export 삭제는 File System 삭제가 아니다.
 
 ## 결과검증
 
@@ -183,7 +198,7 @@ Create export 실패: path prefix/`/`/trailing slash/`.`/`..` 제한과 same AD 
 
 ## 리소스정리
 
-단계7의 alt unmount/Export 삭제가 완료·readback됐으면 이를 반복하지 않는다. 중단 재개만 exact alt SOURCE 및 actual Export OCID 상태를 확인해 남은 작업을 수행한다. mount 부재/잔존 요청 없음과 ALT_DIR_CREATED=1 소유 기록인 경우에만 `sudo rmdir /mnt/oci-lab-alt`한다; 기존 빈 directory는 보존한다. 이번 exact `export45-missing.error`도 관찰 종료 후 삭제한다. `/lab`와 fs/mt는46 및 선택47의 반환 완료 또는 승인 expiry까지 owner43의 consumer registry에 따라 보존한다. `alt-proof.txt`는 **owner43 최종 정리에서 실제 `/lab` NFS mount/source를 확인하고 mounted 상태에서 삭제한 뒤 unmount**한다. owner46은 공유 파일/자원 최종 삭제 owner가 아니다. 새 Export만 삭제해야 하며 원래 File System은 삭제하지 않는다.
+단계7의 alt unmount/Export 삭제가 완료·readback됐으면 이를 반복하지 않는다. 중단 재개만 exact alt SOURCE 및 actual Export OCID 상태를 확인해 남은 작업을 수행한다. mount 부재/잔존 요청 없음과 ALT_DIR_CREATED=1 소유 기록인 경우에만 `sudo rmdir /mnt/oci-lab-alt`한다; 기존 빈 directory는 보존한다. 이번 exact `export45-missing.error`도 관찰 종료 후 삭제한다. `/lab`와 fs/mt는46 및 선택47의 반환 완료 또는 승인 expiry까지 owner43의 consumer registry에 따라 보존한다. `alt-proof.txt`는 **owner45 생성 → owner43 최종 삭제**로 명시 인계한다. owner45는 성공 생성 기록, exact FS_ID/MT_ID/EXPORT_SET_ID/MT_PRIVATE_IP, 경로 `/mnt/oci-lab/alt-proof.txt`(alt alias `/mnt/oci-lab-alt/alt-proof.txt`), 고정 bytes `same-filesystem` + LF(16 bytes), 실제 SHA256 및 원래 `/lab`에서 읽은 device/inode를 owner43 registry에 제출하고 owner43의 수신/삭제 책임 승인을 기록한다. owner45 미선택·생성 전 중단은 NOT_CREATED, 생성 성공/소유 확인은 OWNED, timeout/불명은 PENDING_RECOVERY로 구분한다. 동명 기존 파일은 소유하지 않는다. owner43은 [File Storage 정상 반환 후 alt-proof 정리](00_File_Storage.md#alt-proof-최종-정리)의 absence-safe/source-checked bounded 절차로만 mounted 상태에서 삭제한 뒤 unmount한다. 기록 누락·inode 변경·재mount로 device가 달라진 경우 자동 소유권 갱신 없이 중단하고 owner45와 재조정한다. owner46은 공유 파일/자원 최종 삭제 owner가 아니다. 새 Export만 삭제해야 하며 원래 File System은 삭제하지 않는다.
 
 ## 공식문서
 

@@ -1,15 +1,15 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 검토 완료 · 실제 OCI 실행 미검증**: 이 Compartments 실습의 한정된 시나리오·절차·복구·정리를 문서 기준으로 검토했습니다. 전체 교육과정 승인이나 OCI 실행 성공을 뜻하지 않습니다.
 
 # Compartments
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 문서 수용 범위: **한정된 실행 절차 문서 검토 완료**. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 실행 전 실제 권한·선행 산출물·비용 승인과 아래 안전·복구·정리 조건을 충족해야 합니다. 전체 과정 및 게시 상태는 [통합 상태](../../../Docs/README.md)에서 별도로 확인하세요.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
 ## 학습목표
 
 - iam-lab 아래 두 자식 Compartment와 각각 private Standard Bucket/proof.txt를 생성하고 실제 parent/owner/Region/hash를 기록한다.
-- 관리자 same-key 읽기와 승인된 outsider 거부를 대조하고 41의 scope 시험에 두 fixture를 인계한다.
+- 관리자 same-key 읽기와 Reader 두 거부를 대조한다. outsider 비교와41 scope 인계는 선택하며 미선택이면 이번 fixture를 정리한다.
 
 완료 기준은 아래 실제 생성·설정·요청 결과로 판정한다. 이 목표는 수행할 작업이며 OCI에서 관찰한 결과가 아니다.
 
@@ -24,7 +24,7 @@
 
 ## 사전준비
 
-33 IAM-fixture-ready의 parent IAM_LAB_OCID/REGION/NS·관리자 인증을 받는다. child/sibling 실제 OCID·bucket/proof bytes/hash는 이 문서 생성 출력이며41에 인계한다. outsider deny 선택 시에만34 USER-tested의 그룹 없는 User OCID/LAB_OUTSIDER를 먼저 반환받는다; creator-only는 NOT_SELECTED로 남긴다.
+33 IAM-fixture-ready의 parent IAM_LAB_OCID/REGION/NS·관리자 LAB_ADMIN 및 Reader LAB_READER 인증과 Reader A baseline positive를 받는다. child/sibling 실제 OCID·bucket/proof bytes/hash는 이 문서 생성 출력이며41에 인계한다. outsider deny 선택 시에만34 USER-tested의 그룹 없는 User OCID/LAB_OUTSIDER를 먼저 반환받는다; outsider 비교 생략 경로는 NOT_SELECTED로 남긴다.
 
 ### 기준 계약과 실제 단계 선행조건
 
@@ -33,7 +33,7 @@
 - [33.ready Identity and Access Management (IAM) — FUNCTIONAL_COMPLETION](00_Identity_and_Access_Management_IAM.md#baseline-33-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
 
 - [Identity and Access Management (IAM)](../../../Docs/04_Identity_and_Access_Management_IAM/00_Identity_and_Access_Management_IAM.md) **IAM-fixture-ready**의 `iam-lab` OCID와 관리자 permissions 확보. 초기 network bootstrap은 관리자가 제공한 compartment에서 실행하므로 본 실습을 network 선행으로 역연결하지 않는다.
-- 실제 생성할 child/sibling 이름이 중복되거나 업무 compartment와 혼동되지 않는지 확인한다.41까지 자원을 보존한다.
+- 실제 생성할 child/sibling 이름이 중복되거나 업무 compartment와 혼동되지 않는지 확인한다.41을 선택한 경우에만 등록된 expiry까지 자원을 보존한다. 선택하지 않으면 이 문서 검증 후 아래 정리를 수행한다.
 
 ## 권한
 
@@ -53,7 +53,7 @@
 
 ## 비용및주의사항
 
-iam-lab 아래 child/sibling Compartment와 각 private Standard Bucket/작은 proof 하나를 새로 만든다. owner33 A/B bucket을 이 두 새 fixture로 혼동하지 않는다. 두 추가 bucket의 저장·PUT/GET/LIST/DELETE와 실제 전송 비용, 41까지 보존할 종료시각을 승인한다. VM·VCN·앱은 추가하지 않는다. outsider deny는 USER-tested가 반환된 선택 branch에서만 수행한다.41 반환 후 owner38이 object/bucket/child를 정리하고 parent는 owner33에게 반환한다.
+iam-lab 아래 child/sibling Compartment와 각 private Standard Bucket/작은 proof 하나를 새로 만든다. owner33 A/B bucket을 이 두 새 fixture로 혼동하지 않는다. 두 추가 bucket의 저장·PUT/GET/LIST/DELETE와 실제 전송 비용, 41 선택 시 보존 종료시각을 정한다. VM·VCN·앱은 추가하지 않는다. outsider deny는 USER-tested가 반환된 선택 branch에서만 수행한다.41 미선택이면 지금, 선택이면41 반환 후 owner38이 object/bucket/child를 정리하고 parent는 owner33에게 반환한다.
 
 ## 실습구성
 
@@ -64,7 +64,7 @@ child/sibling Compartment와 각 Bucket를 실제 생성하고 소유경계를 �
 |입력|값/출처|시점|실행 위치|선택 이유|
 |---|---|---|---|---|
 |`IAM_LAB_OCID`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`OUTSIDER_USER_OCID`|[Users](01_Users.md#baseline-34-ready)의 실제 User OCID/그룹 없는 LAB_OUTSIDER; creator-only는 NOT_SELECTED|outsider deny branch 선택 전만|outsider 본인 PC|관리자 fixture 생성에는 User34가 필요하지 않음|
+|`OUTSIDER_USER_OCID`|[Users](01_Users.md#baseline-34-ready)의 실제 User OCID/그룹 없는 LAB_OUTSIDER; outsider 비교 생략 경로는 NOT_SELECTED|outsider deny branch 선택 전만|outsider 본인 PC|관리자 fixture 생성에는 User34가 필요하지 않음|
 |`IAM_CHILD_OCID`|owner38의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 |`IAM_SIBLING_OCID`|owner38의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 |`NS`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
@@ -73,7 +73,7 @@ child/sibling Compartment와 각 Bucket를 실제 생성하고 소유경계를 �
 |---|---|---|
 |Compartment parent / bucket compartment / Region|iam-child and iam-sibling parent iam-lab; same fixture Region; private Standard|이번 기능/실패 원인을 한 변수로 분리|
 
-**생성·변경 범위:** iam-child:Compartment,iam-sibling:Compartment,iam-child-proof:Bucket,iam-sibling-proof:Bucket. **완료 비교:** admin each hash success; outsider each deny; record owner vs Region. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
+**생성·변경 범위:** iam-child:Compartment,iam-sibling:Compartment,iam-child-proof:Bucket,iam-sibling-proof:Bucket. **완료 비교:** admin each hash success; Reader each deny; outsider each deny는 선택; record owner vs Region. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
 `iam-lab` 아래 child `iam-child`와 동등한 자식 `iam-sibling`를 생성한다. 각 private Standard Bucket 하나에 서로 다른 `proof.txt`를 넣는다. compartment는 Subnet/Region 경계가 아니라 리소스 소유/정책 범위라는 것을 owner와 Region 속성을 분리해서 기록한다.
 
@@ -81,7 +81,7 @@ child/sibling Compartment와 각 Bucket를 실제 생성하고 소유경계를 �
 
 ### 개별 완주 보정 — 생성·검증·소유권
 
-아래4와 결과검증의 outsider deny를 수행하려면 [Users](01_Users.md#baseline-34-ready)의 USER-tested와 그룹 없는 LAB_OUTSIDER 인증/반환이 필수다. 사전준비의 OUTSIDER_USER_OCID는 그 실제 출력이다. standalone creator-only 선택이면4/outsider deny를 NOT_SELECTED로 기록하고 COMPARTMENT-fixture-ready만 반환한다; USER-tested를 수행했다고 쓰지 않는다. 관리자와 Reader 검증은 같은 실제 namespace/Region을 사용한다.
+아래4와 결과검증의 outsider deny를 수행하려면 [Users](01_Users.md#baseline-34-ready)의 USER-tested와 그룹 없는 LAB_OUTSIDER 인증/반환이 필수다. 사전준비의 OUTSIDER_USER_OCID는 그 실제 출력이다. outsider 비교 생략 선택이면4/outsider deny를 NOT_SELECTED로 기록하고 COMPARTMENT-fixture-ready만 반환한다; USER-tested를 수행했다고 쓰지 않는다. 두 경로 모두33의 관리자 LAB_ADMIN과 Reader LAB_READER 인증·A baseline positive가 필수이며 관리자/Reader 검증은 같은 실제 namespace/Region을 사용한다. outsider 비교 생략 경로는 User34만 생략하고 단계5 Reader 두 deny는 완료한다.
 
 ### A. 두 child compartment 생성
 1. **Identity & Security → Compartments → iam-lab → Create compartment**: Name `iam-child`, Description `IAM inheritance child`, Parent `iam-lab`. `iam-sibling`도 같은 parent로 만든다. 두 OCID와 parent OCID를 기록한다.
@@ -102,7 +102,18 @@ sha256sum compartment38-fixtures/child/proof.txt compartment38-fixtures/sibling/
 
 ### A-2. 실제 bytes와 주체별 GET
 
-REGION/NS는33과 같은 실제 값으로 각 사용자 shell에 지정한다. 아래 관리자/Reader/outsider station은 각각 표시된 번호의 작업 직후에만 실행하며 policy/membership를 바꾸지 않는다.
+실행 환경은 로컬 Linux/WSL Bash이며 `oci`, `timeout`, `python3`, `sha256sum`이 설치되어 있어야 한다. API signing 설정은33에서 완료한 각 본인 profile을 사용하고 키를 서로 복사하지 않는다. REGION/NS는33과 같은 실제 값으로 각 사용자 shell에 지정한다. 새 터미널에서도33의 보존 기록에서 두 값을 다시 지정한다(빈 값/예시 문자열이면 중단).
+
+```bash
+read -r -p '33 fixture Region: ' REGION
+read -r -p '33 Object Storage namespace: ' NS
+[ -n "$REGION" ] && [ -n "$NS" ] || exit 1
+export REGION NS
+```
+
+각 station은 별도 신규 출력 directory를 만든다. 재시도는 이전 증거를 삭제하거나 기존 경로를 재사용하지 말고 소유 증거를 보존한 뒤 새 빈 작업 directory에서 수행한다. 아래 관리자/Reader/outsider station은 각각 표시된 번호의 작업 직후에만 실행하며 policy/membership를 바꾸지 않는다.
+
+모든 deny는 같은 target 관리자 성공/hash와 한 세트로 기록한다. 각 Reader 시험 직전과 직후33의 A baseline positive를 같은 LAB_READER 인증으로 다시 확인한다. 두 시험 사이 credential/profile, Region/namespace, bucket/key, 객체 존재, policy/membership를 고정한다. baseline positive 실패 또는 관리자 재검증 실패이면 접근 거부 판정은 보류하고33의 정상 상태부터 복구한다. 관리자 재검증은 새 빈 작업 directory에서 위 관리자 station을 다시 실행한다. 뜻밖 allow이면 이 문서는 policy/membership를 변경하지 않았으므로 임의로 권한을 지우지 말고 소유 관리자에게 추가 grant를 조사하도록 요청한다. 관리자 조치 후 baseline positive와 두 deny를 새 증거 경로에서 재시험한다. request-id/서비스 오류가 없으면 deny 완료가 아니다. 관리자 bytes/hash를38 owner가41로 전달한다.
 
 **관리자 PC (Upload 후 단계3):**
 
@@ -129,21 +140,22 @@ fi
 printf 'GetObject RC=%s\n' "$RC"
 ```
 
-**Reader 본인 PC (단계5):**
+**Reader 본인 PC (단계5; 선택 단계4보다 먼저 수행해도 됨):**
 
 ```bash
 mkdir -m 700 "comp38-reader-child" || exit 1
 if timeout 45s oci os object get --profile LAB_READER --region "$REGION" --namespace-name "$NS" --bucket-name iam-child-proof --name proof.txt --file "comp38-reader-child/proof.txt" --max-retries 0 2>"comp38-reader-child/error.txt"; then
-  printf '%s\n' 'STOP: unexpected allow; restore owner test grant/membership'; exit 1
+  printf '%s\n' 'STOP: unexpected allow; ask owner to investigate additional grants'; exit 1
 else
   RC=$?
   printf 'deny candidate RC=%s; inspect request-id and service code\n' "$RC"
-  python3 - "comp38-reader-child/error.txt" <<'PY'
+  python3 - "comp38-reader-child/error.txt" "$RC" <<'PY'
 import sys,json
+assert int(sys.argv[2]) not in (0,124,137), 'STOP: timeout is not deny'
 s=open(sys.argv[1]).read()
 try: x=json.loads(s[s.index('{'):s.rindex('}')+1])
 except (ValueError,json.JSONDecodeError): raise SystemExit('STOP: not a structured service authorization error')
-assert x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
+assert x.get('status') in (403,404) and x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
 print('authorization candidate; mandatory same-target admin positive and frozen credentials')
 PY
   if [ "$?" -ne 0 ]; then exit 1; fi
@@ -151,16 +163,17 @@ fi
 printf 'GetObject RC=%s\n' "$RC"
 mkdir -m 700 "comp38-reader-sibling" || exit 1
 if timeout 45s oci os object get --profile LAB_READER --region "$REGION" --namespace-name "$NS" --bucket-name iam-sibling-proof --name proof.txt --file "comp38-reader-sibling/proof.txt" --max-retries 0 2>"comp38-reader-sibling/error.txt"; then
-  printf '%s\n' 'STOP: unexpected allow; restore owner test grant/membership'; exit 1
+  printf '%s\n' 'STOP: unexpected allow; ask owner to investigate additional grants'; exit 1
 else
   RC=$?
   printf 'deny candidate RC=%s; inspect request-id and service code\n' "$RC"
-  python3 - "comp38-reader-sibling/error.txt" <<'PY'
+  python3 - "comp38-reader-sibling/error.txt" "$RC" <<'PY'
 import sys,json
+assert int(sys.argv[2]) not in (0,124,137), 'STOP: timeout is not deny'
 s=open(sys.argv[1]).read()
 try: x=json.loads(s[s.index('{'):s.rindex('}')+1])
 except (ValueError,json.JSONDecodeError): raise SystemExit('STOP: not a structured service authorization error')
-assert x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
+assert x.get('status') in (403,404) and x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
 print('authorization candidate; mandatory same-target admin positive and frozen credentials')
 PY
   if [ "$?" -ne 0 ]; then exit 1; fi
@@ -173,16 +186,17 @@ printf 'GetObject RC=%s\n' "$RC"
 ```bash
 mkdir -m 700 "comp38-outsider-child" || exit 1
 if timeout 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name iam-child-proof --name proof.txt --file "comp38-outsider-child/proof.txt" --max-retries 0 2>"comp38-outsider-child/error.txt"; then
-  printf '%s\n' 'STOP: unexpected allow; restore owner test grant/membership'; exit 1
+  printf '%s\n' 'STOP: unexpected allow; ask owner to investigate additional grants'; exit 1
 else
   RC=$?
   printf 'deny candidate RC=%s; inspect request-id and service code\n' "$RC"
-  python3 - "comp38-outsider-child/error.txt" <<'PY'
+  python3 - "comp38-outsider-child/error.txt" "$RC" <<'PY'
 import sys,json
+assert int(sys.argv[2]) not in (0,124,137), 'STOP: timeout is not deny'
 s=open(sys.argv[1]).read()
 try: x=json.loads(s[s.index('{'):s.rindex('}')+1])
 except (ValueError,json.JSONDecodeError): raise SystemExit('STOP: not a structured service authorization error')
-assert x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
+assert x.get('status') in (403,404) and x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
 print('authorization candidate; mandatory same-target admin positive and frozen credentials')
 PY
   if [ "$?" -ne 0 ]; then exit 1; fi
@@ -190,16 +204,17 @@ fi
 printf 'GetObject RC=%s\n' "$RC"
 mkdir -m 700 "comp38-outsider-sibling" || exit 1
 if timeout 45s oci os object get --profile LAB_OUTSIDER --region "$REGION" --namespace-name "$NS" --bucket-name iam-sibling-proof --name proof.txt --file "comp38-outsider-sibling/proof.txt" --max-retries 0 2>"comp38-outsider-sibling/error.txt"; then
-  printf '%s\n' 'STOP: unexpected allow; restore owner test grant/membership'; exit 1
+  printf '%s\n' 'STOP: unexpected allow; ask owner to investigate additional grants'; exit 1
 else
   RC=$?
   printf 'deny candidate RC=%s; inspect request-id and service code\n' "$RC"
-  python3 - "comp38-outsider-sibling/error.txt" <<'PY'
+  python3 - "comp38-outsider-sibling/error.txt" "$RC" <<'PY'
 import sys,json
+assert int(sys.argv[2]) not in (0,124,137), 'STOP: timeout is not deny'
 s=open(sys.argv[1]).read()
 try: x=json.loads(s[s.index('{'):s.rindex('}')+1])
 except (ValueError,json.JSONDecodeError): raise SystemExit('STOP: not a structured service authorization error')
-assert x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
+assert x.get('status') in (403,404) and x.get('code') in ['NotAuthorizedOrNotFound','NotAuthorized'], 'STOP: transport/auth/local error is not deny'
 print('authorization candidate; mandatory same-target admin positive and frozen credentials')
 PY
   if [ "$?" -ne 0 ]; then exit 1; fi
@@ -207,10 +222,10 @@ fi
 printf 'GetObject RC=%s\n' "$RC"
 ```
 
-모든 deny는 같은 target 관리자 성공/hash와 한 세트로 기록한다. request-id/서비스 오류가 없으면 deny 완료가 아니다. 관리자 bytes/hash를38 owner가41로 전달한다.
+검증 증거는 위의 deny 판정 조건에 따라 보존한다.
 
 ### B. 리소스 배치와 접근 범위
-4. group 없는 outsider로 child와 sibling 두 get 모두 실패를 확인한다.41에서 child scope 권한을 부여할 때 같은 입력을 사용할 수 있게 namespace/Region/name/OCID를 기록한다.
+4. **선택:** USER-tested를 선택한 경우에만 group 없는 outsider로 child와 sibling 두 get 모두 실패를 확인한다.41에서 child scope 권한을 부여할 때 같은 입력을 사용할 수 있게 namespace/Region/name/OCID를 기록한다.
 5. 기존33 Reader가 `iam-proof-a`만 read 조건을 받으므로 child의 새 이름 bucket은 읽지 못하는지 확인한다. 부모 위치 policy라고 모든 child bucket 이름이 조건 없이 허용되는 것이 아니다.
 6. Console의 bucket **Compartment**와 **Region**을 함께 적고 VCN/Subnet membership과 비교한다. 실제 Resource 이동은 별도 영향을 줄 수 있으므로 이번 생성 실습에서는 move를 수행하지 않는다.
 
@@ -220,7 +235,7 @@ printf 'GetObject RC=%s\n' "$RC"
 ### baseline-38-ready
 
 
-완료 단계 **COMPARTMENT-fixture-ready**: child/sibling ACTIVE, 부모 OCID 동일, bucket owner OCID/Region/hash, 관리자 read 성공과 Reader 두 새 bucket deny. outsider 분기를 선택한 경우에만 두 outsider deny도 필수이고 creator-only는 NOT_SELECTED를 기록한다.41의 상속 테스트까지 모든 fixture를 보존한다. Console에 compartment가 표시되는 것과 resource 접근 권한은 동일하지 않다.
+완료 단계 **COMPARTMENT-fixture-ready**: child/sibling ACTIVE, 부모 OCID 동일, bucket owner OCID/Region/hash, 관리자 read 성공과 Reader 두 새 bucket deny. outsider 분기를 선택한 경우에만 두 outsider deny도 필수이고 outsider 비교 생략 경로는 NOT_SELECTED를 기록한다.41을 선택한 경우만 모든 fixture를 반환/expiry까지 보존한다. 미선택이면 이번 두 fixture를 정리하고 parent 사용을33에 반환한다. Console에 compartment가 표시되는 것과 resource 접근 권한은 동일하지 않다.
 
 **실행 기록(아직 미작성):** 실행자/Region/시각, exact resource OCID, 설정 전·후, 성공 출력, deny 오류·exit code/request-id, positive control, 정리 결과. 문서 검증은 실제 OCI 실행 성공을 뜻하지 않는다.
 
@@ -230,7 +245,9 @@ create403이면 compartment creation 권한과 parent scope를 관리자 확인�
 
 ## 리소스정리
 
-41까지 보존한다. 종료 시 child/sibling object와 version 삭제 → bucket 삭제 → 해당 scope policy 삭제 → child compartment 삭제 후 상태 확인 → sibling 삭제 → parent iam-lab은 owner33 소유이므로38은 삭제하지 않고33 lease에 RETURNED/expiry 및 child/sibling 정리 결과를 반환. Compartment가 비어 보인다는 Console 한 화면만으로 삭제 완료라 주장하지 않는다.
+41 선택 시 반환/expiry까지 보존하고, 미선택이면 검증 직후 정리한다. 종료 시 child/sibling object와 version 삭제 → bucket 삭제 →41을 선택했다면41 소유자가 자신이 추가한 scope policy만 원복/삭제하고 반환한 증거 확인(미선택이면 policy 변경 없음) → child compartment 삭제 후 상태 확인 → sibling 삭제 → parent iam-lab은 owner33 소유이므로38은 삭제하지 않고33 lease에 RETURNED/expiry 및 child/sibling 정리 결과를 반환. Compartment가 비어 보인다는 Console 한 화면만으로 삭제 완료라 주장하지 않는다.
+
+Compartment 삭제는 **Identity & Security → Compartments**에서 기록한 child/sibling OCID와 parent를 대조한 뒤 각 **Actions → Delete Compartment → OK**로 진행한다. work request와 상태를 확인한다. `Deleting`은 진행 중이고 `Active`로 돌아오면 실패이므로 남은 소유 자원/부착 policy를 확인한다. `Deleted`를 확인한 뒤33에 반환한다. 삭제 실패를 우회하려고 parent 또는 타인 policy를 삭제하지 않는다. [Managing Compartments — Deleting Compartments](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcompartments.htm)
 
 **전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: compartment38-fixtures/child/proof.txt、compartment38-fixtures/sibling/proof.txt 및 comp38-admin/reader/outsider-child/sibling의 proof.txt/error.txt. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
 

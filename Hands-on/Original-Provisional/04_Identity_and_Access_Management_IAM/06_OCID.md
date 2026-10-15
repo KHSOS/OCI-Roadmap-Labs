@@ -1,8 +1,8 @@
-> **기존 실습 초안 — 미검증**: 원래 93개 문서의 절차를 보존한 자료입니다. 새 튜토리얼의 품질 승인이나 OCI 실행 검증을 뜻하지 않습니다.
+> **문서 절차 검토 완료 · OCI 실행 미검증**: 기존 Compartment의 OCID 대조와 description 변경·복원 시나리오를 대상으로 문서 검토를 완료했습니다. 실제 OCI 실행 성공이나 전체 커리큘럼 승인을 뜻하지 않습니다.
 
 # OCID
 
-> 통합 품질 gate: **BLOCKED / NOT_ACCEPTED**. 복사·구조 검사만으로 전체 실습 품질을 승인하지 않습니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 검토 잔여사항은 [통합 상태](../../../Docs/README.md)를 확인하세요.
+> 검토 범위: 이 문서의 절차·선행조건·복구·정리 경로에 대한 **문서 수준 검토 완료**입니다. 실제 OCI 실행 없음; 모든 예상 출력은 패턴이며 실측값이 아닙니다. 실행 시 아래 권한·승인·실제 선행 산출물·복구 확인 조건을 충족해야 합니다. 게시·렌더링 및 전체 커리큘럼 상태와는 구분하며 [통합 상태](../../../Docs/README.md)를 확인하세요.
 
 > **저술 완료 · OCI 실행 미검증** — Oracle 공식 작업 문서를 근거로 작성한 한국어 hands-on입니다. Oracle 공인 교육/실행 인증이 아니며 기대 결과와 실제 결과를 구분합니다. 비용 승인과 실제 선행 산출물 확인 후에만 실행하세요.
 
@@ -45,11 +45,11 @@
 - `GetObject`: OBJECT_READ For a customer-managed key encrypted bucket, the objectstorage-<location> subject must have KEY_DECRYPT. — [공식 해당 표](https://docs.oracle.com/en-us/iaas/Content/Identity/Reference/objectstoragepolicyreference.htm).
 - `UpdateCompartment`: COMPARTMENT_UPDATE — [공식 해당 표](https://docs.oracle.com/en-us/iaas/Content/Identity/policyreference/iampolicyreference.htm).
 
-관리자만 User·Group·Dynamic Group·Policy·Compartment를 생성하거나 멤버십을 수정한다. Identity Domains의 사용자/그룹 관리에는 해당 Domain의 적절한 관리자 역할이 필요하고 OCI 리소스 Policy 관리 권한은 별개다. 기존 Administrators 또는 위임된 Domain 관리자에게 승인받는다. 학습자에게 `manage all-resources in tenancy`를 주는 방식으로 우회하지 않는다. 실습 작업자는 아래 절차에 명시한 Object Storage 읽기 권한만 받는다. [Overview of IAM](https://docs.oracle.com/en-us/iaas/Content/Identity/getstarted/identity-domains.htm)의 **The Administrators Group, Policy, and Administrator Roles**, [Managing Policies](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingpolicies.htm)의 **Required IAM Policy**를 읽고 관리 주체와 검증 주체를 기록한다.
+관리자만 User·Group·Dynamic Group·Policy·Compartment를 생성하거나 멤버십을 수정한다. Identity Domains의 사용자/그룹 관리에는 해당 Domain의 적절한 관리자 역할이 필요하고 OCI 리소스 Policy 관리 권한은 별개다. 기존 Administrators 또는 위임된 Domain 관리자에게 승인받는다. 학습자에게 `manage all-resources in tenancy`를 주는 방식으로 우회하지 않는다. 필수 경로의 실행자는 승인된 관리자 profile로 위 Compartment 읽기·description 변경/복원 권한을 사용한다. Object Storage 권한 비교는 기존 USER-tested 선택 분기에서만 수행한다. [Overview of IAM](https://docs.oracle.com/en-us/iaas/Content/Identity/getstarted/identity-domains.htm)의 **The Administrators Group, Policy, and Administrator Roles**, [Managing Policies](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingpolicies.htm)의 **Required IAM Policy**를 읽고 관리 주체와 검증 주체를 기록한다.
 
 ## 비용및주의사항
 
-새 유료 리소스는 없고 owner33 iam-lab의 GetCompartment와 description 변경/복원만 수행한다. 기존 fixture 보존 비용은 owner33 lease를 따른다. VM/VCN 식별자 관찰과 outsider 요청은 이미 해당 prerequisite가 완료된 선택 branch에서만 수행하며 이를 위해 새 자원을 만들지 않는다. description 변경은 저장된 원래값과 독립 120초 복구 담당자가 확보되기 전 금지한다. OCID를 공개 로그에 남기거나 문자열을 조합해 새 식별자를 만들지 않는다.
+새 유료 리소스는 없고 owner33 iam-lab의 GetCompartment와 description 변경/복원만 수행한다. 기존 fixture 보존 비용은 owner33 lease를 따른다. VM/VCN 식별자 관찰과 outsider 요청은 이미 해당 prerequisite가 완료된 선택 branch에서만 수행하며 이를 위해 새 자원을 만들지 않는다. description 변경 전 before.json 원래값을 저장하고 별도 관리자 탭을 유지한다. 공유환경에서만 독립 복구담당자를 지정한다. OCID를 공개 로그에 남기거나 문자열을 조합해 새 식별자를 만들지 않는다.
 
 ## 실습구성
 
@@ -92,18 +92,41 @@ oci iam compartment get --profile LAB_ADMIN --region '<actual-approved-region>' 
 
 4. 관리자 응답 `data.id`/name/parent를 Console 값과 대조한다. outsider 조회 실패가 발생하면 관리자의 동일 target 성공을 남기고 target 존재/권한을 분리한다. outsider가 상위 정책으로 compartment read를 받는 환경이면 실패를 강제하지 않고 그런 정책을 기록한다.
 5.33 policy의 `group id`/`compartment id`가 이 기록과 정확히 일치하는지 대조한다. USER-tested branch를 선택한 경우에만 outsider의 Bucket A get deny로 OCID knowledge와 권한을 분리한다. 미선택은 NOT_SELECTED이며 outsider를 새로 만들지 않는다.
-**단계6 전 저장/복구 station (관리자 PC):**owner33의 parent 편집 승인과 독립 Console 복구담당자/최대120초 UTC deadline을 기록한다. 다음 exact snapshot 성공 전에는 Edit를 누르지 않는다.
+**단계6 전 저장/복구 station (관리자 PC의 Linux/WSL Bash, OCI CLI·Python3 준비):** owner33에게 이 Compartment의 description 편집을 승인받고 원래값을 보존한다. 개인 실습은 별도 관리자 Console 탭을 유지한다. 공유환경에서만 독립 Console 복구담당자를 지정한다. 다음 exact snapshot 성공 전에는 Edit를 누르지 않는다. 같은 터미널에서 진행하며 새 터미널에서는 이 작업 디렉터리로 돌아와 동일 입력을 다시 설정한다.
 ```bash
+# A에서 복사한 전체 OCID와 승인 Region을 입력한다. profile LAB_ADMIN은33의 기존 설정이다.
+export IAM_LAB_OCID='<ACTUAL_IAM_LAB_OCID>'
+export REGION='<actual-approved-region>'
+umask 077
 mkdir -m 700 ocid39-description || exit 1
-oci iam compartment get --profile LAB_ADMIN --region '<actual-approved-region>' --compartment-id '<ACTUAL_IAM_LAB_OCID>' > ocid39-description/before.json || exit 1
-python3 -c "import json; x=json.load(open('ocid39-description/before.json'))['data']; assert all(k in x for k in ('id','name','compartment-id','description'))" || exit 1
+oci iam compartment get --profile LAB_ADMIN --region "$REGION" --compartment-id "$IAM_LAB_OCID" > ocid39-description/before.json || exit 1
+python3 - <<'PY'
+import json, os
+x=json.load(open('ocid39-description/before.json'))['data']
+assert all(k in x for k in ('id','name','compartment-id','description'))
+assert x['id']==os.environ['IAM_LAB_OCID']
+assert isinstance(x['description'],str)
+assert x['description']!='OCI IAM learning only; OCID check', '변경값이 이미 동일: Edit하지 말고 owner33과 다른 시험값을 정한 뒤 절차를 조정한다.'
+print('Console에서 name/parent도 대조:', x['name'], x['compartment-id'])
+print('복원할 description:', repr(x['description']))
+PY
+if [ "$?" -ne 0 ]; then exit 1; fi
 ```
+Console의 name/parent도 snapshot과 일치해야 진행한다. 변경 전에 before.json 원래 description을 별도 관리자 탭에서 볼 수 있도록 보관한다. 빈 문자열이면 복원 시 Description을 비운다. 이 작업 폴더는 복원 확인 전 삭제하지 않는다.
 6. Console → Compartments → exact iam-lab → Edit → Description만 `OCI IAM learning only; OCID check` → Save한다. 이름/parent는 변경하지 않는다. 이제 changed GET을 수행한다.
-changed GET 성공 뒤 **한 번만** before.json의 원래 description으로 Console Edit/Save 복원하고 restored GET을 수행한다. 실패/세션 손실 시 독립 복구담당자가 deadline 내 같은 복원을 맡는다.
+changed GET 성공 뒤 **한 번만** before.json의 원래 description으로 Console Edit/Save 복원하고 restored GET을 수행한다. 실패/세션 손실 시 유지한 관리자 탭에서 before.json 원래값으로 즉시 복원한다.
 ```bash
-(set -C; oci iam compartment get --profile LAB_ADMIN --region '<actual-approved-region>' --compartment-id '<ACTUAL_IAM_LAB_OCID>' > ocid39-description/changed.json) || exit 1
-# 독립 Console에서 before.json의 description 복원/Save 뒤:
-(set -C; oci iam compartment get --profile LAB_ADMIN --region '<actual-approved-region>' --compartment-id '<ACTUAL_IAM_LAB_OCID>' > ocid39-description/restored.json) || exit 1
+(set -C; oci iam compartment get --profile LAB_ADMIN --region "$REGION" --compartment-id "$IAM_LAB_OCID" > ocid39-description/changed.json) || {
+  printf '%s\n' 'GET 실패: 여기서 중단하고 관리자 탭에서 before.json 원래 description 복원/확인. 파일 보존.'
+  exit 1
+}
+```
+관리자 탭에서 before.json의 description으로 복원/Save한 뒤에만 다음 블록을 실행한다.
+```bash
+(set -C; oci iam compartment get --profile LAB_ADMIN --region "$REGION" --compartment-id "$IAM_LAB_OCID" > ocid39-description/restored.json) || {
+  printf '%s\n' 'readback 실패: Console에서 원래값 확인, 파일 보존. OCID-checked 반환 금지.'
+  exit 1
+}
 ```
 
 Save 뒤 새 `changed.json`, 복원 뒤 새 `restored.json`에 같은 GET을 저장한다(기존 파일/symlink가 있으면 중단; noclobber `set -C` 사용). 다음 비교가 끝나야 반환한다.
@@ -117,13 +140,13 @@ assert r['description']==b['description']
 PY
 if [ "$?" -ne 0 ]; then exit 1; fi
 ```
-오류/세션 손실/120초 도달 시 독립 관리자는 before.json의 description으로 즉시 복원/readback한다. 복원 불명은 BLOCKED_RECOVERY이며 parent/fixture 삭제 금지. 반환 후 이 세 파일만 삭제하고 빈 ocid39-description을 rmdir한다.
+오류/세션 손실 시 관리자 탭에서 before.json의 description으로 즉시 복원/readback한다. 복원 불명은 BLOCKED_RECOVERY이며 parent/fixture 삭제 금지. GET 실패로 빈 JSON이 남아도 전체 폴더를 재생성하거나 before.json을 덮어쓰지 않는다. 복원 뒤 재조회가 필요하면 실패한 changed/restored 파일만 별도 이름으로 보존하고 해당 GET을 다시 수행한다. changed 관측을 잃었으면 복원 확인만으로 완료를 주장하지 말고 owner33과 새 시도 여부를 정한다. 반환 후 이 세 파일과 이번 시도의 실패 출력만 삭제하고 빈 ocid39-description을 rmdir한다.
 
 ## 결과검증
 
 ### baseline-39-ready
 
-완료 단계 **OCID-checked**: Console/API 동일 Compartment id·parent, 각 resource type 형식의 실제 관찰, policy subject/target 대응, 선택 USER-tested 분기에서만 target을 아는 outsider의 GetObject 실패(미선택이면 NOT_SELECTED). 무작위 malformed OCID404를 authorization deny로 사용하지 않는다.
+완료 단계 **OCID-checked**: Console/API 동일 Compartment id·parent, 각 resource type 형식의 실제 관찰, policy subject/target 대응, changed description=`OCI IAM learning only; OCID check`, restored description==before description 및 id/name/parent 불변 assertion 성공, 선택 USER-tested 분기에서만 target을 아는 outsider의 GetObject 실패(미선택이면 NOT_SELECTED). 무작위 malformed OCID404를 authorization deny로 사용하지 않는다.
 
 **실행 기록(아직 미작성):** 실행자/Region/시각, exact resource OCID, 설정 전·후, 성공 출력, deny 오류·exit code/request-id, positive control, 정리 결과. 문서 검증은 실제 OCI 실행 성공을 뜻하지 않는다.
 
@@ -133,7 +156,7 @@ if [ "$?" -ne 0 ]; then exit 1; fi
 
 ## 리소스정리
 
-새 리소스는 없으므로 로컬 OCID 작업표와 CLI 출력에서 민감 식별정보를 제거한다. 수정한 description을 원래대로 복원한다.33 fixture는40/41/42 종료까지 유지한다. OCID 자체를 삭제하는 독립 작업은 없으며 실제 resource 삭제는 소유 실습의 정리 절차로 수행한다.
+새 리소스는 없으므로 로컬 OCID 작업표와 CLI 출력에서 민감 식별정보를 제거한다. restored.json과 before.json의 description 일치 및 id/name/parent 불변을 확인한다. 앞서 복원을 마쳤으면 다시 Edit하지 않는다.33 fixture는40/41/42 종료까지 유지한다. OCID 자체를 삭제하는 독립 작업은 없으며 실제 resource 삭제는 소유 실습의 정리 절차로 수행한다.
 
 ## 공식문서
 
