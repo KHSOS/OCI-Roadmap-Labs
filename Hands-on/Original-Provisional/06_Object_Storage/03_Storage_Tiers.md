@@ -96,14 +96,16 @@ export OCI_CLI_REGION="$REGION"
 export LAB_COMPARTMENT_ID="<actual-lab-compartment-ocid>"
 export EXPIRY_UTC="<approved-session-end-UTC>"
 ```
-치환 전 실행 금지. 생성된 OCID/IP/원래 설정/새 rule ID/owner/종료시각을 비밀 없는 registry에 기록하고 다음 터미널에서는 필요한 변수만 다시 설정한다.
+치환 전 실행 금지. 생성된 OCID/IP/원래 설정/새 rule ID/owner/종료시각을 비밀 없는 registry에 기록하고 새 터미널에서는 필요한 변수만 복원한다.
 
 [아래 생성/변경 단계의 정확한 Oracle task 본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/managingobjects_topic-To_update_the_storage_tier_of_an_object.htm) — Console field/CLI/API 동작 근거.
 
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 
 ### Source/download 작업 디렉터리 — 첫 printf/PUT 이전
-Cloud Shell/승인 OCI 터미널의 **같은 shell**에서 실행한다. 새 directory 생성 실패면 진행하지 않는다. 이전 cwd의 같은 파일을 읽거나 덮어쓰지 않는다.
+- 실행 위치: Cloud Shell/승인 OCI 터미널의 **같은 shell**.
+- 새 directory 생성 실패 시 중단한다.
+- 이전 cwd에 있는 같은 이름의 파일은 읽거나 덮어쓰지 않는다.
 ```bash
 set -euo pipefail
 umask 077
@@ -114,7 +116,9 @@ for name in tier.txt tier-read.txt tier-restored.txt; do
 done
 # Record actual LAB_WORK and file creation ownership in consumer registry.
 ```
-Remote PUT도 같은 key의 기존 object 충돌을 owner48 목록에서 확인하고 충돌이면 중단한다. 새 PUT은 `--no-overwrite`를 추가한다. 다음 절차의 출력 파일은 이 directory에서만 생성한다.
+- Remote PUT 전 owner48의 목록에서 같은 key의 기존 object를 확인한다. 충돌 시 중단한다.
+- 새 PUT에는 `--no-overwrite`를 추가한다.
+- 이후 출력 파일은 이 directory에서만 생성한다.
 
 
 ### IA mutation 전 기록과 fresh-terminal 복구

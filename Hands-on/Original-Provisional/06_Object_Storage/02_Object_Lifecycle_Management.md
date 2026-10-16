@@ -79,7 +79,13 @@ owner48 Standard bucket에 lab/expire/test.txt와 prefix 제한 DELETE rule 하�
 이 문서의 모든 CLI/파일 작업은 같은 인증 Cloud Shell/승인 OCI 터미널에서 수행한다. VM/SSH/NFS는 필요하지 않다. 조회/변경/정리의 관리자 승인은 **실행 조건**이며 이 문서는 IAM 성공을 입증하지 않는다. 실제 허용/거부와 capacity는 사용자 실행에서 확인한다. 미승인/NOT_SELECTED/ASYNC_PENDING을 성공으로 바꾸지 않는다.
 
 ### 공유 bucket lease와 비동기 분기
-owner48의 동일 bucket에는 단일 승인 `BUCKET_EXPIRY_UTC`/cleanup owner가 있다. 50의 하루 이상 관찰 또는52의 restore/download가 원래60분을 넘을 가능성이 있으면 **규칙/업로드 이전에** owner48과 budget 승인자가 새 종료시각/비용/담당자와 모든 선택 consumer를 기록하여 lease를 갱신한다. 갱신 승인 없으면 원래 deadline 전에 disable/cancel 가능한 시험을 중단하고 owned key를 삭제/반환한다. 실제 비동기 작업 취소가 지원되지 않으면 작업 상태를 기록하고 객체 삭제/목록 readback을 owner48과 조율한다. owner48은 expiry 때 독자 삭제하지 않고 모든 consumer의 abort/restore/return acknowledgement를 받는다. 연장 불가를 무기한 보존으로 대체하지 않는다. ASYNC_PENDING은 검증 성공이 아니다.
+- owner48의 동일 bucket에는 단일 승인 `BUCKET_EXPIRY_UTC`/cleanup owner가 있다.
+- 50의 하루 이상 관찰 또는52의 restore/download가 원래60분을 넘을 가능성이 있으면 **규칙/업로드 이전에** owner48과 budget 승인자가 새 종료시각/비용/담당자와 모든 선택 consumer를 기록하여 lease를 갱신한다.
+- 갱신 승인 없으면 원래 deadline 전에 disable/cancel 가능한 시험을 중단하고 owned key를 삭제/반환한다.
+- 실제 비동기 작업 취소가 지원되지 않으면 작업 상태를 기록하고 객체 삭제/목록 readback을 owner48과 조율한다.
+- owner48은 expiry 때 독자 삭제하지 않고 모든 consumer의 abort/restore/return acknowledgement를 받는다.
+- 연장 불가를 무기한 보존으로 대체하지 않는다.
+- ASYNC_PENDING은 검증 성공이 아니다.
 
 ## 실습절차
 
@@ -99,14 +105,16 @@ export LAB_COMPARTMENT_ID="<actual-lab-compartment-ocid>"
 export BUCKET_EXPIRY_UTC="<owner48-approved-session-end-UTC>"
 export EXPIRY_UTC="$BUCKET_EXPIRY_UTC"
 ```
-치환 전 실행 금지. 생성된 OCID/IP/원래 설정/새 rule ID/owner/종료시각을 비밀 없는 registry에 기록하고 다음 터미널에서는 필요한 변수만 다시 설정한다.
+치환 전 실행 금지. 생성된 OCID/IP/원래 설정/새 rule ID/owner/종료시각을 비밀 없는 registry에 기록하고 새 터미널에서는 필요한 변수만 복원한다.
 
 [아래 생성/변경 단계의 정확한 Oracle task 본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/usinglifecyclepolicies_topic-To_create_a_lifecycle_policy_rule.htm) — Console field/CLI/API 동작 근거.
 
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 
 ### Source/download 작업 디렉터리 — 첫 printf/PUT 이전
-Cloud Shell/승인 OCI 터미널의 **같은 shell**에서 실행한다. 새 directory 생성 실패면 진행하지 않는다. 이전 cwd의 같은 파일을 읽거나 덮어쓰지 않는다.
+- 실행 위치: Cloud Shell/승인 OCI 터미널의 **같은 shell**.
+- 새 directory 생성 실패 시 중단한다.
+- 이전 cwd에 있는 같은 이름의 파일은 읽거나 덮어쓰지 않는다.
 ```bash
 set -euo pipefail
 LAB_WORK=$(mktemp -d "$HOME/oci-roadmap-50.XXXXXXXX") || exit 1
@@ -116,7 +124,9 @@ for name in expiry.txt; do
 done
 # Record actual LAB_WORK and file creation ownership in consumer registry.
 ```
-Remote PUT도 같은 key의 기존 object 충돌을 owner48 목록에서 확인하고 충돌이면 중단한다. 새 PUT은 `--no-overwrite`를 추가한다. 다음 절차의 출력 파일은 이 directory에서만 생성한다.
+- Remote PUT 전 owner48의 목록에서 같은 key의 기존 object를 확인한다. 충돌 시 중단한다.
+- 새 PUT에는 `--no-overwrite`를 추가한다.
+- 이후 출력 파일은 이 directory에서만 생성한다.
 
 
 ### rule 저장 전 복구와 fresh-terminal 재개

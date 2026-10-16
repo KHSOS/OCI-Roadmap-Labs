@@ -55,7 +55,7 @@
 
 ### 이번 workshop 시나리오와 입력 계약
 
-실제 Compartment OCID를 Console/API로 비교하고 description만 원복 가능한 변경을 한다.
+실제 Compartment OCID를 Console/API로 대조한다. description만 변경하고 원래 값으로 복원한다.
 
 
 - 입력: `IAM_LAB_OCID`
@@ -83,7 +83,9 @@
   - 이유: 이번 기능/실패 원인을 한 변수로 분리
 
 
-**생성·변경 범위:** description-check:ConfigurationChange. **완료 비교:** same id/name/parent; unchanged id after description; known-target auth control. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
+- **생성·변경 범위:** description-check:ConfigurationChange.
+- **완료 비교:** same id/name/parent; unchanged id after description; known-target auth control. 기대 패턴이며 OCI 실측값이 아니다.
+- **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
 새 OCID/리소스를 만들지 않는다. 필수 작업은33의 실제 Compartment/User/Group Console 식별자와 Compartment API의 비교 및 description 원복이다. VCN/Instance 비교는24.ready 완료·승인 때만 선택한다. display name/description 변경과 전체 OCID의 불변을 분리해 기록한다.
 

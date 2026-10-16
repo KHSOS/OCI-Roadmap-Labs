@@ -90,7 +90,9 @@
   - 이유: 이번 기능/실패 원인을 한 변수로 분리
 
 
-**생성·변경 범위:** lab-observers:IdentityGroup,p-observer-read-a:IamPolicy. **완료 비교:** no policy deny→policy allow A/deny B→membership removal deny. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
+- **생성·변경 범위:** lab-observers:IdentityGroup,p-observer-read-a:IamPolicy.
+- **완료 비교:** no policy deny→policy allow A/deny B→membership removal deny. 기대 패턴이며 OCI 실측값이 아니다.
+- **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
 새 Group `lab-observers`를 생성하고 동일 User에 대한 멤버십과 읽기 정책을 연결한다. Group 자체 생성은 권한 부여가 아니며 policy와 membership 둘 다 필요하다는 것을 GetObject로 확인한다.
 
@@ -100,7 +102,7 @@
 
 policy 생성 전에 outsider의 LAB_OUTSIDER user/fingerprint를 확인한다. B deny의 positive control은 admin same object get이다. test policy/membership가 남은 상태로37/40을 시작하지 않는다.
 
-**첫 요청 전 LAB_OUTSIDER PC 입력:**33의 실제 출력으로 다음 값을 채운다. 빈 값/placeholder면 중단한다.
+**첫 요청 전 LAB_OUTSIDER PC 입력:** 33의 실제 출력으로 다음 값을 채운다. 빈 값/placeholder면 중단한다.
 ```bash
 export REGION='<owner33-actual-region>'
 export NS='<owner33-actual-namespace>'

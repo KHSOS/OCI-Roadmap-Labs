@@ -87,7 +87,9 @@ outsider User를 만들고 membership 추가·제거로 인증과 권한을 분�
   - 이유: 이번 기능/실패 원인을 한 변수로 분리
 
 
-**생성·변경 범위:** lab-outsider:IdentityUser. **완료 비교:** authenticated outsider deny→member allow→removed deny. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
+- **생성·변경 범위:** lab-outsider:IdentityUser.
+- **완료 비교:** authenticated outsider deny→member allow→removed deny. 기대 패턴이며 OCI 실측값이 아니다.
+- **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
 새 User `lab-outsider` 하나를 생성하고 처음에는 `lab-readers`에 넣지 않는다. 로그인 성공(인증)과 Bucket A read 실패(권한 없음)를 나누고, 최소 Group 추가 후 read 성공을 검증한다. 사용자 credentials는 각자가 설정하며 신규 Domain을 만들지 않는다.
 

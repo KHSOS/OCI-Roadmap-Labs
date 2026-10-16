@@ -101,7 +101,9 @@
   - 이유: 이번 기능/실패 원인을 한 변수로 분리
 
 
-**생성·변경 범위:** lab-alt-export:Export. **완료 비교:** two paths same hash/shared file; missing path deny; alt deletion original intact. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
+- **생성·변경 범위:** lab-alt-export:Export.
+- **완료 비교:** two paths same hash/shared file; missing path deny; alt deletion original intact. 기대 패턴이며 OCI 실측값이 아니다.
+- **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
 기존 `/lab`와 같은 File System에 추가 path `/lab-alt` Export 하나를 생성한다. Export path는 immutable이고 파일 시스템 내부 directory path와 다르다는 것을 **두 mount에서 같은 file hash**로 확인한다. 동일 MT에서 `/lab/child`처럼 prefix 충돌하는 path는 생성하지 않는다.
 

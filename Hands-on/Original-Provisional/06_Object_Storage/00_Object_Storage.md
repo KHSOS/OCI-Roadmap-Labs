@@ -86,7 +86,7 @@ export OCI_CLI_REGION="$REGION"
 export LAB_COMPARTMENT_ID="<actual-lab-compartment-ocid>"
 # 개인 경로는 이번 세션 안에 정리한다. 선택 consumer만 별도 BUCKET_EXPIRY_UTC를 기록한다.
 ```
-치환 전 실행 금지. 실제 Region/Compartment/bucket identity와 선택 보존 종료시각을 비밀 없는 registry에 기록하고 다음 터미널에서는 필요한 변수만 다시 설정한다.
+치환 전 실행 금지. 실제 Region/Compartment/bucket identity와 선택 보존 종료시각을 비밀 없는 registry에 기록하고 새 터미널에서는 필요한 변수만 복원한다.
 
 [아래 생성/변경 단계의 정확한 Oracle task 본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/managingbuckets_topic-To_create_a_bucket.htm) — Console field/CLI/API 동작 근거.
 

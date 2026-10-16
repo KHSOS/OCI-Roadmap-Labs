@@ -96,14 +96,16 @@ export OCI_CLI_REGION="$REGION"
 export LAB_COMPARTMENT_ID="<actual-lab-compartment-ocid>"
 export EXPIRY_UTC="<approved-session-end-UTC>"
 ```
-치환 전 실행 금지. 생성된 OCID/IP/원래 설정/새 rule ID/owner/종료시각을 비밀 없는 registry에 기록하고 다음 터미널에서는 필요한 변수만 다시 설정한다.
+치환 전 실행 금지. 생성된 OCID/IP/원래 설정/새 rule ID/owner/종료시각을 비밀 없는 registry에 기록하고 새 터미널에서는 필요한 변수만 복원한다.
 
 [아래 생성/변경 단계의 정확한 Oracle task 본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/managingobjects_topic-To_restore_objects_from_Archive_Storage.htm) — Console field/CLI/API 동작 근거.
 
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 
 ### Source/download 작업 디렉터리 — 첫 printf/PUT 이전
-Cloud Shell/승인 OCI 터미널의 **같은 shell**에서 실행한다. 새 directory 생성 실패면 진행하지 않는다. 이전 cwd의 같은 파일을 읽거나 덮어쓰지 않는다.
+- 실행 위치: Cloud Shell/승인 OCI 터미널의 **같은 shell**.
+- 새 directory 생성 실패 시 중단한다.
+- 이전 cwd에 있는 같은 이름의 파일은 읽거나 덮어쓰지 않는다.
 ```bash
 set -euo pipefail
 LAB_WORK=$(mktemp -d "$HOME/oci-roadmap-52.XXXXXXXX") || exit 1
@@ -113,7 +115,9 @@ for name in archive.txt archive-before.txt archive-before-error.txt restored-arc
 done
 # Record actual LAB_WORK and file creation ownership in consumer registry.
 ```
-Remote PUT도 같은 key의 기존 object 충돌을 owner48 목록에서 확인하고 충돌이면 중단한다. 새 PUT은 `--no-overwrite`를 추가한다. 다음 절차의 출력 파일은 이 directory에서만 생성한다.
+- Remote PUT 전 owner48의 목록에서 같은 key의 기존 object를 확인한다. 충돌 시 중단한다.
+- 새 PUT에는 `--no-overwrite`를 추가한다.
+- 이후 출력 파일은 이 directory에서만 생성한다.
 
 
 1. [Object Storage](00_Object_Storage.md#실습절차)의 private Standard bucket을 사용한다. Archive bucket을 별도 생성하지 않는다. 복구와 최소 보관 과금을 승인한다.
@@ -145,12 +149,23 @@ Restore는 위3에서 한 번만 제출한다. Restoring이면 재제출하지 �
 ### 5분 간격 관찰과 재개
 첫 PUT 직후 private 기록에 REGION/NS/BUCKET/bucket OCID/key/LAB_WORK/원본 hash/BUCKET_EXPIRY_UTC/cleanup 담당자를 저장한다. Restore 제출 성공 시 UTC와 hours=1을 추가한다. 응답 손실이면 실제 상태부터 조회하고 재제출하지 않는다. fresh shell은 이 기록의 실제 변수를 다시 설정하고 같은 Region/bucket OCID를 readback한 뒤 restore-status를 한 번 조회한다.
 
-|실제 상태|다음 행동|종료 조건|
-|---|---|---|
-|Restoring|다음 확인을 **현재 UTC+5분**으로 기록하고 그때 한 번 조회; 자동 tight loop/Restore 재제출 금지|lease 10분 전까지 Restored가 아니면 owner48과 abort/owned-key 삭제·반환; 연장은 별도 사전 승인|
-|Restored|실제 restore expiration time을 object details/HEAD에서 읽고 즉시 새 filename GET/cmp|download deadline은 `min(BUCKET_EXPIRY_UTC, 실제 expiration time)-10분`; 종료 전에 key 정리|
-|Archived(미제출/만료)|제출 기록·서비스 상태를 대조한다. 미제출이 확실한 최초3단계 외에는 새 Restore를 제출하지 않는다|만료/불명 상태는 미완료로 반환하고 owned key 정리|
-|조회 실패/다른 상태|credential/Region/bucket을 고정하고 담당자에 인계; 상태를 추측하지 않는다|deadline에 정리/반환, 무기한 대기하지 않는다|
+
+- **상태: Restoring**
+  - 다음 행동: 다음 확인을 **현재 UTC+5분**으로 기록하고 그때 한 번 조회; 자동 tight loop/Restore 재제출 금지
+  - 종료 조건: lease 10분 전까지 Restored가 아니면 owner48과 abort/owned-key 삭제·반환; 연장은 별도 사전 승인
+
+- **상태: Restored**
+  - 다음 행동: 실제 restore expiration time을 object details/HEAD에서 읽고 즉시 새 filename GET/cmp
+  - 종료 조건: download deadline은 `min(BUCKET_EXPIRY_UTC, 실제 expiration time)-10분`; 종료 전에 key 정리
+
+- **상태: Archived(미제출/만료)**
+  - 다음 행동: 제출 기록·서비스 상태를 대조한다. 미제출이 확실한 최초3단계 외에는 새 Restore를 제출하지 않는다
+  - 종료 조건: 만료/불명 상태는 미완료로 반환하고 owned key 정리
+
+- **상태: 조회 실패/다른 상태**
+  - 다음 행동: credential/Region/bucket을 고정하고 담당자에 인계; 상태를 추측하지 않는다
+  - 종료 조건: deadline에 정리/반환, 무기한 대기하지 않는다
+
 
 예: lease 종료15:00Z, 실제 restore expiration14:40Z이면 다운로드/정리 deadline은14:30Z다. Restored를14:05Z에 관찰했다면 관찰 시각+1시간을 만료라고 가정하지 않는다. 실제 expiration을 읽지 못하면 다운로드 창을 확정하지 말고 즉시 GET/cmp 또는 owner와 abort한다. 5분 주기는 이 작은 실습의 요청 상한을 위한 선택이며 Oracle 보장 주기가 아니다.
 
