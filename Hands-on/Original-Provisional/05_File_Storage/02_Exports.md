@@ -63,17 +63,43 @@
 
 같은 FS/MT에 별도 Export를 생성하고 두 path에서 공유 data를 읽고 쓴다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`B_PRIVATE_IP`|owner22의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`MT_PRIVATE_IP`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|B guest|정확한 대상/소유관계 고정|
-|`FS_ID`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`MT_ID`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`EXPORT_SET_ID`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|Export path / existing MT / options|/lab-alt; existing mt-lab/fs-lab; B/32 Privileged RW SYS|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `B_PRIVATE_IP`
+  - 값/출처: owner22의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `MT_PRIVATE_IP`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: B guest
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `FS_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `MT_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `EXPORT_SET_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: Export path / existing MT / options
+  - 실제 입력/선택: /lab-alt; existing mt-lab/fs-lab; B/32 Privileged RW SYS
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** lab-alt-export:Export. **완료 비교:** two paths same hash/shared file; missing path deny; alt deletion original intact. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 

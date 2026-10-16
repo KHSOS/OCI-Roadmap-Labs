@@ -64,17 +64,43 @@
 
 exact B instance Dynamic Group와 read policy를 만들고 VM workload identity로 get한다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`INSTANCE_A_ID`|owner10의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`INSTANCE_B_ID`|owner22의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`IAM_LAB_OCID`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`NS`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`DG_PRIVATE_VM_OCID`|owner36의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|Dynamic Group rule / policy subject / auth|instance.id exact B OCID; dynamic-group id; instance_principal|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `INSTANCE_A_ID`
+  - 값/출처: owner10의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `INSTANCE_B_ID`
+  - 값/출처: owner22의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `IAM_LAB_OCID`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `NS`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `DG_PRIVATE_VM_OCID`
+  - 값/출처: owner36의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: Dynamic Group rule / policy subject / auth
+  - 실제 입력/선택: instance.id exact B OCID; dynamic-group id; instance_principal
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** dg-private-vm:DynamicGroup,p-instance-read-a:IamPolicy. **완료 비교:** B A get allow/B get deny; nonmember VM A deny. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
