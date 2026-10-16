@@ -99,7 +99,12 @@ export EXPIRY_UTC="<approved-session-end-UTC>"
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 
 ### 첫 파일 mutation 전 재개·복구 기록
-개인 실습은 별도 관리 terminal, 공유 실습은 owner43 복구담당자를 열어 둔다. [43 residual-kernel station](00_File_Storage.md#c-실제-linux-mount와-공유-데이터)의 통신/options 복구와 D-state·잔존 요청 확인을 먼저 읽는다. NFS 데이터 작업과 경로 검사에는 아래 timeout 요청을 사용한다. timeout은 kernel 종료 보장이 아니므로 실제 호출이 반환하지 않으면 다른 관리 terminal에서 복구한다. hard mount를 soft로 바꾸지 않는다. 실패 시 새 I/O/스냅샷·endpoint 삭제를 멈추고 원래 B/32 RW/MT 통신 복구→요청 종료 확인→부분 정리를 진행한다.
+개인 실습은 별도 관리 terminal, 공유 실습은 owner43 복구담당자를 열어 둔다. [43 residual-kernel station](00_File_Storage.md#c-실제-linux-mount와-공유-데이터)의 통신/options 복구와 D-state·잔존 요청 확인을 먼저 읽는다. NFS 데이터 작업과 경로 검사에는 아래 timeout 요청을 사용한다. timeout은 kernel 종료 보장이 아니므로 실제 호출이 반환하지 않으면 다른 관리 terminal에서 복구한다. hard mount를 soft로 바꾸지 않는다. 실패 시 다음 순서로 복구한다.
+
+- 새 I/O와 스냅샷·endpoint 삭제를 멈춘다.
+- 원래 B/32 RW/MT 통신을 복구한다.
+- 잔존 요청의 종료를 확인한다.
+- 아래 부분 정리로 이동한다.
 
 - B guest의 로컬(해당 NFS mount 밖) private 기록에 먼저 run 식별자와 입력을 보존한다.
 - 같은 lab47 경로에는 이 run만 접근하도록 owner43과 정한다.
@@ -115,7 +120,7 @@ export EXPIRY_UTC="<approved-session-end-UTC>"
 
 1. 아래 Mount 변수 첫 bash block을 실행해 실제 mount/전용 파일을 준비한다. 같은 작업을 두 번 수행하지 않는다.
 2. **Create 이전** 같은 FILE_SYSTEM_ID의 Console Snapshots 목록 전체에서 lab47-before가 없음을 확인한다. 조회 실패/동명이름 존재면 중단하고 기존 snapshot을 재사용/삭제하지 않는다. Console → File Storage → File Systems → 실제 FILE_SYSTEM_ID → Snapshots → Create Snapshot. Name=lab47-before, expiration은 RO/복원 관측을 마치기 전에 snapshot을 만료시키지 않는 승인 시각을 선택하거나 이번 짧은 시험에서는 미선택 후 수동 삭제한다. Snapshot Policy는 새로 생성/연결하지 않는다. 선택값을 저장하고 생성 상태를 읽는다. Active 확인 전 두 번째 block을 실행하지 않는다.
-3. 아래 두 번째 bash block의 원본 변경/별도 restored.txt 복구/cmp/RO negative control을 수행한다. 사용 경로는 mount root의 .snapshot이다.
+3. 아래 두 번째 Bash block으로 원본 변경, restored.txt 복구, cmp 및 RO negative control을 수행한다. 사용 경로: mount root의 .snapshot.
 
 ### Mount 변수로 끝까지 실행
 ```bash

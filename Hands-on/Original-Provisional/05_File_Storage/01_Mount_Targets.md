@@ -61,17 +61,43 @@
 
 MT의 endpoint 배치를 readback하고 신규 RPC/mount로 network deny와 복구를 비교한다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`B_PRIVATE_IP`|owner22의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`MT_PRIVATE_IP`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|B guest|정확한 대상/소유관계 고정|
-|`MT_FQDN`|owner43 Console의 actual FQDN; DNS/mount 선택 branch에서만 요구|선택 branch 전|B guest|main은 literal MT_PRIVATE_IP:/lab mount로 반환|
-|`MT_ID`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`EXPORT_SET_ID`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|MT NSG / IP / FQDN / Export Set|existing mt-lab; exact Console FQDN; restricted TCP/UDP ingress restored|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `B_PRIVATE_IP`
+  - 값/출처: owner22의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `MT_PRIVATE_IP`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: B guest
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `MT_FQDN`
+  - 값/출처: owner43 Console의 actual FQDN; DNS/mount 선택 branch에서만 요구
+  - 시점: 선택 branch 전
+  - 실행 위치: B guest
+  - 선택 이유: main은 literal MT_PRIVATE_IP:/lab mount로 반환
+
+- 입력: `MT_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `EXPORT_SET_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: MT NSG / IP / FQDN / Export Set
+  - 실제 입력/선택: existing mt-lab; exact Console FQDN; restricted TCP/UDP ingress restored
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** 새 infrastructure 없음; existing resource의 configuration만 변경. **완료 비교:** fresh RPC/mount deny→network restoration same proof hash. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
