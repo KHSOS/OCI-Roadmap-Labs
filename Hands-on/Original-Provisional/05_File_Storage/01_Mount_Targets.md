@@ -59,7 +59,7 @@
 
 ### 이번 workshop 시나리오와 입력 계약
 
-MT의 endpoint 배치를 readback하고 신규 RPC/mount로 network deny와 복구를 비교한다.
+MT endpoint 배치를 readback한다. 새 RPC/mount로 network deny와 복구 결과를 대조한다.
 
 
 - 입력: `B_PRIVATE_IP`
@@ -99,7 +99,9 @@ MT의 endpoint 배치를 readback하고 신규 RPC/mount로 network deny와 복�
   - 이유: 이번 기능/실패 원인을 한 변수로 분리
 
 
-**생성·변경 범위:** 새 infrastructure 없음; existing resource의 configuration만 변경. **완료 비교:** fresh RPC/mount deny→network restoration same proof hash. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
+- **생성·변경 범위:** 새 infrastructure 없음; existing resource의 configuration만 변경.
+- **완료 비교:** fresh RPC/mount deny→network restoration same proof hash. 기대 패턴이며 OCI 실측값이 아니다.
+- **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
 기존 `mt-lab`의 AD·Subnet·IP/FQDN·Export Set·NSG를 추적한다. IP와 hostname은 access endpoint이며 File System 자체의 위치/경로와 다르다. MT NSG attachment는 유지하고 전용 NFS ingress rule만 제거해 신규 RPC/mount 차단을 확인한 뒤 같은 rule을 원복한다. 고성능 MT upgrade는 비용/승인 범위 밖이다.
 
