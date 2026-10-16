@@ -124,7 +124,9 @@ PUT 성공/etag로 이번 key 소유권을 확인한 직후 상태를 `OWNED`로
 PUT 응답 전에 연결이 끊겨 `PUT_PENDING`인 경우에는 재업로드/삭제/변경하지 않는다. owner48과 성공한 목록/객체 상세 및 업로드 시각·내용을 대조하여 이번 실행의 생성인지 확인한 뒤에만 `OWNED`로 바꾼다. 확인할 수 없으면 잔존 key와 deadline을 owner48에게 반환하고 중단한다.
 
 1. fresh 인증 shell에서 기록의 actual REGION/NS/BUCKET/LAB_WORK를 다시 설정하고 OCI_CLI_REGION=REGION을 export한다. bucket OCID를 readback하고 `cd -- "$LAB_WORK"`로 이동한다. tier.txt의 hash가 기록과 같은지 확인한다. 없거나 다르면 원복 성공을 추정하지 말고 owner48에게 반환한다.
+
 2. Console → exact bucket → Objects → lab/tier.txt details의 현재 tier를 읽는다. Infrequent Access면 Actions → **Update storage tier → Standard → Update**; 이미 Standard면 변경을 반복하지 않는다. Archive/다른 key/오류면 중단한다. CLI 대안은 아래 Standard update 한 건이며 Console과 중복하지 않는다. 새 details/HEAD로 Standard를 확인한다.
+
 3. 새 download filename을 선택해 GET하고 보존한 tier.txt와 cmp한다. 성공/실패를 기록한 뒤 owner48과 이번 key 삭제를 진행하고 목록 부재를 확인한다. Standard 복귀로 IA 최소기간/검색 비용이 취소되지 않는다. local 원본은 remote 삭제/반환 뒤 정리한다.
 
 
@@ -137,7 +139,9 @@ oci os object put -ns "$NS" -bn "$BUCKET" --name lab/tier.txt --file tier.txt --
 oci os object head -ns "$NS" -bn "$BUCKET" --name lab/tier.txt
 ```
 HEAD의 tier=Standard를 확인한다. PUT 실패/충돌은 덮어쓰지 말고 위 복구 station에서 판정한다.
+
 2. Console → 같은 bucket → Objects → lab/tier.txt의 Actions → **Update storage tier → Infrequent access → Update**를 선택한다. 최소 저장기간/검색비용을 먼저 승인한다. 전체 bucket default를 변경하지 않는다.
+
 3. `oci os object update-storage-tier -ns "$NS" -bn "$BUCKET" --name lab/tier.txt --storage-tier InfrequentAccess`는 2의 Console 변경을 수행하지 않은 경우에만 쓰는 대안이다. `oci os object head -ns "$NS" -bn "$BUCKET" --name lab/tier.txt`로 **tier=InfrequentAccess**를 확인한 뒤, `oci os object get -ns "$NS" -bn "$BUCKET" --name lab/tier.txt --file tier-read.txt; cmp tier.txt tier-read.txt`로 검증한다. cmp exit 0만 bytes 동일 성공이다. 다음 negative control은 비어 있지 않은 다운로드가 빈 파일과 다름을 확인하는 **로컬 검사**이며 OCI 접근 거부 시험은 아니다.
 ```bash
 if cmp tier-read.txt /dev/null; then
@@ -148,6 +152,7 @@ else
 fi
 ```
 Standard 복원은 아래 원복 block에서 한 번만 수행한다.
+
 4. 이 문서는 Standard 복원과 key 정리로 끝낸다. [Archive](04_Archive.md)는 별도 비용/대기시간을 승인한 다음 선택 실습이며 현재 완료 기준에 포함하지 않는다. Auto-Tiering은 켜지 않는다.
 
 ### tier 원복과 객체 양성대조

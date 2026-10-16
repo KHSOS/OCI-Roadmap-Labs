@@ -100,6 +100,7 @@ export EXPIRY_UTC="<approved-session-end-UTC>"
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 
 1. [Object Storage](00_Object_Storage.md#실습절차)의 bucket 생성과 cmp 성공 단계까지 완료한다. 동일 NS/BUCKET을 사용한다.
+
 2. 먼저 owner49 전용 새 디렉터리를 만든다. owner48의 local source를 변경하지 않는다. overwrite 이전 owner48은 원래 payload의 실제 bytes/hash를 보관하고 독립 인증 Console 복구담당자·lease 이내 복구 deadline을 지정한다. 오류/세션 손실이면 그 담당자가 같은 key만 원래 bytes로 복원하고 새 GET/cmp를 확인한다. 원래 bytes가 본문 `oci-roadmap object payload` LF와 다르면 아래 synthetic 원복을 쓰지 말고 owner48 실제 원본으로 교체·승인하기 전 mutation을 중단한다.
 ```bash
 set -euo pipefail
@@ -145,6 +146,7 @@ printf '%s\n' "$SECOND_ETAG" > second-owned-etag.txt
 oci os object list -ns "$NS" -bn "$BUCKET" --prefix lab/ || exit 1
 ```
 `second-owned-etag.txt`와 작업 directory 절대 경로를 복구 담당자에게 보존한다. 세션을 잃으면 같은 directory에서 `NS`/`BUCKET`을 creator 기록으로 재설정하고 `SECOND_ETAG=$(cat second-owned-etag.txt)`로 복구한다. 파일이 없거나 비어 있으면 소유권을 추정하여 삭제하지 않는다. PUT 직후 출력 보존 이전에 중단되었다면 owner48과 원래 부재 기록·현재 객체를 조정하여 소유권을 확인하기 전 삭제하지 않는다.
+
 4. `oci os object get -ns "$NS" -bn "$BUCKET" --name lab/second.txt --file second-read.txt; cmp lab-object.txt second-read.txt`로 다운로드한다. 누락 key `lab/not-created.txt` GET은 ObjectNotFound이어야 하고 같은 인증/endpoint로 second.txt GET은 성공해야 한다. Versioning은 비용 승인 없이는 켜지 않는다.
 
 ### 실패 양성대조와 원복

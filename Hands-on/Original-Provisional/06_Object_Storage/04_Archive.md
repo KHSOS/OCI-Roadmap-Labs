@@ -117,7 +117,9 @@ Remote PUT도 같은 key의 기존 object 충돌을 owner48 목록에서 확인�
 
 
 1. [Object Storage](00_Object_Storage.md#실습절차)의 private Standard bucket을 사용한다. Archive bucket을 별도 생성하지 않는다. 복구와 최소 보관 과금을 승인한다.
+
 2. `printf 'archive restore payload\n' > archive.txt; oci os object put -ns "$NS" -bn "$BUCKET" --name lab/archive.txt --file archive.txt --storage-tier Archive --no-overwrite`를 실행한다.
+
 3. **Restore 제출 전에** 아래 same-key Archived negative를 실행하고 HEAD 성공/실제 archive 상태와 GET 서비스 진단을 함께 확인한다.
 ```bash
 oci os object head -ns "$NS" -bn "$BUCKET" --name lab/archive.txt
@@ -131,7 +133,9 @@ fi
 # 401/auth, timeout, local output collision, missing object or unrelated error is INCONCLUSIVE.
 ```
 실행자는 위 오류 진단을 실제 archived-state 서비스 거부라고 확인하기 전 Restore를 제출하지 않는다. 공식 task의 다운로드 제한을 근거로 사용하되 미확인 오류 code를 문서에서 invent하지 않는다. Archived GET 거부가 아닌 인증/transport/로컬파일오류면 inconclusive로 중단한다. 다운로드가 바로 가능하다고 가정하지 않는다. Console 객체 메뉴 Restore에서 Time available for download=1 hour(허용1–240, default24)을 입력한다. CLI 대안: `oci os object restore -ns "$NS" -bn "$BUCKET" --name lab/archive.txt --hours 1`.
+
 4. `oci os object restore-status -ns "$NS" -bn "$BUCKET" --name lab/archive.txt`와 Details의 Archived→Restoring→Restored를 읽는다. 공식 복구 최대1시간이며 짧은세션 초과시 정리담당/expiry를 인계하고 완료를 주장하지 않는다. 복구 완료 전에는 성공으로 기록하지 않는다. Restored 상태일 때 `oci os object get -ns "$NS" -bn "$BUCKET" --name lab/archive.txt --file restored-archive.txt; cmp archive.txt restored-archive.txt`를 실행한다.
+
 5. 다운로드 가능 기간 만료 후 Archive 상태로 돌아감을 관찰하는 것은 별도 비용 승인 선택 checkpoint이다.
 
 ### Restore 이후 관찰/반환
