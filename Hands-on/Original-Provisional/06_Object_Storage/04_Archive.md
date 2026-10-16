@@ -88,7 +88,7 @@ owner48의 동일 bucket에는 단일 승인 `BUCKET_EXPIRY_UTC`/cleanup owner�
 
 ### 실행 터미널과 지역 고정
 
-전용 Bash에서 `set -euo pipefail`을 먼저 사용한다. PUT/update/HEAD/GET/cmp의 예기치 않은 실패는 다음 checkpoint로 진행하지 않는다. 모든 다운로드는 존재하지 않는 전용 filename을 확인한 뒤 실행한다. 의도적 negative는 아래 if 또는 `set +e`의 captured exit로만 처리하고 복구는별도owner경로로수행한다.
+전용 Bash에서 `set -euo pipefail`을 먼저 사용한다. PUT/update/HEAD/GET/cmp의 예기치 않은 실패는 다음 checkpoint로 진행하지 않는다. 모든 다운로드는 존재하지 않는 전용 filename을 확인한 뒤 실행한다. 의도적 negative는 아래 if 또는 `set +e`의 captured exit로만 처리하고 복구는 별도 owner 경로로 수행한다.
 아래 OCI 명령과 local bytes 작성/비교는 같은 인증 Cloud Shell/승인 OCI 터미널의 전용 directory에서 실행한다. VM·CIDR·앱 포트는 사용하지 않는다.
 ```bash
 export REGION="<approved-region>"
@@ -98,7 +98,7 @@ export EXPIRY_UTC="<approved-session-end-UTC>"
 ```
 치환 전 실행 금지. 생성된 OCID/IP/원래 설정/새 rule ID/owner/종료시각을 비밀 없는 registry에 기록하고 다음 터미널에서는 필요한 변수만 다시 설정한다.
 
-[아래생성/변경단계의정확한Oracle task본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/managingobjects_topic-To_restore_objects_from_Archive_Storage.htm) — Consolefield/CLI/API동작근거.
+[아래 생성/변경 단계의 정확한 Oracle task 본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/managingobjects_topic-To_restore_objects_from_Archive_Storage.htm) — Console field/CLI/API 동작 근거.
 
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 
@@ -139,7 +139,7 @@ fi
 5. 다운로드 가능 기간 만료 후 Archive 상태로 돌아감을 관찰하는 것은 별도 비용 승인 선택 checkpoint이다.
 
 ### Restore 이후 관찰/반환
-Restore는 위3에서 한 번만 제출한다. Restoring이면 재제출하지않고조회한다. 60분초과관찰은위bucketlease갱신승인필수이며,미승인시deadline전에52/48이중단/삭제/반환한다. download window1시간은복원완료부터이고90일최소비용은삭제로취소되지않는다.
+Restore는 위3에서 한 번만 제출한다. Restoring이면 재제출하지 않고 조회한다. 60분 초과 관찰은 위 bucket lease 갱신 승인이 필수이며, 미승인 시 deadline 전에 52/48이 중단/삭제/반환한다. download window 1시간은 복원 완료부터이고 90일 최소 비용은 삭제로 취소되지 않는다.
 
 
 ### 5분 간격 관찰과 재개

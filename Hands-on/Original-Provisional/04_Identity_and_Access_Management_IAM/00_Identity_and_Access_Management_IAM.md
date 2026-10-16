@@ -30,7 +30,7 @@
 
 실제 tenancy/Region/Domain·주체·소유권은 [공통 baseline-contract.json](../../../baseline-contract.json)과 위 fixture 계약에 맞춘다. 빈 OCID/placeholder·미승인 권한은 실행 차단 입력이다. 이 API/Console 실습 때문에 VM을 생성하지 않는다.
 
-- [00.ready Introduction — FUNCTIONAL_COMPLETION](../00_Introduction/00_Introduction.md#baseline-00-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. PRE_CREATE_OR_INSTALL_PREPARATION으로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
+- [00.ready Introduction — FUNCTIONAL_COMPLETION](../00_Introduction/00_Introduction.md#baseline-00-ready): 표시된 FUNCTIONAL_COMPLETION은 해당 linked ready 단계의 실제 검증/반환이 필요하다. [생성·설치 전 준비](../../../baseline-contract.json "PRE_CREATE_OR_INSTALL_PREPARATION")로 표시한 링크만 준비 출력까지 요구한다. 필요한 OCID/주소만 인계한다.
 - **Tenancy/Region/Domain 준비:** Console 프로필 메뉴에서 Tenancy details의 Tenancy OCID, 상단 Region 선택기의 실습 Region, Identity & Security → Domains에서 기존 Domain 이름/OCID를 기록한다. 이 값과 관리자 로그인만 필요하다. [Introduction to OCI](../01_Introduction_to_OCI/00_Introduction_to_OCI.md)의 bucket 기능완료는 선택 선행학습이다.
 
 - [Introduction to OCI](../../../Docs/01_Introduction_to_OCI/00_Introduction_to_OCI.md): **Tenancy/Home Region/실습 Region 확인** 완료. 상위 lab-root만 재사용하고, 아래 A에서 전용 `iam-lab`를 생성한다. 이미 이 문서에서 만든 iam-lab을 재개하는 경우에만 생성 기록과 OCID/parent를 확인하여 재사용한다. [Compartments](../../../Docs/04_Identity_and_Access_Management_IAM/05_Compartments.md) 전체 실습을 미리 완료할 필요는 없다.

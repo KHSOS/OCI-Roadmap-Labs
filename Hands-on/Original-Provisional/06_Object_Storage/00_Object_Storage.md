@@ -88,7 +88,7 @@ export LAB_COMPARTMENT_ID="<actual-lab-compartment-ocid>"
 ```
 치환 전 실행 금지. 실제 Region/Compartment/bucket identity와 선택 보존 종료시각을 비밀 없는 registry에 기록하고 다음 터미널에서는 필요한 변수만 다시 설정한다.
 
-[아래생성/변경단계의정확한Oracle task본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/managingbuckets_topic-To_create_a_bucket.htm) — Consolefield/CLI/API동작근거.
+[아래 생성/변경 단계의 정확한 Oracle task 본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/managingbuckets_topic-To_create_a_bucket.htm) — Console field/CLI/API 동작 근거.
 
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 

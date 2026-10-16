@@ -101,7 +101,7 @@ export EXPIRY_UTC="$BUCKET_EXPIRY_UTC"
 ```
 치환 전 실행 금지. 생성된 OCID/IP/원래 설정/새 rule ID/owner/종료시각을 비밀 없는 registry에 기록하고 다음 터미널에서는 필요한 변수만 다시 설정한다.
 
-[아래생성/변경단계의정확한Oracle task본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/usinglifecyclepolicies_topic-To_create_a_lifecycle_policy_rule.htm) — Consolefield/CLI/API동작근거.
+[아래 생성/변경 단계의 정확한 Oracle task 본문](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/usinglifecyclepolicies_topic-To_create_a_lifecycle_policy_rule.htm) — Console field/CLI/API 동작 근거.
 
 아래 단계는 Oracle task 본문을 근거로 작성한 lab recipe이며 공식 실행결과가 아니다. 각 단계의 근거는 끝의 정확한 task 링크를 따른다.
 
@@ -140,7 +140,7 @@ private 기록에 actual REGION/NS/BUCKET/bucket OCID/LAB_WORK, rule name=`lab-p
 
 ### 비동기 관찰과 실패 복구의 분리
 오류/세션 손실은 위 rule 저장 전 복구 station으로 즉시 이동한다.
-Console Lifecycle policy에서 rule `lab-prefix-expiry`의 prefix=lab/expire/, timeAmount=1/timeUnit=DAYS/action=DELETE/isEnabled=true를 읽는다. 삭제시험은 공식비동기시간 때문에 짧은세션에서 `ASYNC_PENDING`이다. 설정실패에는 잘못된 rule/prefix를 저장하지 말고 즉시 취소한다. config-only는 정상 readback 직후 Enabled=false로 편집/조회한다. extended-observation은 renewed lease 안에서 실제 비동기 결과를 관찰할 때만 enabled를 유지하고 결과/실패 또는 새deadline 뒤 disable/delete한다. 두분기disable시점을혼합하지않는다. 기존 policy 전체를 CLI delete하는 방식은 다른 rule이 있을 때 사용하지 않는다. policy 추가 이전값을 저장하고 실습 rule만 Console에서 Delete한다. 관리자만 이번실습 service principal policy statement를 제거하며 다른 lifecycle consumer가 있으면 보존한다.
+Console Lifecycle policy에서 rule `lab-prefix-expiry`의 prefix=lab/expire/, timeAmount=1/timeUnit=DAYS/action=DELETE/isEnabled=true를 읽는다. 삭제시험은 공식비동기시간 때문에 짧은세션에서 `ASYNC_PENDING`이다. 설정실패에는 잘못된 rule/prefix를 저장하지 말고 즉시 취소한다. config-only는 정상 readback 직후 Enabled=false로 편집/조회한다. extended-observation은 renewed lease 안에서 실제 비동기 결과를 관찰할 때만 enabled를 유지하고 결과/실패 또는 새deadline 뒤 disable/delete한다. 두 분기의 disable 시점을 혼합하지 않는다. 기존 policy 전체를 CLI delete하는 방식은 다른 rule이 있을 때 사용하지 않는다. policy 추가 이전값을 저장하고 실습 rule만 Console에서 Delete한다. 관리자만 이번실습 service principal policy statement를 제거하며 다른 lifecycle consumer가 있으면 보존한다.
 
 ## 결과검증
 
