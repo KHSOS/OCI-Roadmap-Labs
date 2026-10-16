@@ -4,7 +4,7 @@ OCI Compute는 instance라고 부르는 실행 host를 제공하고 관리하는
 
 ## VM과 Bare Metal의 역할
 
-**Virtual Machine (VM)**은 물리 hardware 위에 격리된 실행 환경을 제공한다. 물리 서버 전체의 자원이 필요하지 않은 application에 적합하다. **Bare Metal**은 전용 물리 서버 접근이 필요한 성능·격리 요구를 위한 선택이다. 더 큰 형태를 고르는 것보다 workload가 요구하는 CPU·메모리·network·storage 특성을 맞추는 것이 중요하다.
+**Virtual Machine (VM)** 은 물리 hardware 위에 격리된 실행 환경을 제공한다. 물리 서버 전체의 자원이 필요하지 않은 application에 적합하다. **Bare Metal**은 전용 물리 서버 접근이 필요한 성능·격리 요구를 위한 선택이다. 더 큰 형태를 고르는 것보다 workload가 요구하는 CPU·메모리·network·storage 특성을 맞추는 것이 중요하다.
 
 ## Instance 구성 요소의 관계
 

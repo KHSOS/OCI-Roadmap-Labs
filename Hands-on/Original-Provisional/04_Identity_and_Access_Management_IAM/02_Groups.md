@@ -244,7 +244,7 @@ printf 'GetObject RC=%s\n' "$RC"
 
 test policy `p-observer-read-a` 삭제 → User membership 제거 → `lab-observers` 삭제.33의 `lab-readers`/policy와 fixture는 후속 IAM까지 보존한다. 삭제 후 exact Group OCID 조회 불가와 기존 Reader A read 정상 여부를 확인한다.
 
-**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: group35-no-policy의 proof.txt/error.txt、group35-admin-b/proof.txt、group35-admin-a/proof.txt、group35-admin-a-removed/proof.txt、group35-policy의 a.txt/b.txt/b-error.txt、group35-removed/rejoined의 proof.txt/error.txt 및 승인 retry directory의 동일 파일. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
+**전용 로컬 산출물 정리:** 실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: group35-no-policy의 proof.txt/error.txt、group35-admin-b/proof.txt、group35-admin-a/proof.txt、group35-admin-a-removed/proof.txt、group35-policy의 a.txt/b.txt/b-error.txt、group35-removed/rejoined의 proof.txt/error.txt 및 승인 retry directory의 동일 파일. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
 
 ## 공식문서
 

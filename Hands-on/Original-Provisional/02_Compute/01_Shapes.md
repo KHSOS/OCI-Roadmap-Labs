@@ -196,6 +196,8 @@ shape list가 image와 호환되지 않으면 CPU architecture와 region/AD를 �
 
 ## 리소스정리
 
+[공동 launch creator의 리소스정리로 돌아가기](00_Compute.md#리소스정리)
+
 shape/OCPU/memory/architecture와 same event; owner10 VM 보존. 공유 기반 리소스는 이 consumer가 직접 삭제하지 않는다. 실제 소비자/expiry를 creator에게 반환하고 creator의 리소스정리 절차를 사용한다. VM을 Stop했다고 boot/IP/backup 비용이 끝난 것으로 처리하지 않는다. 로컬/guest 파일은 자신이 만든 정확한 경로만 제거하며 기록된 증거를 보존한다.
 
 

@@ -62,16 +62,24 @@ owner48 Standard bucket에 lab/expire/test.txt와 prefix 제한 DELETE rule 하�
 - **완주 흐름:** 승인/입력→본문의 생성/편집→prefix/action/age/enabled readback; 실제삭제 별도 ASYNC_PENDING→실습rule disable/delete→key삭제→관리자 principal statement 반환.
 - **선택 이유/실패 경계:** 60분 내 하루 규칙 실행을 PASS로 바꾸지 않는다.
 
-| 입력/산출물 | 실제 값 출처 | 준비 시점 |
-|---|---|---|
-| `NS` | creator의 실제 생성/조회 출력; 임의 OCID/IP 금지 | 사용 전 |
-| `BUCKET` | creator의 실제 생성/조회 출력; 임의 OCID/IP 금지 | 사용 전 |
-| `REGION` | 본문 단계에서 승인/선택한 값 | 사용 전 |
+
+- 입력/산출물: `NS`
+  - 실제 값 출처: creator의 실제 생성/조회 출력; 임의 OCID/IP 금지
+  - 준비 시점: 사용 전
+
+- 입력/산출물: `BUCKET`
+  - 실제 값 출처: creator의 실제 생성/조회 출력; 임의 OCID/IP 금지
+  - 준비 시점: 사용 전
+
+- 입력/산출물: `REGION`
+  - 실제 값 출처: 본문 단계에서 승인/선택한 값
+  - 준비 시점: 사용 전
+
 
 이 문서의 모든 CLI/파일 작업은 같은 인증 Cloud Shell/승인 OCI 터미널에서 수행한다. VM/SSH/NFS는 필요하지 않다. 조회/변경/정리의 관리자 승인은 **실행 조건**이며 이 문서는 IAM 성공을 입증하지 않는다. 실제 허용/거부와 capacity는 사용자 실행에서 확인한다. 미승인/NOT_SELECTED/ASYNC_PENDING을 성공으로 바꾸지 않는다.
 
 ### 공유 bucket lease와 비동기 분기
-owner48의 동일 bucket에는 단일 승인 `BUCKET_EXPIRY_UTC`/cleanup owner가 있다. 50의 하루 이상 관찰 또는52의 restore/download가 원래60분을 넘을 가능성이 있으면 **규칙/업로드 이전에** owner48과 budget 승인자가 새 종료시각/비용/담당자와 모든 선택 consumer를 기록하여 lease를 갱신한다. 갱신 승인 없으면 원래deadline 전에 disable/cancel 가능한 시험을중단하고 owned key를삭제/반환한다; 실제비동기 작업취소가 지원되지않으면작업상태를기록하고 객체삭제/목록readback을owner48과조율한다. owner48은 expiry때 독자삭제하지않고 모든consumer의abort/restore/return acknowledgement를받는다. 연장안됨을단순히무기한보존으로대체하지않는다. ASYNC_PENDING은검증성공아니다.
+owner48의 동일 bucket에는 단일 승인 `BUCKET_EXPIRY_UTC`/cleanup owner가 있다. 50의 하루 이상 관찰 또는52의 restore/download가 원래60분을 넘을 가능성이 있으면 **규칙/업로드 이전에** owner48과 budget 승인자가 새 종료시각/비용/담당자와 모든 선택 consumer를 기록하여 lease를 갱신한다. 갱신 승인 없으면 원래 deadline 전에 disable/cancel 가능한 시험을 중단하고 owned key를 삭제/반환한다. 실제 비동기 작업 취소가 지원되지 않으면 작업 상태를 기록하고 객체 삭제/목록 readback을 owner48과 조율한다. owner48은 expiry 때 독자 삭제하지 않고 모든 consumer의 abort/restore/return acknowledgement를 받는다. 연장 불가를 무기한 보존으로 대체하지 않는다. ASYNC_PENDING은 검증 성공이 아니다.
 
 ## 실습절차
 
@@ -142,15 +150,15 @@ Console Lifecycle policy에서 rule `lab-prefix-expiry`의 prefix=lab/expire/, t
 
 ## 문제해결
 
-policy저장과서비스실행은별개. serviceprincipalregion/BUCKETREAD/INSPECT/OBJECTDELETE없으면관리자가수정;24시간전미삭제를장애라고단정하지않는다. 실행은 하루 단위이고 변경 반영/첫 실행 시작에 최대 24시간이 걸릴 수 있으며 UTC last-modified의 일 단위 올림과 처리 지연을 고려한다. 승인 deadline 도달 시 추가 대기 대신 복구 station으로 반환한다.
+policy 저장과 서비스 실행은 별개다. service principal의 Region 및 BUCKET_READ/INSPECT/OBJECT_DELETE 권한이 없으면 관리자가 수정한다. 24시간 전 미삭제를 장애라고 단정하지 않는다. 실행은 하루 단위이고 변경 반영/첫 실행 시작에 최대 24시간이 걸릴 수 있으며 UTC last-modified의 일 단위 올림과 처리 지연을 고려한다. 승인 deadline 도달 시 추가 대기 대신 복구 station으로 반환한다.
 
-실패기록에는같은target/credentials/region/요청시간을고정한다. 복구는원래설정으로실행하고actualresponse/readback둘다확인한다;예상값을실측으로쓰지않는다.
+실패 기록에는 같은 target/credentials/region/요청 시간을 고정한다. 복구는 원래 설정으로 실행하고 actual response/readback을 둘 다 확인한다. 예상값을 실측으로 쓰지 않는다.
 
 ## 리소스정리
 
 먼저 위 복구 station으로 이번 rule을 disable/delete하고 원래 rules를 보존한다. exact owned key는 목록에서 존재할 때만 삭제하고 목록 readback으로 부재를 확인한다. 이미 비동기 삭제됐으면 반복 삭제하지 않는다. owner48 반환과 service statement 반환 확인 뒤 LAB_WORK의 이번 regular/non-symlink expiry.txt만 존재할 때 제거하고, directory 밖에서 `rmdir -- "$LAB_WORK"`한다. local diagnostic/원래 rules 기록은 증거 보존 종료 후 exact 소유 파일만 정리하며 glob/recursive 삭제는 하지 않는다.
 
-정리실행자의실제UTC/OCID/readback을기록한다. 공유 bucket은 owner48 확인 전 삭제하지 않는다. 이 consumer는 bucket을 삭제하지 않고 rule/key 반환만 수행한다.
+정리 실행자의 실제 UTC/OCID/readback을 기록한다. 공유 bucket은 owner48 확인 전 삭제하지 않는다. 이 consumer는 bucket을 삭제하지 않고 rule/key 반환만 수행한다.
 
 ## 공식문서
 

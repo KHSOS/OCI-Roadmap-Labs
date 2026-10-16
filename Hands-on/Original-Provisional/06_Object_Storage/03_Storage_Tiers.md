@@ -62,16 +62,24 @@ owner48 Standard bucket의 `lab/tier.txt` 한 개만 Standard→InfrequentAccess
 - **완주 흐름:** 승인/입력→본문의 생성/편집→각 tier HEAD, GET/cmp0,원복 Standard→tier.txt삭제→48 반환;31일 과금 인계.
 - **선택 이유/실패 경계:** bucket default immutable; IA 검색/조기삭제 비용 승인.
 
-| 입력/산출물 | 실제 값 출처 | 준비 시점 |
-|---|---|---|
-| `NS` | creator의 실제 생성/조회 출력; 임의 OCID/IP 금지 | 사용 전 |
-| `BUCKET` | creator의 실제 생성/조회 출력; 임의 OCID/IP 금지 | 사용 전 |
-| `tier.txt` | 본문 단계에서 승인/선택한 값 | 사용 전 |
+
+- 입력/산출물: `NS`
+  - 실제 값 출처: creator의 실제 생성/조회 출력; 임의 OCID/IP 금지
+  - 준비 시점: 사용 전
+
+- 입력/산출물: `BUCKET`
+  - 실제 값 출처: creator의 실제 생성/조회 출력; 임의 OCID/IP 금지
+  - 준비 시점: 사용 전
+
+- 입력/산출물: `tier.txt`
+  - 실제 값 출처: 본문 단계에서 승인/선택한 값
+  - 준비 시점: 사용 전
+
 
 입력별 실행위치는 본문 터미널 구분을 따른다: OCI CLI=인증 Cloud Shell/승인 OCI 터미널, OS 앱/NFS/부하=지정 guest, private HTTP/TCP=vm-a guest, YAML 작성/SSH private key=본인 local. 조회/변경/정리의 관리자 승인은 **실행 조건**이며 이 문서는 IAM 성공을 입증하지 않는다. 실제 허용/거부와 capacity는 사용자 실행에서 확인한다. 미승인/NOT_SELECTED/ASYNC_PENDING을 성공으로 바꾸지 않는다.
 
 ### 공유 bucket lease와 비동기 분기
-owner48의 동일 bucket에는 단일 승인 `BUCKET_EXPIRY_UTC`/cleanup owner가 있다. 50의 하루 이상 관찰 또는52의 restore/download가 원래60분을 넘을 가능성이 있으면 **규칙/업로드 이전에** owner48과 budget 승인자가 새 종료시각/비용/담당자와 모든 선택 consumer를 기록하여 lease를 갱신한다. 갱신 승인 없으면 원래deadline 전에 disable/cancel 가능한 시험을중단하고 owned key를삭제/반환한다; 실제비동기 작업취소가 지원되지않으면작업상태를기록하고 객체삭제/목록readback을owner48과조율한다. owner48은 expiry때 독자삭제하지않고 모든consumer의abort/restore/return acknowledgement를받는다. 연장안됨을단순히무기한보존으로대체하지않는다. ASYNC_PENDING은검증성공아니다.
+owner48의 동일 bucket에는 단일 승인 `BUCKET_EXPIRY_UTC`/cleanup owner가 있다. 50의 하루 이상 관찰 또는52의 restore/download가 원래60분을 넘을 가능성이 있으면 **규칙/업로드 이전에** owner48과 budget 승인자가 새 종료시각/비용/담당자와 모든 선택 consumer를 기록하여 lease를 갱신한다. 갱신 승인 없으면 원래 deadline 전에 disable/cancel 가능한 시험을 중단하고 owned key를 삭제/반환한다. 실제 비동기 작업 취소가 지원되지 않으면 작업 상태를 기록하고 객체 삭제/목록 readback을 owner48과 조율한다. owner48은 expiry 때 독자 삭제하지 않고 모든 consumer의 abort/restore/return acknowledgement를 받는다. 연장 불가를 무기한 보존으로 대체하지 않는다. ASYNC_PENDING은 검증 성공이 아니다.
 
 ## 실습절차
 
@@ -160,9 +168,9 @@ Standard→Infrequent Access→Standard 상태와 payload 동일성을 기록한
 
 ## 문제해결
 
-tier변경권한OBJECT_UPDATE_TIER확인;IAretrieval/earlydelete비용을읽고AutoTiering충돌없게한다.
+tier 변경 권한 OBJECT_UPDATE_TIER를 확인한다. IA retrieval/early delete 비용을 읽고 Auto Tiering과 충돌하지 않게 한다.
 
-실패기록에는같은target/credentials/region/요청시간을고정한다. 복구는원래설정으로실행하고actualresponse/readback둘다확인한다;예상값을실측으로쓰지않는다.
+실패 기록에는 같은 target/credentials/region/요청 시간을 고정한다. 복구는 원래 설정으로 실행하고 actual response/readback을 둘 다 확인한다. 예상값을 실측으로 쓰지 않는다.
 
 ## 리소스정리
 

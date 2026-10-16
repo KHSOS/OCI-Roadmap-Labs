@@ -61,17 +61,43 @@ iam-lab 아래 child/sibling Compartment와 각 private Standard Bucket/작은 p
 
 child/sibling Compartment와 각 Bucket를 실제 생성하고 소유경계를 기록한다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`IAM_LAB_OCID`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`OUTSIDER_USER_OCID`|[Users](01_Users.md#baseline-34-ready)의 실제 User OCID/그룹 없는 LAB_OUTSIDER; outsider 비교 생략 경로는 NOT_SELECTED|outsider deny branch 선택 전만|outsider 본인 PC|관리자 fixture 생성에는 User34가 필요하지 않음|
-|`IAM_CHILD_OCID`|owner38의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`IAM_SIBLING_OCID`|owner38의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`NS`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|Compartment parent / bucket compartment / Region|iam-child and iam-sibling parent iam-lab; same fixture Region; private Standard|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `IAM_LAB_OCID`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `OUTSIDER_USER_OCID`
+  - 값/출처: [Users](01_Users.md#baseline-34-ready)의 실제 User OCID/그룹 없는 LAB_OUTSIDER; outsider 비교 생략 경로는 NOT_SELECTED
+  - 시점: outsider deny branch 선택 전만
+  - 실행 위치: outsider 본인 PC
+  - 선택 이유: 관리자 fixture 생성에는 User34가 필요하지 않음
+
+- 입력: `IAM_CHILD_OCID`
+  - 값/출처: owner38의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `IAM_SIBLING_OCID`
+  - 값/출처: owner38의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `NS`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: Compartment parent / bucket compartment / Region
+  - 실제 입력/선택: iam-child and iam-sibling parent iam-lab; same fixture Region; private Standard
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** iam-child:Compartment,iam-sibling:Compartment,iam-child-proof:Bucket,iam-sibling-proof:Bucket. **완료 비교:** admin each hash success; Reader each deny; outsider each deny는 선택; record owner vs Region. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
@@ -249,7 +275,7 @@ create403이면 compartment creation 권한과 parent scope를 관리자 확인�
 
 Compartment 삭제는 **Identity & Security → Compartments**에서 기록한 child/sibling OCID와 parent를 대조한 뒤 각 **Actions → Delete Compartment → OK**로 진행한다. work request와 상태를 확인한다. `Deleting`은 진행 중이고 `Active`로 돌아오면 실패이므로 남은 소유 자원/부착 policy를 확인한다. `Deleted`를 확인한 뒤33에 반환한다. 삭제 실패를 우회하려고 parent 또는 타인 policy를 삭제하지 않는다. [Managing Compartments — Deleting Compartments](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcompartments.htm)
 
-**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: compartment38-fixtures/child/proof.txt、compartment38-fixtures/sibling/proof.txt 및 comp38-admin/reader/outsider-child/sibling의 proof.txt/error.txt. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
+**전용 로컬 산출물 정리:** 실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: compartment38-fixtures/child/proof.txt、compartment38-fixtures/sibling/proof.txt 및 comp38-admin/reader/outsider-child/sibling의 proof.txt/error.txt. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
 
 ## 공식문서
 

@@ -184,7 +184,7 @@ propagate_probe condition40-all-get-b get deny "$BUCKET_B" || exit 1
 4. A GetObject 성공, A ListObjects 실패, B GetObject 실패를 기대한다. Console의 Objects list가 숨겨져도 direct get 성공이 유효하므로 Console 메타데이터 권한을 추가해 조건을 무력화하지 않는다.
 **관리자 snapshot 준비:** outsider PC shell과 별개의 LAB_ADMIN 전용 Bash shell을 열어 `umask 077`과 `export REGION='<owner33_actual_region>'`을 먼저 실행하고 실제 Region으로 대체했는지 확인한다. 이 shell의 현재 directory 절대 경로를 기록한다.
 
-**snapshot 충돌 gate:**관리자 shell에서 `test ! -e condition40-original-policy.json && test ! -L condition40-original-policy.json` 성공 후 `set -C`(noclobber)를 켠다. 실패면 widening을 시작하지 않는다.
+**snapshot 충돌 gate:** 관리자 shell에서 `test ! -e condition40-original-policy.json && test ! -L condition40-original-policy.json` 성공 후 `set -C`(noclobber)를 켠다. 실패면 widening을 시작하지 않는다.
 
 **조건 widening 전 recovery gate:** LAB_ADMIN config를 준비한 관리자 본인 PC 전용 shell에서 exact p-condition-test OCID/원래 전체 statements를 `oci iam policy get --policy-id '<actual_p-condition-test_OCID>' --profile LAB_ADMIN --region "$REGION" > condition40-original-policy.json || exit 1`로 저장한다. 복구 Console 담당자·원래 all statement와 최대10분 UTC deadline/fixture lease를 승인받는다. widened 관찰은 아래 유한 함수로 stale만 최대10회 관찰하되 성공/invalid/절대 deadline 도달 즉시 원래 all 조건으로 복원한다. PROP_DEADLINE_EPOCH은 widening 이전 승인된 deadline이며 restored 관찰에도 동일 값으로 남은 budget만 사용한다. 시간 내 전파 미확인은 BLOCKED_PROPAGATION이며 담당자가 deadline에 원래 statements를 반드시 복원/readback한다. 새 broad grant를 추가하거나 deadline을 연장하지 않는다.
 

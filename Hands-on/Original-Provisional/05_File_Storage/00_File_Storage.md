@@ -87,19 +87,55 @@ Allow group id <LAB_OPERATOR_GROUP_OCID> to use virtual-network-family in compar
 
 전용 private Subnet과 File System/MT/Export 한 이벤트를 만들고 NFS write/remount한다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`VCN_ID`|owner19의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`B_PRIVATE_IP`|owner22의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`B_AD`|owner22의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`MT_PRIVATE_IP`|owner43의 actual output; `<...>` 대체 필수|생성 후 readback|B guest|정확한 대상/소유관계 고정|
-|`FS_ID`|owner43의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`MT_ID`|owner43의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`EXPORT_ID`|owner43의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|FS AD / MT subnet / Export source / ports|same AD as B; lab-fss10.77.30.0/24; /lab B/32 RW Privileged SYS squashNone|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `VCN_ID`
+  - 값/출처: owner19의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `B_PRIVATE_IP`
+  - 값/출처: owner22의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `B_AD`
+  - 값/출처: owner22의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `MT_PRIVATE_IP`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: B guest
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `FS_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `MT_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `EXPORT_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: FS AD / MT subnet / Export source / ports
+  - 실제 입력/선택: same AD as B; lab-fss10.77.30.0/24; /lab B/32 RW Privileged SYS squashNone
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** lab-fss:Subnet,rt-fss:RouteTable,sl-fss:SecurityList,nsg-fss-mt:NetworkSecurityGroup,nsg-fss-client:NetworkSecurityGroup,fs-lab:FileSystem,mt-lab:MountTarget,lab-export:Export. **완료 비교:** mount actual MT:/lab NFSv3; write/remount same hash. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
@@ -329,7 +365,7 @@ if [ "$?" -ne 0 ]; then printf 'BLOCKED_RECOVERY: preserve endpoints; reconcile 
 
 이 block은 absence 또는 검증된 한 파일만 처리한다. 동시 writer/rename가 있는 공유 환경은 check/unlink race를 완전히 막지 못하므로 exclusive 창이 없으면 실행하지 않는다. 결과를 registry에 기록한 뒤만 정상 unmount/exact mount 부재와 나머지 consumer 소유 파일 반환을 확인하고 endpoint 정리로 진행한다. recursive 삭제와 symlink 따라가기는 하지 않는다.
 
-**owner43 삭제 readback/로컬 종료:**삭제 전에 fs/mt/export/NSG/subnet/rt-fss/sl-fss exact OCID 목록을 저장한다. 각 Delete 뒤 성공 응답만 믿지 말고 Console의 동일 Compartment/AD 목록을 새로 열어 exact OCID 부재/종료 상태를 확인한다. Export 전부 부재 → FS 부재 → MT 부재 → B 기존 NSG 배열 유지/이번 membership 부재 → 전용 NSG 부재 → lab-fss subnet 부재 → rt-fss와 **sl-fss 둘 다 부재**를 각각 기록한다. 권한/필터 오류는 부재 증거가 아니다. 공유 NSG/table/SL은 삭제하지 않는다. B의 mount dir은 exact mount 부재와 잔존 kernel 요청 없음 확인 후 **FSS43_MOUNT_DIR_CREATED=1 기록인 경우에만** `sudo rmdir /mnt/oci-lab`한다. 관리자 PC의 이번 fss43-vcn-plan.json/fss43-existing-subnets.json 및 실행 중 등록된 own snapshot/capture 파일만 제거한다. 기존 파일/symlink는 보존하며 다음 실행의 gate 출력은 noclobber로 생성한다.
+**owner43 삭제 readback/로컬 종료:** 삭제 전에 fs/mt/export/NSG/subnet/rt-fss/sl-fss exact OCID 목록을 저장한다. 각 Delete 뒤 성공 응답만 믿지 말고 Console의 동일 Compartment/AD 목록을 새로 열어 exact OCID 부재/종료 상태를 확인한다. Export 전부 부재 → FS 부재 → MT 부재 → B 기존 NSG 배열 유지/이번 membership 부재 → 전용 NSG 부재 → lab-fss subnet 부재 → rt-fss와 **sl-fss 둘 다 부재**를 각각 기록한다. 권한/필터 오류는 부재 증거가 아니다. 공유 NSG/table/SL은 삭제하지 않는다. B의 mount dir은 exact mount 부재와 잔존 kernel 요청 없음 확인 후 **FSS43_MOUNT_DIR_CREATED=1 기록인 경우에만** `sudo rmdir /mnt/oci-lab`한다. 관리자 PC의 이번 fss43-vcn-plan.json/fss43-existing-subnets.json 및 실행 중 등록된 own snapshot/capture 파일만 제거한다. 기존 파일/symlink는 보존하며 다음 실행의 gate 출력은 noclobber로 생성한다.
 
 ## 공식문서
 

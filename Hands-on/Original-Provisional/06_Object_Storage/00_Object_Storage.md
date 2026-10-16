@@ -74,7 +74,7 @@ private bucket 하나를 만들어 작은 payload를 넣고 인증된 다운로�
 ### 선택 후속 실습의 공유 bucket lease와 비동기 분기
 개인 첫 성공 경로는 다음 consumer를 예약하지 않고 다운로드 확인 후 바로 정리한다. 49–54를 선택하는 경우에만 다음 계약을 적용한다.
 
-owner48의 동일 bucket에는 단일 승인 `BUCKET_EXPIRY_UTC`/cleanup owner가 있다. 50의 하루 이상 관찰 또는52의 restore/download가 원래60분을 넘을 가능성이 있으면 **규칙/업로드 이전에** owner48과 budget 승인자가 새 종료시각/비용/담당자와 모든 선택 consumer를 기록하여 lease를 갱신한다. 갱신 승인 없으면 원래deadline 전에 disable/cancel 가능한 시험을중단하고 owned key를삭제/반환한다; 실제비동기 작업취소가 지원되지않으면작업상태를기록하고 객체삭제/목록readback을owner48과조율한다. owner48은 expiry때 독자삭제하지않고 모든consumer의abort/restore/return acknowledgement를받는다. 연장안됨을단순히무기한보존으로대체하지않는다. ASYNC_PENDING은검증성공아니다.
+owner48의 동일 bucket에는 단일 승인 `BUCKET_EXPIRY_UTC`/cleanup owner가 있다. 50의 하루 이상 관찰 또는52의 restore/download가 원래60분을 넘을 가능성이 있으면 **규칙/업로드 이전에** owner48과 budget 승인자가 새 종료시각/비용/담당자와 모든 선택 consumer를 기록하여 lease를 갱신한다. 갱신 승인 없으면 원래 deadline 전에 disable/cancel 가능한 시험을 중단하고 owned key를 삭제/반환한다. 실제 비동기 작업 취소가 지원되지 않으면 작업 상태를 기록하고 객체 삭제/목록 readback을 owner48과 조율한다. owner48은 expiry 때 독자 삭제하지 않고 모든 consumer의 abort/restore/return acknowledgement를 받는다. 연장 불가를 무기한 보존으로 대체하지 않는다. ASYNC_PENDING은 검증 성공이 아니다.
 
 ## 실습절차
 
@@ -165,11 +165,11 @@ rm -- mismatch.txt
 
 ## 문제해결
 
-namespace/bucket-region오류는OCI_CLI_REGION/NS/BUCKET세값을같은target으로고정. localfileexists는전용새다운로드filename사용;privatemode를public으로수정하지않는다.
+namespace/bucket-region 오류는 OCI_CLI_REGION/NS/BUCKET 세 값을 같은 target으로 고정하여 확인한다. local file exists이면 전용 새 다운로드 filename을 사용한다. private mode를 public으로 수정하지 않는다.
 
 CLI/Console 모두 bucket 생성 이후 실패하면 새 bucket을 만들지 않는다. 기록한 Region/namespace/name/OCID를 다시 확인하고, PUT 이전 실패면 빈 bucket 정리로, PUT/GET 이후 실패면 exact key 목록 확인과 다운로드 재시도로 돌아간다. 부분 다운로드는 이번 전용 폴더의 파일임을 확인한 뒤 새 파일명으로 재다운로드하며 원본은 보존한다. 권한/인증 오류는 public 전환이나 PAR 생성으로 우회하지 않는다.
 
-실패기록에는같은target/credentials/region/요청시간을고정한다. 복구는원래설정으로실행하고actualresponse/readback둘다확인한다;예상값을실측으로쓰지않는다.
+실패 기록에는 같은 target/credentials/region/요청 시간을 고정한다. 복구는 원래 설정으로 실행하고 actual response/readback을 둘 다 확인한다. 예상값을 실측으로 쓰지 않는다.
 
 ## 리소스정리
 
@@ -179,7 +179,7 @@ CLI/Console 모두 bucket 생성 이후 실패하면 새 bucket을 만들지 않
 
 **선택 후속 종료(개인 경로는 다음 공통 삭제 순서로 바로 이동):** 위 단일 bucket lease의 선택49–54가 모두 return/abort acknowledgement를 기록한 뒤 owner48만 정리한다. expiry가 먼저면 새 시험을 중단하고 각 owner의 disable/owned-key 삭제/반환을 조율한다. 갱신 lease가 있으면 갱신된 deadline을 사용한다. 기존60분 문장으로 renewed lease를 덮어쓰거나 consumer 확인 없이 삭제하지 않는다. 
 
-**공통 삭제 순서:** owner48의 `lab/payload.txt`도 `oci os object delete -ns "$NS" -bn "$BUCKET" --name lab/payload.txt`로 삭제한다. 이어 `oci os object list -ns "$NS" -bn "$BUCKET" --all`로빈bucket확인. 남은실습key를각owner가삭제하고 `oci os bucket delete -ns "$NS" -bn "$BUCKET"`를확인prompt후실행. `oci os bucket get`의BucketNotFound와동일namespace정상조회로삭제검증.
+**공통 삭제 순서:** owner48의 `lab/payload.txt`도 `oci os object delete -ns "$NS" -bn "$BUCKET" --name lab/payload.txt`로 삭제한다. 이어 `oci os object list -ns "$NS" -bn "$BUCKET" --all`로 빈 bucket을 확인한다. 남은 실습 key를 각 owner가 삭제하고 `oci os bucket delete -ns "$NS" -bn "$BUCKET"`를 확인 prompt 후 실행한다. `oci os bucket get`의 BucketNotFound와 동일 namespace 정상 조회로 삭제를 검증한다.
 
 
 remote 반환/정리가 끝나고 증거 보존 승인이 종료되면 registry의 LAB48_WORK 안에 이번 생성한 regular/non-symlink `lab-object.txt`/`downloaded.txt`/선택 `mismatch.txt` 및 이번 재다운로드 파일(실패 partial 포함)만 exact 경로로 제거한다. 디렉터리를 벗어난 뒤 `rmdir -- "$LAB48_WORK"`로 빈 owned directory만 제거한다.49의 전용 파일과 기존 사용자의 파일은 정리하지 않는다.

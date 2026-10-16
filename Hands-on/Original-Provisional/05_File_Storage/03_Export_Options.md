@@ -68,16 +68,37 @@
 
 같은 Export source/access만 RW→RO→no-match→RW로 바꾸고 실제 write deny를 확인한다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`B_PRIVATE_IP`|owner22의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`MT_PRIVATE_IP`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|B guest|정확한 대상/소유관계 고정|
-|`EXPORT_ID`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`FS_ID`|owner43의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|Export Access / Source / client options|B/32; server Read Only while client rw; restore exact B/32 RW|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `B_PRIVATE_IP`
+  - 값/출처: owner22의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `MT_PRIVATE_IP`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: B guest
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `EXPORT_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `FS_ID`
+  - 값/출처: owner43의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: Export Access / Source / client options
+  - 실제 입력/선택: B/32; server Read Only while client rw; restore exact B/32 RW
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** export-options-change:ConfigurationChange. **완료 비교:** RW write→server RO read/deny-write→no-match deny-mount→RW restored. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
@@ -132,7 +153,7 @@ sudo timeout -k 5s 20s umount /mnt/oci-lab || exit 1
 }
 ```
 
-**RO 첫 변경 전 실행 gate:**복구담당자가 독립 Console에서 원래 options를 열고120초 wall-clock deadline을 감시한다. RO 요청은 mount20초/kill유예5초, read10초, touch10초로 한 번만 수행한다. timeout/잔존 D-state는 RO deny 증거가 아니고 즉시 원래 options 복구 후 정상 요청 종료/clean unmount를 기다린다. deadline을 요청 프로세스 종료 여부에 의존시키지 않는다; 복원 확인 전 source 시험 금지.
+**RO 첫 변경 전 실행 gate:** 복구담당자가 독립 Console에서 원래 options를 열고120초 wall-clock deadline을 감시한다. RO 요청은 mount20초/kill유예5초, read10초, touch10초로 한 번만 수행한다. timeout/잔존 D-state는 RO deny 증거가 아니고 즉시 원래 options 복구 후 정상 요청 종료/clean unmount를 기다린다. deadline을 요청 프로세스 종료 여부에 의존시키지 않는다; 복원 확인 전 source 시험 금지.
 
 ### B. 서버 RO와 실제 write deny
 4. Console에서 같은 entry의 **Access만 Read Only**로 바꾼다. B를 client **rw** options로 remount한다. client `-o ro`를 사용해 서버 RO와 혼동하지 않는다.
@@ -315,7 +336,7 @@ RO인데 write 성공: 첫 matching entry의 access, 다른 Export path/old moun
 
 마지막 RW/source B/32를 복원하고 remount/RW read-write positive control을 기록한다. **owner46은 공유 FSS 삭제 owner가 아니다.** [47 Snapshots](04_Snapshots.md)가 승인 session에 선택되면 mounted `/lab`, fs/mt/export OCID·source·RW 증거를 47과 owner43에 반환하며 `proof.txt`와 공유 자원을 보존한다. 46 소유 `export-proof.txt`/`ro-should-fail.txt`(실제로 생성된 경우만)/`export46-recovered.txt`/`export46-between.txt`만 확인 후 삭제한다. registry에 47의 SELECTED/NOT_SELECTED, 담당자, 종료시각, 비용 상한, 반환 완료를 명시한다. 예약 consumer가 없거나 expiry에 도달하면 idle 보존하지 않고 owner43의 [최종 정리](00_File_Storage.md#리소스정리)로 인계한다. 47 snapshot 삭제 완료 후 owner43만 전체 client unmount → 교육 Export → File System → 다른 export 없는 MT → 전용 NSG/Subnet/table 순으로 삭제한다.
 
-**로컬 owned 오류 파일 종료:**복원/options readback·IP-source RW positive와 잔존 요청 없음이 확인된 뒤 이번 B shell이 collision guard 후 만든 `export-ro-error.txt`/`export46-source-error.txt`만 삭제한다. 실패 중에는 복구 evidence를 보존한다. 사용자/기존 파일/symlink를 glob으로 제거하지 않는다.
+**로컬 owned 오류 파일 종료:** 복원/options readback·IP-source RW positive와 잔존 요청 없음이 확인된 뒤 이번 B shell이 collision guard 후 만든 `export-ro-error.txt`/`export46-source-error.txt`만 삭제한다. 실패 중에는 복구 evidence를 보존한다. 사용자/기존 파일/symlink를 glob으로 제거하지 않는다.
 
 ## 공식문서
 

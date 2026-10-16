@@ -63,18 +63,49 @@
 
 부모 scope grant를 제거하고 child-only policy로 세 영역 접근을 비교한다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`IAM_LAB_OCID`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`IAM_CHILD_OCID`|owner38의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`IAM_SIBLING_OCID`|owner38의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`OUTSIDER_USER_OCID`|owner34의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`SCOPE_GROUP_OCID`|owner41의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`NS`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|Policy attachment / statement location|p-parent-read attached iam-lab; p-child-read attached iam-child; separate scope IDs|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `IAM_LAB_OCID`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `IAM_CHILD_OCID`
+  - 값/출처: owner38의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `IAM_SIBLING_OCID`
+  - 값/출처: owner38의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `OUTSIDER_USER_OCID`
+  - 값/출처: owner34의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `SCOPE_GROUP_OCID`
+  - 값/출처: owner41의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `NS`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: Policy attachment / statement location
+  - 실제 입력/선택: p-parent-read attached iam-lab; p-child-read attached iam-child; separate scope IDs
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** lab-scope-test:IdentityGroup,p-parent-read:IamPolicy,p-child-read:IamPolicy. **완료 비교:** parent grant all allow→removed all deny→child-only child allow/others deny. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
@@ -151,7 +182,7 @@ parent 삭제 뒤 관리자 `oci iam policy list --profile LAB_ADMIN --compartme
 
 각 변경 뒤 **최대10분,60초 간격,최대10회** 같은 credentials의 세 GET을 새 `scope41-parent-allow-try1`/`no-parent-grant-try1`/`child-only-try1` 등 디렉터리로 실행한다.10분 또는 승인 expiry 중 먼저 도달하면 BLOCKED_PROPAGATION으로 중단한다. 원래 statements와 관리자가 준비한 rollback에 따라 교육 grant/membership만 복구/반환하고 새 상위 권한은 추가하지 않는다. 이 상한은 저술용 budget이며 OCI SLA가 아니다.
 
-**첫 변경 전 독립 복구 station:**교육 grant/membership의 원래 배열(outsider group-free), attachment OCID, 생성할 전용 이름과 fixture lease expiry를 관리자가 보관한다. 첫 mutation 전에 전체 실습의 승인 UTC 종료시각과 복구 담당자를 정하고, 각 transition 관찰은 최대10분/전체 종료시각/creator lease 중 먼저 도달하는 시각까지다. 종료시각에는 이번 scope grant 제거/outsider 그룹 없는 baseline readback을 실행한다. matrix 한 회는 GET15초×3/kill 유예로 최대60초를 예약하며 종료60초 이전에만 시작한다. STATE는 parent-allow/no-parent-grant/child-only 뒤 `-try1`~`-try10`만 허용한다. parent-allow는3 성공, no-parent-grant는3 authorization deny, child-only는child 성공/나머지 deny여야 한다. 아래 validator를 각 matrix 직후 실행한다.
+**첫 변경 전 독립 복구 station:** 교육 grant/membership의 원래 배열(outsider group-free), attachment OCID, 생성할 전용 이름과 fixture lease expiry를 관리자가 보관한다. 첫 mutation 전에 전체 실습의 승인 UTC 종료시각과 복구 담당자를 정하고, 각 transition 관찰은 최대10분/전체 종료시각/creator lease 중 먼저 도달하는 시각까지다. 종료시각에는 이번 scope grant 제거/outsider 그룹 없는 baseline readback을 실행한다. matrix 한 회는 GET15초×3/kill 유예로 최대60초를 예약하며 종료60초 이전에만 시작한다. STATE는 parent-allow/no-parent-grant/child-only 뒤 `-try1`~`-try10`만 허용한다. parent-allow는3 성공, no-parent-grant는3 authorization deny, child-only는child 성공/나머지 deny여야 한다. 아래 validator를 각 matrix 직후 실행한다.
 ```bash
 python3 - "$STATE" "scope41-$STATE" <<'PY'
 import json,pathlib,re,sys,os
@@ -210,9 +241,9 @@ parent grant 제거 후 성공하면 tenancy/ancestor policy 또는 other group 
 
 `p-child-read`와 실패 중 남은 `p-parent-read` 중 이번에 생성한 exact OCID만 관리자 Console에서 삭제한다. 각 attachment의 policy list를 다시 읽어 exact ID 부재를 확인한다(404 단독은 증거가 아니다). 이어 test membership 제거 → 원래 group-free readback → 이번 scope Group 삭제/Domain 목록 부재를 확인한다. 중간 실패/만료도 같은 순서로 수행하며 기존/운영 정책이나 다른 membership은 변경하지 않는다. child/sibling과 parent fixture는41이 삭제하지 않고38/33 creator에게 각각 반환한다. 42를 실제 선택하고 creator 보존 승인을 받은 경우만 그 lease까지 남긴다.
 
-**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: scope41-parent-policy.json、scope41-child-policy.json、scope41-parent-after-delete.json 및 각 scope41-state/승인 retry directory의 `<실제 BUCKET_A>.txt`/iam-child-proof.txt/iam-sibling-proof.txt와 각각 bucket-error.txt 및 bucket-rc.txt. 실제 bucket마다 `<bucket>-rc.txt` 세 파일도 생성 소유 목록에 등록한다. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`하고 exit0을 확인한다. rc 파일을 남긴 directory는 정리 완료가 아니다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
+**전용 로컬 산출물 정리:** 실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: scope41-parent-policy.json、scope41-child-policy.json、scope41-parent-after-delete.json 및 각 scope41-state/승인 retry directory의 `<실제 BUCKET_A>.txt`/iam-child-proof.txt/iam-sibling-proof.txt와 각각 bucket-error.txt 및 bucket-rc.txt. 실제 bucket마다 `<bucket>-rc.txt` 세 파일도 생성 소유 목록에 등록한다. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`하고 exit0을 확인한다. rc 파일을 남긴 directory는 정리 완료가 아니다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
 
-**owner38 반환:**교육 policy/membership 정리와 원래 child/sibling fixture hash를38 담당자에게 전달하고 consumer41을 RETURNED 또는 승인 ABORTED로 기록한다. parent A의 원래 hash와 consumer41 반환도33 담당자에게 전달한다. 원래 lease의 EXPIRY_UTC 이후 새 요청 금지; 38이 object/bucket/child 삭제 owner이며41은 parent/child fixture를 직접 삭제하지 않는다.
+**owner38 반환:** 교육 policy/membership 정리와 원래 child/sibling fixture hash를38 담당자에게 전달하고 consumer41을 RETURNED 또는 승인 ABORTED로 기록한다. parent A의 원래 hash와 consumer41 반환도33 담당자에게 전달한다. 원래 lease의 EXPIRY_UTC 이후 새 요청 금지; 38이 object/bucket/child 삭제 owner이며41은 parent/child fixture를 직접 삭제하지 않는다.
 
 ## 공식문서
 

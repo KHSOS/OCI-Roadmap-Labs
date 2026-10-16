@@ -62,16 +62,37 @@
 
 isolated Group의 inspect/read를 바꾸고 실제 list/get/put를 비교한다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`IAM_LAB_OCID`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`OUTSIDER_USER_OCID`|owner34의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`POLICY_TEST_GROUP_OCID`|이 문서 단계 A.1에서 생성한 Group의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`NS`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|Policy verb / bucket condition|p-verb-test; inspect→read objects; bucket <actual_BUCKET_A_name> only|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `IAM_LAB_OCID`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `OUTSIDER_USER_OCID`
+  - 값/출처: owner34의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `POLICY_TEST_GROUP_OCID`
+  - 값/출처: 이 문서 단계 A.1에서 생성한 Group의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `NS`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: Policy verb / bucket condition
+  - 실제 입력/선택: p-verb-test; inspect→read objects; bucket <actual_BUCKET_A_name> only
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** lab-policy-test:IdentityGroup,p-verb-test:IamPolicy. **완료 비교:** inspect list allow/get deny; read get allow/new put deny. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
@@ -184,7 +205,7 @@ propagate_probe verb37-read get allow "$BUCKET_A" || exit 1
 ```
 
 
-**단계6 앞 관리자 same-operation control:**관리자 PC에서 아래 순서대로33 fixture와 구별되는 `deny-upload.txt` 새 key를 확인한다. Console A Objects 전체 목록에서 exact key 부재를 확인하고, 새 로컬 directory에 동일 `iam-deny-create` LF bytes를 준비한다. Objects → Upload로 **동일 key/동일 bytes** PUT 성공과 GET bytes/hash를 확인한다 → 이 control key만 Delete → 새 목록에서 부재 readback. 원래 proof.txt를 변경하지 않는다. 이 성공/삭제가 미확인이면 outsider PUT을 시작하지 않는다. control 작업자는 OBJECT_CREATE/OBJECT_READ/OBJECT_DELETE가 필요하다. outsider 후 예상밖 성공이면 이 key만 관리자가 삭제/readback하며 다른 key는 보존한다.
+**단계6 앞 관리자 same-operation control:** 관리자 PC에서 아래 순서대로33 fixture와 구별되는 `deny-upload.txt` 새 key를 확인한다. Console A Objects 전체 목록에서 exact key 부재를 확인하고, 새 로컬 directory에 동일 `iam-deny-create` LF bytes를 준비한다. Objects → Upload로 **동일 key/동일 bytes** PUT 성공과 GET bytes/hash를 확인한다 → 이 control key만 Delete → 새 목록에서 부재 readback. 원래 proof.txt를 변경하지 않는다. 이 성공/삭제가 미확인이면 outsider PUT을 시작하지 않는다. control 작업자는 OBJECT_CREATE/OBJECT_READ/OBJECT_DELETE가 필요하다. outsider 후 예상밖 성공이면 이 key만 관리자가 삭제/readback하며 다른 key는 보존한다.
 
 6. 새 object put를 outsider로 시도하여 실패를 기록한다.
 

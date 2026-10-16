@@ -51,11 +51,25 @@ oci --version
 
 ### Workshop 입력 계약 — 단계와 host
 
-| 입력/출력 | 값 또는 실제 획득 경로 | 사용할 시점 | 실행 위치 | 선택 이유 |
-|---|---|---|---|---|
-| Console/설정 필드 | owner07 same vm-b event; actual OCID/shape/boot size/owner/expiry/UTC times; 다섯 pillar 구현범위 | 기존 creator 출력 확인 → readback | 본문 Console/로컬 지정 | 두 기존 자원의 조회 범위 |
-| `KEY` | owner15 Part A 전용 private key 절대경로; 내용 전송 금지 | 준비 완료 | 로컬 SSH만 | 해당 공개키와 대응 |
-| `REGION` | 승인된 기존 subscribed Region identifier | 생성 전 | Console/Cloud Shell | API endpoint/데이터 위치 |
+
+- 입력/출력: Console/설정 필드
+  - 값 또는 실제 획득 경로: owner07 same vm-b event; actual OCID/shape/boot size/owner/expiry/UTC times; 다섯 pillar 구현범위
+  - 사용할 시점: 기존 creator 출력 확인 → readback
+  - 실행 위치: 본문 Console/로컬 지정
+  - 선택 이유: 두 기존 자원의 조회 범위
+
+- 입력/출력: `KEY`
+  - 값 또는 실제 획득 경로: owner15 Part A 전용 private key 절대경로; 내용 전송 금지
+  - 사용할 시점: 준비 완료
+  - 실행 위치: 로컬 SSH만
+  - 선택 이유: 해당 공개키와 대응
+
+- 입력/출력: `REGION`
+  - 값 또는 실제 획득 경로: 승인된 기존 subscribed Region identifier
+  - 사용할 시점: 생성 전
+  - 실행 위치: Console/Cloud Shell
+  - 선택 이유: API endpoint/데이터 위치
+
 
 생성 전에는 행의 승인값/선행 완료값만 지정하고, 생성 후 ID/IP는 해당 owner 응답으로 채운다. Cloud Shell과 로컬 SSH의 환경변수는 공유되지 않는다. 로컬에는 KEY와 접속 주소만 다시 지정하고 guest disk 명령은 로그인한 guest에서만 실행한다. `<...>`가 남으면 해당 명령은 실행하지 않는다.
 
@@ -168,13 +182,27 @@ ledger는 **Cloud Shell 전용 lab 작업 디렉터리**에서 작성한다. 위
 
 아래는 관찰/제안 형식이지 실행 결과가 아니다. 결과검증을 끝낸 뒤 ledger를 로컬 텍스트 편집기로 열어 각 pillar에 `observation`과 `improvement` 한 문장씩 추가한다. 검증 실패 항목은 implemented를 NOT_EXECUTED로 유지하고 실패 원인을 적는다. 새 cloud 자원을 만들 필요는 없다.
 
-| Pillar | 이번 검증 후 적을 관찰 예 | 실행하지 않을 개선 제안 예 |
-|---|---|---|
-| Security and compliance | vm-a 전체 허용 합집합 evidence의 UTC와 제한접근 범위 | 변경 시 전체 규칙 재검토 |
-| Reliability and resilience | 두 instance의 같은 AD/다른 FD 확인, app failover 미시험 | 별도 승인 후 app 복구 시험 설계 |
-| Performance and cost optimization | API의 shape/boot 크기/expiry, 청구액 아님 | 실제 비용 반영 후 적정 크기 검토 |
-| Operational efficiency | 두 creator 출력과 API inventory 대조 | 반복 조회 절차 자동화 검토 |
-| Distributed cloud | NOT_SELECTED; 단일 Region만 사용 | 요구가 생길 때 별도 설계 검토 |
+
+- Pillar: Security and compliance
+  - 이번 검증 후 적을 관찰 예: vm-a 전체 허용 합집합 evidence의 UTC와 제한접근 범위
+  - 실행하지 않을 개선 제안 예: 변경 시 전체 규칙 재검토
+
+- Pillar: Reliability and resilience
+  - 이번 검증 후 적을 관찰 예: 두 instance의 같은 AD/다른 FD 확인, app failover 미시험
+  - 실행하지 않을 개선 제안 예: 별도 승인 후 app 복구 시험 설계
+
+- Pillar: Performance and cost optimization
+  - 이번 검증 후 적을 관찰 예: API의 shape/boot 크기/expiry, 청구액 아님
+  - 실행하지 않을 개선 제안 예: 실제 비용 반영 후 적정 크기 검토
+
+- Pillar: Operational efficiency
+  - 이번 검증 후 적을 관찰 예: 두 creator 출력과 API inventory 대조
+  - 실행하지 않을 개선 제안 예: 반복 조회 절차 자동화 검토
+
+- Pillar: Distributed cloud
+  - 이번 검증 후 적을 관찰 예: NOT_SELECTED; 단일 Region만 사용
+  - 실행하지 않을 개선 제안 예: 요구가 생길 때 별도 설계 검토
+
 
 ## 결과검증
 

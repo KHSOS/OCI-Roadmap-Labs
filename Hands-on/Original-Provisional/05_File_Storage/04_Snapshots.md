@@ -62,12 +62,23 @@ owner43의 FS/표준 MT/Export와 owner22의 기존 NFS client를 재사용한�
 - **완주 흐름:** 승인/입력→본문의 생성/편집→현재 after-snapshot / snapshot before-snapshot / 복원 cmp0 / snapshot write 거부→47 snapshot·lab47 파일 삭제→43 mount/FS 반환.
 - **선택 이유/실패 경계:** mount 아닌 local directory의 false success와 root-owned mount UID를 먼저 차단한다.
 
-| 입력/산출물 | 실제 값 출처 | 준비 시점 |
-|---|---|---|
-| `FSS_MOUNT` | 본문 단계에서 승인/선택한 값 | 사용 전 |
-| `MT_PRIVATE_IP` | creator의 실제 생성/조회 출력; 임의 OCID/IP 금지 | 사용 전 |
-| `FILE_SYSTEM_ID` | creator의 실제 생성/조회 출력; 임의 OCID/IP 금지 | 사용 전 |
-| `SNAPSHOT_NAME` | 본문 단계에서 승인/선택한 값 | 사용 전 |
+
+- 입력/산출물: `FSS_MOUNT`
+  - 실제 값 출처: 본문 단계에서 승인/선택한 값
+  - 준비 시점: 사용 전
+
+- 입력/산출물: `MT_PRIVATE_IP`
+  - 실제 값 출처: creator의 실제 생성/조회 출력; 임의 OCID/IP 금지
+  - 준비 시점: 사용 전
+
+- 입력/산출물: `FILE_SYSTEM_ID`
+  - 실제 값 출처: creator의 실제 생성/조회 출력; 임의 OCID/IP 금지
+  - 준비 시점: 사용 전
+
+- 입력/산출물: `SNAPSHOT_NAME`
+  - 실제 값 출처: 본문 단계에서 승인/선택한 값
+  - 준비 시점: 사용 전
+
 
 입력별 실행위치는 본문 터미널 구분을 따른다: OCI CLI=인증 Cloud Shell/승인 OCI 터미널, OS 앱/NFS/부하=지정 guest, private HTTP/TCP=vm-a guest, YAML 작성/SSH private key=본인 local. 조회/변경/정리의 관리자 승인은 **실행 조건**이며 이 문서는 IAM 성공을 입증하지 않는다. 실제 허용/거부와 capacity는 사용자 실행에서 확인한다. 미승인/NOT_SELECTED/ASYNC_PENDING을 성공으로 바꾸지 않는다.
 
@@ -151,9 +162,9 @@ snapshot에서는 before-snapshot, 현재 파일에서는 after-snapshot 문자�
 
 ## 문제해결
 
-snapshot경로ENOENT는mountroot와snapshot이름/상태확인. NFSpermissiondenied는exportoptions/UID/mount권한이며IAM확대하지않는다.
+snapshot 경로의 ENOENT는 mount root와 snapshot 이름/상태를 확인한다. NFS permission denied는 export options/UID/mount 권한 문제이므로 IAM을 확대하지 않는다.
 
-실패기록에는같은target/credentials/region/요청시간을고정한다. 복구는원래설정으로실행하고actualresponse/readback둘다확인한다;예상값을실측으로쓰지않는다.
+실패 기록에는 같은 target/credentials/region/요청 시간을 고정한다. 복구는 원래 설정으로 실행하고 actual response/readback을 둘 다 확인한다. 예상값을 실측으로 쓰지 않는다.
 
 ## 리소스정리
 
@@ -218,7 +229,7 @@ fi
 ```
 Snapshot 부재/owned files 부재/잔존 요청 없음과 기존 mount를43에 반환한다. FILE_SYSTEM_ID/export/mounttarget는47에서 삭제하지 않는다. owner22의 B도 여기서 종료하지 않는다.
 
-정리실행자의실제UTC/OCID/readback을기록한다. 공유resource는owner확인전삭제금지; stop만으로bootvolume/LB/image비용종료가아니다.
+정리 실행자의 실제 UTC/OCID/readback을 기록한다. 공유 resource는 owner 확인 전 삭제하지 않는다. stop만으로 boot volume/LB/image 비용이 종료되는 것은 아니다.
 
 ## 공식문서
 

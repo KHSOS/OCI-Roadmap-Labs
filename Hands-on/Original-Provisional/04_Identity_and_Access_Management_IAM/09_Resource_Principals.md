@@ -73,18 +73,49 @@ Function invocation/GB-second·OCIR storage·network transfer는 현행 Region �
 
 Python Function를 image build/deploy/invoke하고 Resource Principal A/B read를 검증한다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`VCN_ID`|owner19의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`SUBNET_PRIVATE_ID`|owner21의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`NS`|owner33의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`FUNCTION_COMPARTMENT_OCID`|관리자가 승인한 기존 Compartment의 actual OCID; 신규 Compartment 생성 없음|배포/생성 전|Console/deployer Cloud Shell|정확한 대상/소유관계 고정|
-|`IMAGE_COMPARTMENT_OCID`|관리자가 승인한 기존 Compartment의 actual OCID; 신규 Compartment 생성 없음|배포/생성 전|Console/deployer Cloud Shell|정확한 대상/소유관계 고정|
-|`OCIR_HOST`|승인 Region의 공식 OCIR endpoint/Console Registry 안내에서 배포 전 취득; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|Application architecture / subnet / memory / timeout|iam-rp-app x86; private-app; 256MiB/30s; exact Function DG|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `VCN_ID`
+  - 값/출처: owner19의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `SUBNET_PRIVATE_ID`
+  - 값/출처: owner21의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `NS`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `FUNCTION_COMPARTMENT_OCID`
+  - 값/출처: 관리자가 승인한 기존 Compartment의 actual OCID; 신규 Compartment 생성 없음
+  - 시점: 배포/생성 전
+  - 실행 위치: Console/deployer Cloud Shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `IMAGE_COMPARTMENT_OCID`
+  - 값/출처: 관리자가 승인한 기존 Compartment의 actual OCID; 신규 Compartment 생성 없음
+  - 시점: 배포/생성 전
+  - 실행 위치: Console/deployer Cloud Shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `OCIR_HOST`
+  - 값/출처: 승인 Region의 공식 OCIR endpoint/Console Registry 안내에서 배포 전 취득; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: Application architecture / subnet / memory / timeout
+  - 실제 입력/선택: iam-rp-app x86; private-app; 256MiB/30s; exact Function DG
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** iam-rp-app:FunctionsApplication,rp-read-proof:Function,iam-rp-image:ContainerImage,dg-rp-proof:DynamicGroup,p-rp-read-a:IamPolicy. **완료 비교:** real invocation allow200/hash and deny service error; grant removal deny→restore는 별도 선택 심화만 해당. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
@@ -96,7 +127,7 @@ Application `iam-rp-app`와 Python Function `rp-read-proof` 하나를 **실제 i
 
 SDK ObjectStorageClient의 Region은 Resource Principal signer가 제공하는 실제 function Region을 확인한다. Console Application config 값/Function OCID/DG subject를 readback한 뒤 invoke한다. SDK 또는 FDK build 실패는 성공 출력으로 대체하지 않는다. private-app function egress는 service destination443/DNS가 실제 연결된 NSG/SL에 허용되어야 한다; Compute B의 NSG만 허용돼 있다는 것으로 Function 허용을 추정하지 않는다.
 
-**단계1 전 입력/승인 (deployer Cloud Shell):**관리자가 기존 deployer Group의 실제 OCID/Domain, Network compartment의 실제 OCID와 image/function compartment scope를 제공/승인한다. 새 Group/compartment를 몰래 만들지 않는다. Console Region selector와 Registry의 Region endpoint/namespace를 대조해 REGION/OCIR_HOST를 먼저 기록한다(이미지 생성 출력이 아님). Application 생성 후 tailored Getting Started 값을 재대조한다.
+**단계1 전 입력/승인 (deployer Cloud Shell):** 관리자가 기존 deployer Group의 실제 OCID/Domain, Network compartment의 실제 OCID와 image/function compartment scope를 제공/승인한다. 새 Group/compartment를 몰래 만들지 않는다. Console Region selector와 Registry의 Region endpoint/namespace를 대조해 REGION/OCIR_HOST를 먼저 기록한다(이미지 생성 출력이 아님). Application 생성 후 tailored Getting Started 값을 재대조한다.
 ```bash
 export REGION='<approved-actual-region>'
 export NETWORK_COMPARTMENT_OCID='<network-owner-approved-compartment-OCID>'

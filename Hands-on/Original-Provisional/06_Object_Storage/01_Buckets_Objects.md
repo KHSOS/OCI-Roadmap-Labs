@@ -62,11 +62,19 @@ owner48의 private Standard bucket 하나를 재사용한다. 추가 범위는 `
 - **완주 흐름:** 승인/입력→본문의 생성/편집→version-two→missing key 오류+같은인증 positive→payload original cmp0→second만삭제→48 반환.
 - **선택 이유/실패 경계:** ETag는 checksum 단정 금지; OBJECT_OVERWRITE 별도 승인.
 
-| 입력/산출물 | 실제 값 출처 | 준비 시점 |
-|---|---|---|
-| `NS` | creator의 실제 생성/조회 출력; 임의 OCID/IP 금지 | 사용 전 |
-| `BUCKET` | creator의 실제 생성/조회 출력; 임의 OCID/IP 금지 | 사용 전 |
-| `lab-object.txt` | 본문 단계에서 승인/선택한 값 | 사용 전 |
+
+- 입력/산출물: `NS`
+  - 실제 값 출처: creator의 실제 생성/조회 출력; 임의 OCID/IP 금지
+  - 준비 시점: 사용 전
+
+- 입력/산출물: `BUCKET`
+  - 실제 값 출처: creator의 실제 생성/조회 출력; 임의 OCID/IP 금지
+  - 준비 시점: 사용 전
+
+- 입력/산출물: `lab-object.txt`
+  - 실제 값 출처: 본문 단계에서 승인/선택한 값
+  - 준비 시점: 사용 전
+
 
 입력별 실행위치는 본문 터미널 구분을 따른다: OCI CLI=인증 Cloud Shell/승인 OCI 터미널, OS 앱/NFS/부하=지정 guest, private HTTP/TCP=vm-a guest, YAML 작성/SSH private key=본인 local. 조회/변경/정리의 관리자 승인은 **실행 조건**이며 이 문서는 IAM 성공을 입증하지 않는다. 실제 허용/거부와 capacity는 사용자 실행에서 확인한다. 미승인/NOT_SELECTED/ASYNC_PENDING을 성공으로 바꾸지 않는다.
 
@@ -162,9 +170,9 @@ cmp owner48-original.txt owner48-restored.txt
 
 ## 문제해결
 
-overwriteprompt가예상기존labkey인지확인;객체versioningdisabled일때payload원복은원본bytes재upload이며이전version자동복구아님.
+overwrite prompt가 예상한 기존 lab key인지 확인한다. 객체 versioning disabled일 때 payload 원복은 원본 bytes 재업로드이며 이전 version 자동 복구가 아니다.
 
-실패기록에는같은target/credentials/region/요청시간을고정한다. 복구는원래설정으로실행하고actualresponse/readback둘다확인한다;예상값을실측으로쓰지않는다.
+실패 기록에는 같은 target/credentials/region/요청 시간을 고정한다. 복구는 원래 설정으로 실행하고 actual response/readback을 둘 다 확인한다. 예상값을 실측으로 쓰지 않는다.
 
 ## 리소스정리
 

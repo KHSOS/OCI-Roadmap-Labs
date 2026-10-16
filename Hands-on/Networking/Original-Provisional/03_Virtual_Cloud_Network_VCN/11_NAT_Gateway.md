@@ -228,7 +228,7 @@ B만 실패하면 rt-private association/per-resource route, Block traffic, egre
 - [실습근거 2] [VCN Route Tables](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/managingroutetables.htm) — 생성/수정·접근 제어·검증 관련 본문. 공식 본문을 수집해 저술 근거로 사용했으며 Console 메뉴·현재 CLI/이미지 호환성은 실행 시 재확인한다.
 
 ### B guest NAT 시험 RC station
-positive / blocked / recovered 각각 한 번 실행한다. 같은 www.oracle.com/no-proxy/IPv4/credentials/DNS/TLS 설정을 고정한다. 각 상태에서 새 directory와 stderr를 보존한다. blocked 요청 직후 Console 담당자는 기존 단계의 exact NAT block=false를 60초 이내 복원하고 recovered 요청을 수행한다; 실패 분류 때문에 복원을 지연하지 않는다.
+positive / blocked / recovered 각각 한 번 실행한다. 같은 `www.oracle.com` / no-proxy / IPv4 / credentials / DNS / TLS 설정을 고정한다. 각 상태에서 새 directory와 stderr를 보존한다. blocked 요청 직후 Console 담당자는 기존 단계의 exact NAT block=false를 60초 이내 복원하고 recovered 요청을 수행한다; 실패 분류 때문에 복원을 지연하지 않는다.
 ```bash
 WORK30=$(mktemp -d "$HOME/nat30-probe.XXXXXXXX") || exit 1
 getent ahostsv4 www.oracle.com > "$WORK30/dns.txt" || exit 1

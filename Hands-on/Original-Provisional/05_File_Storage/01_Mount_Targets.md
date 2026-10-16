@@ -191,7 +191,7 @@ RPC111만 성공하고 mount 실패하면 TCP2049/2048/2050 또는 UDP2048, priv
 
 MT rule을 반드시 복원하고 mounted `/lab`과 proof hash를 owner43에 반환한다. 45/46 및 선택47까지 endpoint를 owner43의 승인 consumer registry/EXPIRY_UTC에 따라 유지한다. owner44는 공유 File System/Export/MT의 삭제 owner가 아니다. 예약 consumer가 없거나 expiry에 도달한 최종 종료는 [owner43의 정리](00_File_Storage.md#리소스정리)로 인계한다: 실제 NFS mount/source 확인 → mounted 상태에서 전용 test 파일 삭제 → 모든 client 정상 unmount → associated Export 소유관계 확인/삭제 → File System 삭제 → 다른 File System의 Export가 없는 MT 삭제. shared MT면 다른 File System을 건드리지 않는다. owner43은 `mt-lab` 삭제 뒤 private IP/NSG membership 잔존을 확인한다.
 
-**network negative 분류/로컬 정리:**rpc timeout/connection refused/transport unreachable과 packet 관찰은 same MT의 전후 rpc/mount positive와 한 세트로 기록한다. command missing/permission/local 오류는 network deny가 아니며 INCONCLUSIVE로 복원한다. MT ingress 제거 전 mt44-work를 예약하고 재시도는 새 승인 directory만 사용한다. 복원/readback/잔존 요청 종료 뒤 본인이 만든 positive-rpc.out/positive-rpc.err/deny-rpc.out/deny-rpc.err/restored-rpc.out/restored-rpc.err 및 own capture/rule snapshot만 exact 경로로 삭제하고 빈 mt44-work를 rmdir한다.
+**network negative 분류/로컬 정리:** rpc timeout/connection refused/transport unreachable과 packet 관찰은 same MT의 전후 rpc/mount positive와 한 세트로 기록한다. command missing/permission/local 오류는 network deny가 아니며 INCONCLUSIVE로 복원한다. MT ingress 제거 전 mt44-work를 예약하고 재시도는 새 승인 directory만 사용한다. 복원/readback/잔존 요청 종료 뒤 본인이 만든 positive-rpc.out/positive-rpc.err/deny-rpc.out/deny-rpc.err/restored-rpc.out/restored-rpc.err 및 own capture/rule snapshot만 exact 경로로 삭제하고 빈 mt44-work를 rmdir한다.
 
 ## 공식문서
 

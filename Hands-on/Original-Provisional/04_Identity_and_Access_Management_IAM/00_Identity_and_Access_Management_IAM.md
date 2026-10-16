@@ -65,17 +65,43 @@
 
 격리 Compartment·User·Group·두 private Bucket를 만들고 Reader A/B 접근을 비교한다.
 
-|입력|값/출처|시점|실행 위치|선택 이유|
-|---|---|---|---|---|
-|`LAB_COMPARTMENT_ID`|owner0의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`REGION`|owner4의 actual output; `<...>` 대체 필수|실행 전 선행 완료값|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`IAM_LAB_OCID`|owner33의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`LAB_READERS_GROUP_OCID`|owner33의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
-|`NS`|owner33의 actual output; `<...>` 대체 필수|생성 후 readback|Console/사용자 전용 shell|정확한 대상/소유관계 고정|
 
-|Console field|실제 입력/선택|이유|
-|---|---|---|
-|Compartment parent / Group / bucket tier/access|iam-lab parent lab-root; lab-readers; Standard/Private/Oracle-managed; no versioning|이번 기능/실패 원인을 한 변수로 분리|
+- 입력: `LAB_COMPARTMENT_ID`
+  - 값/출처: owner0의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `REGION`
+  - 값/출처: owner4의 actual output; `<...>` 대체 필수
+  - 시점: 실행 전 선행 완료값
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `IAM_LAB_OCID`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `LAB_READERS_GROUP_OCID`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+- 입력: `NS`
+  - 값/출처: owner33의 actual output; `<...>` 대체 필수
+  - 시점: 생성 후 readback
+  - 실행 위치: Console/사용자 전용 shell
+  - 선택 이유: 정확한 대상/소유관계 고정
+
+
+
+- Console field: Compartment parent / Group / bucket tier/access
+  - 실제 입력/선택: iam-lab parent lab-root; lab-readers; Standard/Private/Oracle-managed; no versioning
+  - 이유: 이번 기능/실패 원인을 한 변수로 분리
+
 
 **생성·변경 범위:** iam-lab:Compartment,lab-readers:IdentityGroup,lab-reader:IdentityUser,iam-proof-a:Bucket,iam-proof-b:Bucket,p-lab-read-a:IamPolicy. **완료 비교:** Reader A success/B deny; admin same B success. 기대 패턴이며 OCI 실측값이 아니다. **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
@@ -253,7 +279,7 @@ registry에 기록한 신규 IAM_GET_WORK의 이번 다운로드만 제거하고
 
 선택하여 등록한 소비자가 남으면 fixture와 Reader 계정을 보존한다. 모두 NOT_SELECTED인 단독 경로는 지금 정리한다. 종료 시 모든 테스트 정책 제거 → API key/auth token revoke → Group membership 제거 → test User 삭제 → Group 삭제 → object(모든 version 여부 확인) 삭제 → Bucket 삭제 → 남은 VM/Function/FSS resource 확인 → 빈 compartment 삭제. 재개 시 기존에 보존한 자원/계정/API key는 소유 기록과 소비자 반환을 먼저 대조하고, 이번 소유가 아닌 것은 삭제하지 않는다. 이번에 만든 전용 config/private key도 API key revoke를 확인한 뒤 해당 사용자 PC의 기록된 exact path만 제거한다. 업무 Domain 전체를 삭제하지 않는다.
 
-**전용 로컬 산출물 정리:**실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: iam33-fixtures/a/proof.txt、iam33-fixtures/b/proof.txt、iam33-admin-a/proof.txt/error.txt、iam33-admin-b/proof.txt/error.txt 및 IAM_GET_WORK의 a.txt/b.txt/b-error.json, IAM_ADMIN_CONTROL의 proof.txt/error.txt. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
+**전용 로컬 산출물 정리:** 실행 전에 새로 생성한 exact directory/file 경로를 소유 기록에 남기고, 증거 보존 필요가 끝난 뒤 해당 사용자/host에서 다음 파일만 삭제한다: iam33-fixtures/a/proof.txt、iam33-fixtures/b/proof.txt、iam33-admin-a/proof.txt/error.txt、iam33-admin-b/proof.txt/error.txt 및 IAM_GET_WORK의 a.txt/b.txt/b-error.json, IAM_ADMIN_CONTROL의 proof.txt/error.txt. 실패 요청이 부분 파일을 만들었으면 그것도 이번 owned 파일일 때만 제거한다. symlink/기존 재사용 파일은 삭제하지 않는다. 파일을 하나씩 exact path로 제거한 뒤 자신이 만든 빈 하위 directory부터 `rmdir`한다. retry는 실행 등록된 경로만 순회하고 wildcard/rm -rf는 사용하지 않는다; 미등록/타인 파일 잔존이면 중단한다.
 
 ## 공식문서
 
