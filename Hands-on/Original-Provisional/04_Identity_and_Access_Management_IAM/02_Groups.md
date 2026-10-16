@@ -100,7 +100,7 @@
 
 ### 개별 완주 보정 — 생성·검증·소유권
 
-policy 생성 전에 outsider의 LAB_OUTSIDER user/fingerprint를 확인한다. B deny의 positive control은 admin same object get이다. test policy/membership가 남은 상태로37/40을 시작하지 않는다.
+policy 생성 전에 outsider의 LAB_OUTSIDER user/fingerprint를 확인한다. B deny는 admin의 같은 object GET 성공과 대조한다. test policy/membership가 남은 상태로37/40을 시작하지 않는다.
 
 **첫 요청 전 LAB_OUTSIDER PC 입력:** 33의 실제 출력으로 다음 값을 채운다. 빈 값/placeholder면 중단한다.
 ```bash

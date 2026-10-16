@@ -122,7 +122,12 @@ done
 
 1. [Object Storage](00_Object_Storage.md#실습절차)의 private Standard bucket을 사용한다. Archive bucket을 별도 생성하지 않는다. 복구와 최소 보관 과금을 승인한다.
 
-2. `printf 'archive restore payload\n' > archive.txt; oci os object put -ns "$NS" -bn "$BUCKET" --name lab/archive.txt --file archive.txt --storage-tier Archive --no-overwrite`를 실행한다.
+2. 같은 shell에서 아래 payload 생성과 Archive PUT을 실행한다.
+
+   ```bash
+   printf 'archive restore payload\n' > archive.txt
+   oci os object put -ns "$NS" -bn "$BUCKET" --name lab/archive.txt --file archive.txt --storage-tier Archive --no-overwrite
+   ```
 
 3. **Restore 제출 전에** 아래 same-key Archived negative를 실행하고 HEAD 성공/실제 archive 상태와 GET 서비스 진단을 함께 확인한다.
 ```bash

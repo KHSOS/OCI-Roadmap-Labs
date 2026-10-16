@@ -84,7 +84,7 @@ owner48 Standard bucket에 lab/expire/test.txt와 prefix 제한 DELETE rule 하�
 - 갱신 승인 없으면 원래 deadline 전에 disable/cancel 가능한 시험을 중단하고 owned key를 삭제/반환한다.
 - 실제 비동기 작업 취소가 지원되지 않으면 작업 상태를 기록하고 객체 삭제/목록 readback을 owner48과 조율한다.
 - owner48은 expiry 때 독자 삭제하지 않고 모든 consumer의 abort/restore/return acknowledgement를 받는다.
-- 연장 불가를 무기한 보존으로 대체하지 않는다.
+- 연장 불가 시 무기한 보존은 금지한다.
 - ASYNC_PENDING은 검증 성공이 아니다.
 
 ## 실습절차
