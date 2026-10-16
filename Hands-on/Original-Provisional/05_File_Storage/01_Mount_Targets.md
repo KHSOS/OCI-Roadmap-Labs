@@ -99,7 +99,7 @@ MT endpoint 배치를 readback한다. 새 RPC/mount로 network deny와 복구 �
   - 이유: 이번 기능/실패 원인을 한 변수로 분리
 
 
-- **생성·변경 범위:** 새 infrastructure 없음; existing resource의 configuration만 변경.
+- **생성·변경 범위:** 신규 infrastructure 없음; 기존 resource configuration 수정.
 - **완료 비교:** fresh RPC/mount deny→network restoration same proof hash. 기대 패턴이며 OCI 실측값이 아니다.
 - **정리:** 본 주제의 변경만 원복하고 전용 신규 resource만 dependency 역순으로 정리한다; 공유 자원은 creator와 consumer registry/expiry 기준으로 반환한다.
 
